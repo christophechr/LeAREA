@@ -14,3 +14,9 @@ There will be 3 containers:
 
 ## API documentation
 You can find the API documentation in the `docs` folder.
+
+## Collaborators
+- [Léo Maman](https://github.com/mangasteak)
+- [Raphael Mercié](https://github.com/raphaelMrci)
+- [Saad Berrada](https://github.com/Codrux2200)
+- [Stéphane Corbière](https://github.com/STCB)
