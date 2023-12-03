@@ -14,7 +14,7 @@ services:
     build:
       context: area-expo/
     volumes:
-      - shared_data:/shared
+      - shared_data:/pipe
 
   client_web:
     container_name: web_client
@@ -26,7 +26,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - shared_data:/shared
+      - shared_data:/pipe
 
 volumes:
   database:
