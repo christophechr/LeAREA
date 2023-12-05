@@ -12,8 +12,13 @@ There will be 3 containers:
 - The Front web
 - The Front mobile
 
-## API documentation
-You can find the API documentation in the `docs` folder.
+## documentation
+You can find the documentation in the `docs` folder.
+To find the benchmark, you will find the file in the `docs/` folder as [Benchmark-technologies-choice.pdf](docs/Benchmark-technologies-choice.pdf).
+
+## Contribute to the project
+To contribute to the project, you can find everything needed in the [CONTRIBUTING.md](docs/CONTRIBUTE.md) file.
+
 
 ## Collaborators
 - [Léo Maman](https://github.com/mangasteak)
