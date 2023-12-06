@@ -1,10 +1,11 @@
 FROM node:latest
 
-#WORKDIR /app
-#COPY ../../area-react .
-#
-#RUN npm install && npm build
-#
-#EXPOSE 8080
+WORKDIR /app
+COPY . .
 
-CMD echo "I am useless for now"
+RUN npm install
+
+EXPOSE 3000
+
+RUN echo "Warning, running in dev mode !"
+CMD ["npm", "run", "dev"]
