@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-import exemple from "./exemple.route";
+import exemple from "./exemple.api";
 
 const router = new Hono();
 
