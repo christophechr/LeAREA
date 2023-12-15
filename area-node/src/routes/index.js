@@ -1,10 +1,4 @@
 module.exports = (fastify, opts, done) => {
-    fastify.register(require("./exemple.route.js"), { prefix: "/exemple" });
+    fastify.register(require("./auth.route.js"), { prefix: "/auth" });
     done();
 };
-
-/**
- * /auth:
- *    /auth/register
- *    /auth/login
- */
