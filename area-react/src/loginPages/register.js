@@ -1,55 +1,84 @@
 import logo from '../logo.svg';
 import './login.css';
-// il faut retirer tout les <br></br> et le refaire avec des flex box
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+
+const RegisterUser = (email, password) => {
+  return new Promise((resolve, reject) => {
+    if (email === "" || password === "") {
+      window.alert("Email and password are required");
+      reject(new Error("Email and password are required"));
+      return;
+    }
+
+    const userData = {
+      email: email,
+      password: password,
+    };
+
+    console.log(userData);
+
+    axios
+      .post('http://localhost:8080/auth/register', userData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          window.alert("Success connection");
+          console.log(response.data);
+          localStorage.setItem("id", response.data.id);
+          localStorage.setItem("token", response.data.token);
+          resolve(response.data); // Resolve with the data
+        } else {
+          reject(new Error(`Unexpected response status: ${response.status}`));
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        window.alert(error.message);
+        reject(error); // Reject with the error
+      });
+  });
+};
+
+
+
+
 export function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigate();
   return (
     <div className="App">
-      <div className="LoginCage">
-      <span className="title">WELCOME !</span>
-      <br></br>
-      <br></br>
-      <div className='divinputinfo'>
-      <input type='text' className='inputinfo' placeholder='Name'></input>
-      <input type = "text" className='inputinfo' placeholder='first name'></input>
-      </div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <input type = "email" className='inputconnexion' placeholder='Email'></input>
-      <br></br>
-      <br></br>
-      <input type = "email" className='inputconnexion' placeholder='Confirm Email'></input>
-      <br></br>
-      <br></br>
-      <input type = "password" className='inputconnexion' placeholder='Password'></input>
-      <br>
-      </br>
-      <br></br>
-      <a href = "dev" style={{color : "rgba(86, 128, 233, 1)"}}>forget password ?</a>
-      <br></br>
-      <br></br>
-      <a href = "lien">
-        <div className='Button'>
-          <p className='ButtonText'>Sign In</p>
-        </div>
-      </a>
-      <br></br>
-      <br></br>
-      <div className='line'></div>
-      <br>
-      </br>
-      <div style={{flexDirection :'row', display : 'flex', justifyContent : 'space-between'}}>
-        <div className='SocialButton'>
-          <img style={{width : 50, height : 50}} src = "https://cdn.pixabay.com/photo/2021/05/24/09/15/google-logo-6278331_640.png"></img>
-        </div>
-        <div className='SocialButton'>
-        <img style={{width : 50, height : 50}} src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/480px-Facebook_f_logo_%282019%29.svg.png"></img>
-        </div>
-        <div className='SocialButton'>
-        <img style={{width : 50, height : 50}} src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png"></img>
-        </div>
-      </div>
+      <div className='tab'>
+        <h1>WELCOME !</h1>
+        <span>You have an account <a>SIGN IN</a></span>
+        <input className='inputconnexion' placeholder='deniel123@gmail.com' type='email' onChange={(e) => {setEmail(e.target.value)}}></input>
+        <input className='inputconnexion' type='password' onChange={(e) => {setPassword(e.target.value)}}></input>
 
+        <button onClick={() => {RegisterUser(email, password)
+          .then((data) => {navigation("/workflow")})
+          .catch((error) => {
+            console.log(error);
+          });
+          }
+
+        } 
+          className='Button' >Sign Out</button>
+
+        <div className='line'></div>
+
+        <div style={{display : "flex", justifyContent : 'space-between'}}>
+          <div className='SocialButton'></div>
+          <div className='SocialButton'></div>
+          <div className='SocialButton'></div>
+        </div>
 
       </div>
     </div>
