@@ -73,7 +73,12 @@ const login = async (request, reply) => {
     });
 };
 
+const me = async (request, reply) => {
+    reply.send(request.user);
+};
+
 module.exports = {
     register,
     login,
+    me,
 };
