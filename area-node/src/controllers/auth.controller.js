@@ -20,7 +20,7 @@ const register = async (request, reply) => {
                     const token = createJwt(savedUser._id, savedUser.email);
 
                     reply.send({
-                        userId: savedUser._id,
+                        id: savedUser._id,
                         token,
                     });
                 })
@@ -52,17 +52,21 @@ const login = async (request, reply) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        reply.status(404).send("User not found");
+        reply.status(401).send({
+            message: "Incorrect email or password",
+        });
     }
 
     await bcrypt.compare(password, user.passwordHash).then((match) => {
         if (!match) {
-            reply.status(401).send("Wrong password");
+            reply.status(401).send({
+                message: "Incorrect email or password",
+            });
         } else {
             const token = createJwt(user._id, user.email);
 
             reply.send({
-                userId: user._id,
+                id: user._id,
                 token,
             });
         }

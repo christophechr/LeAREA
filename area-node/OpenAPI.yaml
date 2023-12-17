@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: AREA API - OpenAPI 3.0
+  description: |-
+    This is the AREA Server API description based on the OpenAPI 3.0 specification.  You can find out more about
+    AREA at [GitHub repository](https://github.com/christophechr/LeAREA/tree/main)
+    
+  contact:
+    email: raphael.mercie@epitech.eu
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Area project
+  url: https://github.com/christophechr/LeAREA/tree/main
+servers:
+  - url: http://localhost:3000/
+tags:
+  - name: Authentication
+    description: Routes to login and register
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Register a new user
+      operationId: register
+      requestBody:
+        description: Register a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+        '400':
+          description: Missing email or password
+        '409':
+          description: Email already used
+        '500':
+          description: Password hashing failed or user storing failed
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login a user
+      description: Login user by generating a JWT for the session
+      operationId: login
+      requestBody:
+        description: Login the user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Login token created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+        '400':
+          description: Missing email or password
+        '401':
+          description: Incorrect email or password
+components:
+  schemas:
+    UserLoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@email.com
+        password:
+          type: string
+          example: '12345'
+    UserLoginResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 657ce6e26f5235905f0178f3
+        token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTdjZTZlMjZmNTIzNTkwNWYwMTc4ZjMiLCJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJpYXQiOjE3MDI3MzIwNDgsImV4cCI6MTcwMjgxODQ0OH0.8JjWDxH9Q_UYi2yGwt4z17lQGgWdpUwQp_cDro41in0'
