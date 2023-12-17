@@ -1,4 +1,4 @@
-const { verify } = require("../utils/jwt.utils");
+const { verifyJwt } = require("../utils/jwt.utils");
 
 const auth = (request, reply, next) => {
     if (request.headers && request.headers.authorization) {
@@ -9,7 +9,7 @@ const auth = (request, reply, next) => {
         }
 
         try {
-            const decoded = verify(token);
+            const decoded = verifyJwt(token);
 
             request.user = decoded;
 
