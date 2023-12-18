@@ -43,7 +43,9 @@ You must ask a pull request to merge to one of these branches :
 - frontMobile
 - backEnd
 
-At every daily meeting, we'll see if we have to pull request to main.
+We'll have a daily meeting to see if we can merge the pull request to the dev branch.
+
+At the end of the sprint, we'll merge the dev branch to the main branch if there are features.
 
 # 4th point : Devops
 Don't forget, we must have a docker-compose for every part the project.
