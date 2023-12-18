@@ -44,7 +44,7 @@ const register = async (request, reply) => {
 
 const login = async (request, reply) => {
     const { email, password } = request.body;
-    console.log(email , password);
+    console.log(email, password);
     if (!email || !password) {
         reply.status(400).send("Missing email or password");
     }

@@ -34,41 +34,43 @@ async function getAccessTokenFromCode(code) {
 }
 
 const github = async (request, reply) => {
-    console.log(request.query);
-
+    reply.send({ url: githubLoginUrl });
     // Check if the request contains the code query parameter
     if (!request.query.code) {
         console.log("no code, redirecting to github");
-        reply.send({ url: githubLoginUrl });
     } else {
         // If the code parameter is present, exchange it for an access token
-        const { code } = request.query;
+    }
+};
 
-        try {
-            const accessToken = await getAccessTokenFromCode(code);
-            console.log(accessToken);
+const registerToken = async (request, reply) => {
+    const { code } = request.body;
 
-            console.log(request.user);
+    try {
+        const accessToken = await getAccessTokenFromCode(code);
+        console.log(accessToken);
 
-            // Store the access token in the user
-            const user = await User.findOneAndUpdate(
-                { _id: request.user.userId },
-                { githubToken: accessToken },
-                { new: true }
-            );
-            console.log(user);
-            reply.send({
-                message: "GitHub token stored",
-            });
-        } catch (err) {
-            console.log(err);
-            reply.status(500).send({
-                message: err.message,
-            });
-        }
+        console.log(request.user);
+
+        // Store the access token in the user
+        const user = await User.findOneAndUpdate(
+            { _id: request.user.userId },
+            { githubToken: accessToken },
+            { new: true }
+        );
+        console.log(user);
+        reply.send({
+            message: "GitHub token stored",
+        });
+    } catch (err) {
+        console.log(err);
+        reply.status(500).send({
+            message: err.message,
+        });
     }
 };
 
 module.exports = {
     github,
+    registerToken,
 };
