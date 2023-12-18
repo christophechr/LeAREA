@@ -19,6 +19,7 @@ export const Github = () => {
       }).then((response) => {
         if (response.status === 200) {
             console.log("Sucess registration");
+            window.location = "/workflow";
         } else {
             console.log("Error: " + response.status);
         }
