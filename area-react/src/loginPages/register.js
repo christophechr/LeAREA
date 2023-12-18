@@ -23,7 +23,7 @@ const RegisterUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post('http://10.15.190.199:8080/auth/register', userData, {
+      .post('http://localhost:8080/auth/register', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -68,7 +68,6 @@ export function Register() {
             console.log(error);
           });
           }
-
         } 
           className='Button' >Sign Out</button>
 
