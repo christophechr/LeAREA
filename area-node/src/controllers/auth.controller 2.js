@@ -20,7 +20,7 @@ const register = async (request, reply) => {
                     const token = createJwt(savedUser._id, savedUser.email);
 
                     reply.send({
-                        id: savedUser._id,
+                        userId: savedUser._id,
                         token,
                     });
                 })
@@ -32,11 +32,13 @@ const register = async (request, reply) => {
                             code: err.code,
                         });
                     } else {
+                        console.log(err);
                         reply.status(500).send("Internal server error");
                     }
                 });
         })
         .catch((err) => {
+            console.log("ERROR: error 2");
             console.log(err);
             reply.status(500).send("Internal server error");
         });
@@ -44,7 +46,7 @@ const register = async (request, reply) => {
 
 const login = async (request, reply) => {
     const { email, password } = request.body;
-    console.log(email , password);
+
     if (!email || !password) {
         reply.status(400).send("Missing email or password");
     }
@@ -52,33 +54,24 @@ const login = async (request, reply) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        reply.status(401).send({
-            message: "Incorrect email or password",
-        });
+        reply.status(404).send("User not found");
     }
 
     await bcrypt.compare(password, user.passwordHash).then((match) => {
         if (!match) {
-            reply.status(401).send({
-                message: "Incorrect email or password",
-            });
+            reply.status(401).send("Wrong password");
         } else {
             const token = createJwt(user._id, user.email);
 
             reply.send({
-                id: user._id,
+                userId: user._id,
                 token,
             });
         }
     });
 };
 
-const me = async (request, reply) => {
-    reply.send(request.user);
-};
-
 module.exports = {
     register,
     login,
-    me,
 };
