@@ -1,6 +1,9 @@
 name: ci
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 env:
   MIRROR_URL: git@github.com:EpitechPromo2026/B-DEV-500-TLS-5-2-area-saad.berrada.git
