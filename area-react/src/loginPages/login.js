@@ -25,7 +25,7 @@ const LoginUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post('http://localhost:8080/auth/login', userData, {
+      .post('http://10.15.190.199:8080/auth/login', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
