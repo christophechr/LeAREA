@@ -74,7 +74,9 @@ const login = async (request, reply) => {
 };
 
 const me = async (request, reply) => {
-    reply.send(request.user);
+    reply.send({
+        isGithubConnected: !!request.user.githubToken,
+    });
 };
 
 module.exports = {

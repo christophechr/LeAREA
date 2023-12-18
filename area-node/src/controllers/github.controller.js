@@ -54,7 +54,7 @@ const registerToken = async (request, reply) => {
 
         // Store the access token in the user
         const user = await User.findOneAndUpdate(
-            { _id: request.user.userId },
+            { _id: request.user._id },
             { githubToken: accessToken },
             { new: true }
         );

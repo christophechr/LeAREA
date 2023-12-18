@@ -1,5 +1,12 @@
 const { verifyJwt } = require("../utils/jwt.utils");
 
+const getUser = async (request, reply) => {
+    const user = await User.findById(request.userId);
+
+    request.user = user;
+    next();
+};
+
 const auth = (request, reply, next) => {
     if (request.headers && request.headers.authorization) {
         const token = request.headers.authorization.split(" ")[1];
@@ -11,7 +18,7 @@ const auth = (request, reply, next) => {
         try {
             const decoded = verifyJwt(token);
 
-            request.user = decoded;
+            request.userId = decoded.userId;
 
             next();
         } catch (err) {
@@ -24,4 +31,5 @@ const auth = (request, reply, next) => {
 
 module.exports = {
     auth,
+    getUser,
 };
