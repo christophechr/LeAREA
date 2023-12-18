@@ -1,10 +1,10 @@
 const { verifyJwt } = require("../utils/jwt.utils");
+const User = require("../models/user.model.js");
 
 const getUser = async (request, reply) => {
     const user = await User.findById(request.userId);
 
     request.user = user;
-    next();
 };
 
 const auth = (request, reply, next) => {
