@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Workflowpage } from './WorkflowPages/workflowpage';
 import { useNavigation } from 'react-router-dom';
+import { Github } from './loginPages/GithubPages/github';
 function App() {
   const [basicpath, setBasicPath] = useState(null);
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/workflow" element={<Workflowpage />} />
+            <Route path="/auth/github" element={<Github/>} />
           </>
         ) : null}
       </Routes>
