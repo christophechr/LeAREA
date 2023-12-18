@@ -3,7 +3,7 @@ module.exports = (fastify, opts, done) => {
     fastify.register(require('@fastify/cors'), {
         origin: '*',
         methods: 'GET,POST,PUT,DELETE',
-        allowedHeaders: 'Content-Type',
+        allowedHeaders: '*',
       });
     done();
 };
