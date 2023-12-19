@@ -2,7 +2,7 @@
 
 ## What is LeAREA?
 
-LeAREA is a project that aims to create a IFTTT like services.
+LeAREA is a project that aims to create a [IFTTT](https://ifttt.com/) like services.
 
 ## How to use it?
 You'll need to use the docker-compose file to run the project.

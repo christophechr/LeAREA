@@ -68,7 +68,6 @@ export function Register() {
             console.log(error);
           });
           }
-
         } 
           className='Button' >Sign Out</button>
 

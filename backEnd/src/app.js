@@ -7,7 +7,7 @@ const fastify = require("fastify")({
 });
 
 const routes = require("./routes");
-
+console.log(process.env.DB_USER);
 // Connect to the database
 mongoose
     .connect(
@@ -27,7 +27,7 @@ fastify.register(routes);
  */
 const start = async () => {
     try {
-        await fastify.listen({ port: 3000 });
+        await fastify.listen({ port: 8080});
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
