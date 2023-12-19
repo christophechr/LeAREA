@@ -1,10 +1,11 @@
 const actionsConfig = require("../config/actions.config");
 
 const getActions = (req, res) => {
-    // Remove function from actions config
-    const actions = actionsConfig.map((action) => {
-        const { function: func, ...rest } = action;
-        return rest;
+    const actions = actionsConfig.map((service) => {
+        service.actions = service.actions.map((action) => {
+            delete action.function;
+            return action;
+        });
     });
     res.send(actions);
 };
