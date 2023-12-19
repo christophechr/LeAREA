@@ -1,13 +1,16 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
+const routes = require("./routes");
+
+const { flowTask } = require("./tasks/flows.task.js");
+
+const fastifyCron = require("fastify-cron");
 
 const fastify = require("fastify")({
     logger: true,
 });
 
-const routes = require("./routes");
-console.log(process.env.DB_USER);
 // Connect to the database
 mongoose
     .connect(
@@ -22,12 +25,23 @@ mongoose
 
 fastify.register(routes);
 
+// Allow CORS requests for all routes
+fastify.register(require("@fastify/cors"), {
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "*",
+});
+
+fastify.register(fastifyCron, {
+    jobs: [{ cronTime: "* * * * * *", onTick: flowTask, start: true }],
+});
+
 /**
  * Run the server!
  */
 const start = async () => {
     try {
-        await fastify.listen({ port: 8080});
+        await fastify.listen({ port: 8080 });
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
