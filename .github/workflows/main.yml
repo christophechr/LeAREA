@@ -11,11 +11,35 @@ env:
 jobs:
   push_to_mirror:
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.11
+        ports:
+          - 8080:80
+        options: --entrypoint "sh -c"
+    
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url: ${{ env.MIRROR_URL }}
           ssh_private_key: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+  
+      - name: Set up Docker Compose
+        run: |
+          docker-compose --version
+          sudo apt-get install -y docker-compose
+  
+      - name: Build and run containers
+        run: |
+          docker-compose up -d --build
+          docker-compose ps
+          sleep 10  # Allow some time for the containers to start
+      
+      - name: Stop containers
+        run: docker-compose down
