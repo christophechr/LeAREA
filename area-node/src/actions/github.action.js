@@ -16,17 +16,7 @@ const getGithubClient = (user, params) => {
 };
 
 const newUserRepo = async (user, params) => {
-    if (!user || !user.githubToken) {
-        throw new Error("No GitHub token provided");
-    }
-
-    if (!params) {
-        throw new Error("No parameters provided");
-    }
-
-    if (!params.name) {
-        throw new Error("No repo name provided");
-    }
+    if (!user || !user.githubToken || !params || !params.name) return;
 
     const { data } = await axios({
         url: "https://api.github.com/user/repos",

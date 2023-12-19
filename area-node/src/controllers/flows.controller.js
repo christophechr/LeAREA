@@ -16,9 +16,19 @@ const getUserFlows = async (req, res) => {
 };
 
 const checkParams = (params, config, res) => {
-    if (params.length !== config.length)
+    const countParams = (params) => {
+        let count = 0;
+        for (const [key, value] of Object.entries(params)) {
+            count++;
+        }
+        return count;
+    };
+
+    const count = countParams(params);
+
+    if (count > config.length)
         return res.status(400).send({
-            message: `Invalid number of parameters. Expected: ${config.length}, received: ${params.length}`,
+            message: `Invalid number of parameters. Expected: ${config.length}, received: ${count}`,
         });
 
     for (const param of config) {
@@ -76,7 +86,6 @@ const createFlow = async (req, res) => {
                 message: "Invalid trigger id.",
             });
 
-        console.log(triggerConfig);
         if (
             !triggerConfig[splittedTriggerId[0]] ||
             !triggerConfig[splittedTriggerId[0]].triggers[splittedTriggerId[1]]
@@ -105,7 +114,7 @@ const createFlow = async (req, res) => {
 
         if (
             !actionConfig[splittedActionId[0]] ||
-            !actionConfig[splittedActionId[0]][splittedActionId[1]]
+            !actionConfig[splittedActionId[0]].actions[splittedActionId[1]]
         ) {
             return res.status(400).send({
                 message: "Invalid action id.",
@@ -113,7 +122,7 @@ const createFlow = async (req, res) => {
         }
 
         const actionConfigObj =
-            actionConfig[splittedActionId[0]][splittedActionId[1]];
+            actionConfig[splittedActionId[0]].actions[splittedActionId[1]];
 
         // Check if all the required parameters are provided and are in the correct format
         const actionError = checkParams(

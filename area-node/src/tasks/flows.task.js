@@ -8,19 +8,26 @@ const flowTask = async () => {
         flows.forEach((flow) => {
             const [service, action] = flow.trigger.id.split(".");
 
-            console.log(service, action);
             User.findById(flow.user).then(async (user) => {
-                const isReady = await triggersConfig[service].triggers[
-                    action
-                ].function(user, flow.trigger.params);
+                try {
+                    const isReady = await triggersConfig[service].triggers[
+                        action
+                    ].function(user, flow.trigger.params);
 
-                if (isReady) {
-                    const [service, action] = flow.action.id.split(".");
+                    if (isReady) {
+                        const [service, action] = flow.action.id.split(".");
 
-                    actionsConfig[service][action].function(
-                        user,
-                        flow.action.params
-                    );
+                        try {
+                            actionsConfig[service].actions[action].function(
+                                user,
+                                flow.action.params
+                            );
+                        } catch (err) {
+                            console.log(err);
+                        }
+                    }
+                } catch (err) {
+                    console.log(err);
                 }
             });
         });
