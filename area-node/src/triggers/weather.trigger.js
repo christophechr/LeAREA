@@ -14,6 +14,8 @@ const temperature = async (user, params) => {
             ? weather.main.temp - 273.15
             : weather.main.temp * 1.8 - 459.67;
 
+    console.log(weatherTemperature, temperature, operator);
+
     switch (operator) {
         case "equal":
             return weatherTemperature === temperature;
