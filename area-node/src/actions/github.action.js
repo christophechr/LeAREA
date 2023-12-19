@@ -53,4 +53,5 @@ const newUserRepo = async (user, params) => {
 
 module.exports = {
     getGithubClient,
+    newUserRepo,
 };

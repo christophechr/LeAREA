@@ -1,13 +1,16 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
+const routes = require("./routes");
+
+const { flowTask } = require("./tasks/flows.task.js");
+
+const fastifyCron = require("fastify-cron");
 
 const fastify = require("fastify")({
     logger: true,
 });
 
-const routes = require("./routes");
-console.log(process.env.DB_USER);
 // Connect to the database
 mongoose
     .connect(
@@ -27,6 +30,10 @@ fastify.register(require("@fastify/cors"), {
     origin: "*",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "*",
+});
+
+fastify.register(fastifyCron, {
+    jobs: [{ cronTime: "* * * * * *", onTick: flowTask, start: true }],
 });
 
 /**

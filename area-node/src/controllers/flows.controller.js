@@ -16,6 +16,11 @@ const getUserFlows = async (req, res) => {
 };
 
 const checkParams = (params, config, res) => {
+    if (params.length !== config.length)
+        return res.status(400).send({
+            message: `Invalid number of parameters. Expected: ${config.length}, received: ${params.length}`,
+        });
+
     for (const param of config) {
         if (param.required && !params[param.id])
             return res.status(400).send({
@@ -54,7 +59,12 @@ const checkParams = (params, config, res) => {
 
 const createFlow = async (req, res) => {
     try {
-        const { trigger, action } = req.body;
+        const { trigger, action, name } = req.body;
+
+        if (!trigger || !action || !name)
+            return res.status(400).send({
+                message: "Missing required parameters.",
+            });
 
         // Check if the trigger id is valid by existing in the config file (trigger.id = ${app name}.${trigger name})
 
@@ -92,6 +102,7 @@ const createFlow = async (req, res) => {
             return res.status(400).send({
                 message: "Invalid action id.",
             });
+
         if (
             !actionConfig[splittedActionId[0]] ||
             !actionConfig[splittedActionId[0]][splittedActionId[1]]
@@ -116,6 +127,7 @@ const createFlow = async (req, res) => {
             user: req.user._id,
             trigger: req.body.trigger,
             action: req.body.action,
+            name: req.body.name,
         });
 
         await flow.save();

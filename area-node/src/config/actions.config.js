@@ -1,3 +1,5 @@
+const actions = require("../actions");
+
 module.exports = [
     {
         id: "github",
@@ -5,68 +7,56 @@ module.exports = [
         actions: [
             {
                 id: "new_repo",
-                name: "When the temperature value is...",
-                description: "Triggers a temperature condition.",
+                name: "Create a new repository",
+                function: actions.githubActions.newUserRepo,
+                description:
+                    "Creates a new repository for the authenticated GitHub user.",
                 params: [
                     {
-                        id: "location",
-                        name: "City location",
+                        id: "name",
+                        name: "Repo name",
                         type: "string",
                         required: true,
-                        description: "The city location to check the weather.",
+                        description: "The name of the new repository.",
                     },
                     {
-                        id: "operator",
-                        name: "Operator",
-                        type: "enum",
-                        required: true,
-                        description: "The operator to compare the temperature.",
-                        values: [
-                            {
-                                name: "Equal",
-                                value: "equal",
-                            },
-                            {
-                                name: "Greater than",
-                                value: "greater_than",
-                            },
-                            {
-                                name: "Less than",
-                                value: "less_than",
-                            },
-                            {
-                                name: "Greater than or equal",
-                                value: "greater_than_or_equal",
-                            },
-                            {
-                                name: "Less than or equal",
-                                value: "less_than_or_equal",
-                            },
-                        ],
+                        id: "description",
+                        name: "Description",
+                        type: "string",
+                        required: false,
+                        description: "The description of the new repository.",
                     },
                     {
-                        id: "temperature",
-                        name: "Temperature",
-                        type: "number",
-                        required: true,
-                        description: "The temperature to check.",
+                        id: "private",
+                        name: "Private",
+                        type: "boolean",
+                        required: false,
+                        description:
+                            "Whether the repository should be private or not.",
                     },
                     {
-                        id: "unit",
-                        name: "Unit",
-                        type: "enum",
-                        required: true,
-                        description: "The unit of the temperature.",
-                        values: [
-                            {
-                                name: "Celsius",
-                                value: "celsius",
-                            },
-                            {
-                                name: "Fahrenheit",
-                                value: "fahrenheit",
-                            },
-                        ],
+                        id: "has_issues",
+                        name: "Issues",
+                        type: "boolean",
+                        required: false,
+                        description:
+                            "Whether the repository should have issues enabled or not.",
+                    },
+                    {
+                        id: "has_projects",
+                        name: "Projects",
+                        type: "boolean",
+                        required: false,
+                        description:
+                            "Whether the repository should have projects enabled or not.",
+                    },
+                    {
+                        id: "has_wiki",
+                        name: "Wiki",
+                        type: "boolean",
+                        required: false,
+                        description:
+                            "Whether the repository should have wiki enabled or not.",
                     },
                 ],
             },
