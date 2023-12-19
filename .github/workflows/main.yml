@@ -7,14 +7,8 @@ env:
 
 jobs:
   push_to_mirror:
+    needs: [docker_compose]
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:20.10.11
-        ports:
-          - 8080:80
-        options: --entrypoint "sh -c"
-    
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,6 +18,16 @@ jobs:
         with:
           target_repo_url: ${{ env.MIRROR_URL }}
           ssh_private_key: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+
+  docker_compose:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.11
+        ports:
+          - 8080:80
+        options: --entrypoint "sh -c"
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
   
