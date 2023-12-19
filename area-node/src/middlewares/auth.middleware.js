@@ -19,7 +19,6 @@ const auth = (request, reply, next) => {
             const decoded = verifyJwt(token);
 
             request.userId = decoded.userId;
-
             next();
         } catch (err) {
             reply.code(401).send({ error: "Unauthorized" });

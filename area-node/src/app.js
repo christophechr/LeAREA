@@ -22,6 +22,13 @@ mongoose
 
 fastify.register(routes);
 
+// Allow CORS requests for all routes
+fastify.register(require("@fastify/cors"), {
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "*",
+});
+
 /**
  * Run the server!
  */
