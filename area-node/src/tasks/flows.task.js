@@ -1,4 +1,4 @@
-const Flow = require("../models/Flow.model.js");
+const Flow = require("../models/flow.model.js");
 const mongoose = require("mongoose");
 const actionsConfig = require("../config/actions.config.js");
 const triggersConfig = require("../config/triggers.config.js");
