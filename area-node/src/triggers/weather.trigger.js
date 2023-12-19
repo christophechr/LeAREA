@@ -29,3 +29,7 @@ const temperature = async (user, params) => {
             return false;
     }
 };
+
+module.exports = {
+    temperature,
+};
