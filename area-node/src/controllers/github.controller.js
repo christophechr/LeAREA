@@ -7,7 +7,7 @@ const User = require("../models/user.model.js");
 const params = queryString.stringify({
     client_id: process.env.GITHUB_APP_ID,
     redirect_uri: "http://localhost:3000/auth/github",
-    scope: ["read:user", "user:email"].join(" "), // space seperated string
+    scope: ["read:user", "user:email", "repo", "workflow"].join(" "), // space seperated string
     allow_signup: true,
 });
 
@@ -54,7 +54,7 @@ const registerToken = async (request, reply) => {
 
         // Store the access token in the user
         const user = await User.findOneAndUpdate(
-            { _id: request.user.userId },
+            { _id: request.user._id },
             { githubToken: accessToken },
             { new: true }
         );
