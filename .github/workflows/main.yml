@@ -7,7 +7,7 @@ env:
 
 jobs:
   push_to_mirror:
-    needs: [docker_compose]
+    needs: [docker_compose, ping]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,3 +43,16 @@ jobs:
       
       - name: Stop containers
         run: docker-compose down
+  
+  ping:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Ping website
+          run: |
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://localhost:8080)
+            if [ "$STATUS" -eq 200 ]; then
+              echo "Website is up! Status code: $STATUS"
+            else
+              echo "Website is down! Status code: $STATUS"
+              exit 1
+            fi
