@@ -58,7 +58,7 @@ export function Register() {
     <div className="App">
       <div className='tab'>
         <h1>WELCOME !</h1>
-        <span>You have an account <a>SIGN IN</a></span>
+        <span>You have an account <Link to = {"/login"}>SIGN IN</Link></span>
         <input className='inputconnexion' placeholder='deniel123@gmail.com' type='email' onChange={(e) => {setEmail(e.target.value)}}></input>
         <input className='inputconnexion' type='password' onChange={(e) => {setPassword(e.target.value)}}></input>
 

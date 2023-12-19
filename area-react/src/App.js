@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Workflowpage } from './WorkflowPages/workflowpage';
 import { useNavigation } from 'react-router-dom';
 import { Github } from './loginPages/GithubPages/github';
+import { Navbar } from './Utils/Navbar';
 function App() {
   const [basicpath, setBasicPath] = useState(null);
 
@@ -23,6 +24,11 @@ function App() {
 
   return (
     <BrowserRouter>
+    {/* {
+      basicpath != "/login" ?
+      (<>
+      <Navbar/></> ): null
+    } */}
       <Routes>
         {basicpath !== null ? (
           <>
