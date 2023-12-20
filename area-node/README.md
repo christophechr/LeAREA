@@ -54,4 +54,11 @@ DB_USER=area-backend
 DB_PASSWORD=<your-password>
 DB_HOST=localhost
 DB_PORT=27017
+
+JWT_SECRET=secret
+
+GITHUB_APP_ID=
+GITHUB_SECRET=
+
+OPEN_WEATHER_API_KEY=
 ```
