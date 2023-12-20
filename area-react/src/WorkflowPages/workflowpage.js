@@ -10,7 +10,7 @@ import { CheckboxInputs, EqualityInputs, NominalInputs, NumberInputs } from "../
 const github_connexion = () => {
     const bearerToken = localStorage.getItem("token");
 
-    const apiUrl = "http://localhost:8080/auth/github";
+    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/auth/github";
 
     const axiosConfig = {
         method: "get",
@@ -45,7 +45,7 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
     }
     console.log(json);
     axios
-      .post('http://localhost:8080/flows', json, {
+      .post("http://" + localStorage.getItem("ip") + ':8080/flows', json, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
@@ -56,7 +56,8 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
           window.alert("created workflow successfully");
           window.location = "/workflow"
         } else {
-          window.alert("error creating workflow", response.status)
+          window.alert("il y a peux être eu un soucis", response.status)
+          window.location = "/workflow"
         }
       })
       .catch((error) => {
@@ -80,7 +81,7 @@ const NewWorkflow = () => {
         const [data, setdata] = useState([]);
 
         const bearerToken = localStorage.getItem("token");
-        const apiUrl = "http://localhost:8080/" + mode;
+        const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/" + mode;
         const axiosConfig = {
             method: "get",
             url: apiUrl,
@@ -232,7 +233,7 @@ const NewWorkflow = () => {
 export const Getflows = () => {
     const [data, setdata] = useState([]);
     const bearerToken = localStorage.getItem("token");
-    const apiUrl = "http://localhost:8080/flows";
+    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/flows";
     const axiosConfig = {
             method: "get",
             url: apiUrl,
