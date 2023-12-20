@@ -11,7 +11,7 @@ export const Github = () => {
         console.log(code);
         const userData = {code};
         axios
-      .post('http://localhost:8080/auth/github/save', userData, {
+      .post("http://" + localStorage.getItem("ip") + ':8080/auth/github', userData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.getItem('token'),
