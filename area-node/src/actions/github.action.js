@@ -40,6 +40,7 @@ const newUserRepo = async (user, params) => {
         });
     } catch (err) {
         // console.log("Cannot create new repository");
+        console.log("Cannot create new repository");
     }
 
     // console.log(data);

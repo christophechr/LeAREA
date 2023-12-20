@@ -20,9 +20,10 @@ const flowTask = async () => {
 
                         try {
                             actionsConfig
-                                .find((service) => service.id === service)
-                                .actions.find((action) => action.id === action)
+                                .find((s) => s.id === service)
+                                .actions.find((a) => a.id === action)
                                 .function(user, flow.action.params);
+                            console.log("Flow executed");
                         } catch (err) {
                             console.log(err);
                         }
