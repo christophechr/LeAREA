@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-
+import {IP} from '@env'
 
 const RegisterUser = async (email, password) => {
     return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ const RegisterUser = async (email, password) => {
       console.log(userData);
       
       axios
-        .post('http://10.15.190.199:8080/auth/register', userData, {
+        .post('http://' + IP + ':8080/auth/register', userData, {
           headers: {
             'Content-Type': 'application/json',
           },
