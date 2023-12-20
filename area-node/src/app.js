@@ -41,7 +41,7 @@ fastify.register(fastifyCron, {
  */
 const start = async () => {
     try {
-        await fastify.listen({ port: 8080 });
+        await fastify.listen({ port: 8080, host : "192.168.0.11" });
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);

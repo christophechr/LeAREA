@@ -98,7 +98,7 @@ const NewWorkflow = () => {
                     console.error(error);
                 });
         }, [open]);
-    
+        
         return (
             <Popup
                 modal
