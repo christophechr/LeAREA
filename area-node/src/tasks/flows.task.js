@@ -6,32 +6,35 @@ const triggersConfig = require("../config/triggers.config.js");
 const flowTask = async () => {
     Flow.find({}).then((flows) => {
         flows.forEach((flow) => {
-            const [service, action] = flow.trigger.id.split(".");
+            const [tServiceId, triggerId] = flow.trigger.id.split(".");
 
-            User.findById(flow.user)
-                .populate("githubToken")
-                .then(async (user) => {
-                    try {
-                        const isReady = await triggersConfig[service].triggers[
-                            action
-                        ].function(user, flow.trigger.params);
+            User.findById(flow.user).then(async (user) => {
+                try {
+                    const isReady = await triggersConfig
+                        .find((service) => service.id === tServiceId)
+                        .triggers.find((trigger) => trigger.id === triggerId)
+                        .function(user, flow.trigger.params);
 
-                        if (isReady) {
-                            const [service, action] = flow.action.id.split(".");
+                    if (isReady) {
+                        const [aServiceId, actionId] =
+                            flow.action.id.split(".");
 
-                            try {
-                                actionsConfig[service].actions[action].function(
-                                    user,
-                                    flow.action.params
-                                );
-                            } catch (err) {
-                                console.log(err);
-                            }
+                        try {
+                            actionsConfig
+                                .find((service) => service.id === aServiceId)
+                                .actions.find(
+                                    (action) => action.id === actionId
+                                )
+                                .function(user, flow.action.params);
+                            console.log("Flow executed");
+                        } catch (err) {
+                            console.log(err);
                         }
-                    } catch (err) {
-                        console.log(err);
                     }
-                });
+                } catch (err) {
+                    console.log(err);
+                }
+            });
         });
     });
 };

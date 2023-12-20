@@ -1,10 +1,12 @@
 const actions = require("../actions");
 
-module.exports = {
-    github: {
+module.exports = [
+    {
+        id: "github",
         name: "GitHub",
-        actions: {
-            new_repo: {
+        actions: [
+            {
+                id: "new_repo",
                 name: "Create a new repository",
                 function: actions.githubActions.newUserRepo,
                 description:
@@ -19,6 +21,6 @@ module.exports = {
                     },
                 ],
             },
-        },
+        ],
     },
-};
+];

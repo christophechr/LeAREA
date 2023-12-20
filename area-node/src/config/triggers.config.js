@@ -1,10 +1,12 @@
 const triggers = require("../triggers");
 
-module.exports = {
-    weather: {
+module.exports = [
+    {
+        id: "weather",
         name: "Weather",
-        triggers: {
-            temperature: {
+        triggers: [
+            {
+                id: "temperature",
                 name: "When the temperature value is...",
                 description: "Triggers a temperature condition.",
                 function: triggers.weatherTriggers.temperature,
@@ -71,6 +73,6 @@ module.exports = {
                     },
                 ],
             },
-        },
+        ],
     },
-};
+];

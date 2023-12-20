@@ -86,17 +86,23 @@ const createFlow = async (req, res) => {
                 message: "Invalid trigger id.",
             });
 
-        if (
-            !triggerConfig[splittedTriggerId[0]] ||
-            !triggerConfig[splittedTriggerId[0]].triggers[splittedTriggerId[1]]
-        ) {
+        const triggerService = triggerConfig.find(
+            (service) => service.name === splittedTriggerId[0]
+        );
+
+        if (!triggerService)
             return res.status(400).send({
                 message: "Invalid trigger id.",
             });
-        }
 
-        const triggerConfigObj =
-            triggerConfig[splittedTriggerId[0]].triggers[splittedTriggerId[1]];
+        const triggerConfigObj = triggerService.triggers.find(
+            (trigger) => trigger.id === splittedTriggerId[1]
+        );
+
+        if (!triggerConfigObj)
+            return res.status(400).send({
+                message: "Invalid trigger id.",
+            });
 
         // Check if all the required parameters are provided and are in the correct format
         const triggerError = checkParams(
@@ -112,17 +118,23 @@ const createFlow = async (req, res) => {
                 message: "Invalid action id.",
             });
 
-        if (
-            !actionConfig[splittedActionId[0]] ||
-            !actionConfig[splittedActionId[0]].actions[splittedActionId[1]]
-        ) {
+        const actionService = actionConfig.find(
+            (service) => service.name === splittedActionId[0]
+        );
+
+        if (!actionService)
             return res.status(400).send({
                 message: "Invalid action id.",
             });
-        }
 
-        const actionConfigObj =
-            actionConfig[splittedActionId[0]].actions[splittedActionId[1]];
+        const actionConfigObj = actionService.actions.find(
+            (action) => action.id === splittedActionId[1]
+        );
+
+        if (!actionConfigObj)
+            return res.status(400).send({
+                message: "Invalid action id.",
+            });
 
         // Check if all the required parameters are provided and are in the correct format
         const actionError = checkParams(
