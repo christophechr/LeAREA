@@ -52,7 +52,8 @@
 
 .cross-button{
     width: 300px;
-    font-size: 100px;
+    font-size: 70px;
+    height: 200px;
     border : 0px;
     border-radius: 30px;
     background-color: rgba(255,255, 255, 0.7);
