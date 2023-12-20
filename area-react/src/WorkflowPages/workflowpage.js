@@ -126,7 +126,7 @@ const NewWorkflow = () => {
 
     const SecondStepWorkflow = () => {
         useEffect(() => {
-            console.log(triggerparams);
+            console.log(trigger.triggers[0].params);
         }
         , []);
         return(
@@ -135,7 +135,7 @@ const NewWorkflow = () => {
                 <div>
                     <span>{action.name}</span>
                     <div style ={{flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
-                        {action.actions[chooseaction].params.map((val) => {return(
+                        {action.actions[0].params.map((val) => {return(
                             <div>
                                  {val.type == "string" ?
                                 <NominalInputs setVal={setactionparams} Val={actionparams} action = {val}></NominalInputs>
@@ -152,7 +152,7 @@ const NewWorkflow = () => {
                 <div>
                     <span>{trigger.name}</span>
                     <div style ={{flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
-                        {trigger.triggers[choosetrigger].params.map((val) => {return(
+                        {trigger.triggers[0].params.map((val) => {return(
                             <div>
                                {val.type == "string" ?
                                 <NominalInputs setVal={setriggerparams} Val={triggerparams} action = {val}></NominalInputs>
