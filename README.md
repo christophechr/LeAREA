@@ -14,9 +14,9 @@ There will be 3 containers:
 
 
 ## Change the ip
-Beaucause it's not dockerize yet you need to put you local ip adress to be able to use the program
-to do that, please change the IP section in your .env file in area-node and area-expo directories and also the
-localStorage.setItem("ip"); in the app.js of the area-react directorie.
+Because it's not dockerized yet you need to put you local ip address to be able to use the program.
+To do that, please change the IP section in your .env file in area-node and area-expo directories and also the
+localStorage.setItem("ip"); in the app.js of the area-react directory.
 
 ## documentation
 You can find the documentation in the `docs` folder.
