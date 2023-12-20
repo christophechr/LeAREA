@@ -108,6 +108,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TriggersConfig'
+        '401':
+          description: Unauthorized
   /actions:
     get:
       tags:
@@ -140,6 +142,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionsConfig'
+        '401':
+          description: Unauthorized
+  /auth/github:
+    get:
+      tags:
+        - GitHub
+      summary: GitHub get authorization URL
+      description: Get the URL to redirect the user to GitHub authorization page
+      operationId: githubAuth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the URL to redirect the user to GitHub authorization page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://https://github.com/login/oauth/authorize?client_id=1234567890&redirect_uri=http://localhost:8080/auth/github/callback&scope=user:email&allow_signup=true
+        '401':
+          description: Unauthorized'
+    post:
+      tags:
+        - GitHub
+      summary: Send GitHub code REQUIRED
+      description: |
+        This route have to be caled to send the GitHub code to the backend to let it get the user token.<br />
+        This route is mandatory to associate a GitHub account to the user.
+      operationId: githubCode
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: GitHub callback
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: 1234567890
+        required: true
+      responses:
+        '200':
+          description: |
+            Returns the URL to redirect the user to GitHub authorization page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: GitHub token stored
+        '400':
+          description: Missing code
+        '401':
+          description: Unauthorized
+
 
 
 components:

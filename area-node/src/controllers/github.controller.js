@@ -35,17 +35,16 @@ async function getAccessTokenFromCode(code) {
 
 const github = async (request, reply) => {
     reply.send({ url: githubLoginUrl });
-    // Check if the request contains the code query parameter
-    if (!request.query.code) {
-        console.log("no code, redirecting to github");
-    } else {
-        // If the code parameter is present, exchange it for an access token
-    }
 };
 
 const registerToken = async (request, reply) => {
     const { code } = request.body;
 
+    if (!code) {
+        reply.status(400).send({
+            message: "Code not provided",
+        });
+    }
     try {
         const accessToken = await getAccessTokenFromCode(code);
         console.log(accessToken);
