@@ -17,6 +17,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm i @react-native-community/cli-platform-android
 RUN yarn add expo
 RUN npx expo prebuild --platform android
 RUN cd ./android/ && ./gradlew assembleRelease && cd ..
