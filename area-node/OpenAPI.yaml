@@ -340,6 +340,29 @@ paths:
           description: Unauthorized
         '500':
           description: Failed to create the flow
+  /auth/me:
+    get:
+      tags:
+        - Authentication
+      summary: Get user information
+      description: Used to know if the user JWT is still valid, and returns the services associated with the user
+      operationId: me
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            User JWT is still valid, returns the user information and the services associated with the user.<br />
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isGithubConnected:
+                    type: boolean
+                    example: true
+        '401':
+          description: Unauthorized
 
 
 
