@@ -89,8 +89,10 @@ paths:
         '200':
           description: |
             Returns the available triggers as JSON object.<br />
+            - <b>id</b> The ID of the service
             - <b>name</b> The name of the service to display (e.g. GitHub)
             - <b>triggers</b> List of all triggers available for the service
+              - <b>id</b> ID of the trigger
               - <b>name</b> Name of the trigger to display (e.g. When temperature is...)
               - <b>description</b> A brief to describe the trigger check
               - <b>params</b> Parameters accepted by the trigger
@@ -119,8 +121,10 @@ paths:
         '200':
           description: |
             Returns the available actions as JSON object.<br />
+            - <b>id</b> The ID of the service
             - <b>name</b> The name of the service to display (e.g. GitHub)
             - <b>actions</b> List of all actions available for the service
+              - <b>id</b> ID of the action
               - <b>name</b> Name of the action to display (e.g. When temperature is...)
               - <b>description</b> A brief to describe the action check
               - <b>params</b> Parameters accepted by the action
@@ -136,7 +140,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActionsConfig'
-
 
 
 components:
@@ -165,176 +168,92 @@ components:
           type: string
           example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTdjZTZlMjZmNTIzNTkwNWYwMTc4ZjMiLCJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJpYXQiOjE3MDI3MzIwNDgsImV4cCI6MTcwMjgxODQ0OH0.8JjWDxH9Q_UYi2yGwt4z17lQGgWdpUwQp_cDro41in0'
     TriggersConfig:
-      type: object
-      properties:
-        weather:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the weather trigger.
-            triggers:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the trigger service.
+          name:
+            type: string
+            description: The name of the trigger service.
+          actions:
+            type: array
+            items:
               type: object
               properties:
-                temperature:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: When the temperature value is...
-                    description:
-                      type: string
-                      description: Triggers a temperature condition.
-                    params:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          name:
-                            type: string
-                          type:
-                            type: string
-                          required:
-                            type: boolean
-                          description:
-                            type: string
-                          values:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-        github:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the GitHub trigger.
-            triggers:
-              type: object
-              properties:
-                temperature:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: When the temperature value is...
-                    description:
-                      type: string
-                      description: Triggers a temperature condition.
-                    params:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          name:
-                            type: string
-                          type:
-                            type: string
-                          required:
-                            type: boolean
-                          description:
-                            type: string
-                          values:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                value:
-                                  type: string
+                id:
+                  type: string
+                  description: The ID of the trigger.
+                name:
+                  type: string
+                  description: The name of the trigger.
+                description:
+                  type: string
+                  description: Description of the trigger.
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the parameter.
+                      name:
+                        type: string
+                        description: The name of the parameter.
+                      type:
+                        type: string
+                        description: The data type of the parameter.
+                      required:
+                        type: boolean
+                        description: Indicates if the parameter is required.
+                      description:
+                        type: string
+                        description: Description of the parameter.
     ActionsConfig:
-      type: object
-      properties:
-        weather:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the weather action.
-            actions:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the action service.
+          name:
+            type: string
+            description: The name of the action service.
+          actions:
+            type: array
+            items:
               type: object
               properties:
-                temperature:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: When the temperature value is...
-                    description:
-                      type: string
-                      description: Triggers a temperature condition.
-                    params:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          name:
-                            type: string
-                          type:
-                            type: string
-                          required:
-                            type: boolean
-                          description:
-                            type: string
-                          values:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                value:
-                                  type: string
-        github:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the GitHub action.
-            actions:
-              type: object
-              properties:
-                temperature:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: When the temperature value is...
-                    description:
-                      type: string
-                      description: Triggers a temperature condition.
-                    params:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          name:
-                            type: string
-                          type:
-                            type: string
-                          required:
-                            type: boolean
-                          description:
-                            type: string
-                          values:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                value:
-                                  type: string
+                id:
+                  type: string
+                  description: The ID of the action action.
+                name:
+                  type: string
+                  description: The name of the action action.
+                description:
+                  type: string
+                  description: Description of the action action.
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the parameter.
+                      name:
+                        type: string
+                        description: The name of the parameter.
+                      type:
+                        type: string
+                        description: The data type of the parameter.
+                      required:
+                        type: boolean
+                        description: Indicates if the parameter is required.
+                      description:
+                        type: string
+                        description: Description of the parameter.
