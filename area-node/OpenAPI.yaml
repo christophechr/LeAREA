@@ -22,7 +22,7 @@ tags:
   - name: Actions
     description: Actions routes
   - name: GitHub
-    description: Routes used for GitHub
+    description: Routes used for GitHub authentication
   - name: Flows
     description: Routes used for user flows
 paths:
@@ -174,8 +174,9 @@ paths:
         - GitHub
       summary: Send GitHub code REQUIRED
       description: |
-        This route have to be caled to send the GitHub code to the backend to let it get the user token.<br />
+        This route have to be called to send the GitHub code to the backend to let it get the user token.<br />
         This route is mandatory to associate a GitHub account to the user.
+        It will generate the token from the code given by GitHub with the URL given by the previous route.
       operationId: githubCode
       security:
         - bearerAuth: []
@@ -193,7 +194,7 @@ paths:
       responses:
         '200':
           description: |
-            Returns the URL to redirect the user to GitHub authorization page
+            GitHub token stored
           content:
             application/json:
               schema:
