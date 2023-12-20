@@ -13,7 +13,7 @@ module.exports = function (fastify, opts, done) {
         githubControllers.github
     );
     fastify.post(
-        "/github/save",
+        "/github",
         { preHandler: [auth, getUser] },
         githubControllers.registerToken
     );

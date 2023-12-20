@@ -83,16 +83,16 @@ const createFlow = async (req, res) => {
 
         if (splittedTriggerId.length !== 2)
             return res.status(400).send({
-                message: "Invalid trigger id.",
+                message: "Invalid trigger id, expected: app_name.trigger_name",
             });
 
         const triggerService = triggerConfig.find(
-            (service) => service.name === splittedTriggerId[0]
+            (service) => service.id === splittedTriggerId[0]
         );
 
         if (!triggerService)
             return res.status(400).send({
-                message: "Invalid trigger id.",
+                message: "Invalid trigger id. Service not found.",
             });
 
         const triggerConfigObj = triggerService.triggers.find(
@@ -101,7 +101,7 @@ const createFlow = async (req, res) => {
 
         if (!triggerConfigObj)
             return res.status(400).send({
-                message: "Invalid trigger id.",
+                message: "Invalid trigger id. Trigger not found.",
             });
 
         // Check if all the required parameters are provided and are in the correct format
@@ -115,16 +115,16 @@ const createFlow = async (req, res) => {
         // Check if the action id is valid by existing in the config file (action.id = ${app name}.${action name})
         if (splittedActionId.length !== 2)
             return res.status(400).send({
-                message: "Invalid action id.",
+                message: "Invalid action id. Expected: app_name.action_name",
             });
 
         const actionService = actionConfig.find(
-            (service) => service.name === splittedActionId[0]
+            (service) => service.id === splittedActionId[0]
         );
 
         if (!actionService)
             return res.status(400).send({
-                message: "Invalid action id.",
+                message: "Invalid action id. Service not found.",
             });
 
         const actionConfigObj = actionService.actions.find(
@@ -133,7 +133,7 @@ const createFlow = async (req, res) => {
 
         if (!actionConfigObj)
             return res.status(400).send({
-                message: "Invalid action id.",
+                message: "Invalid action id. Action not found.",
             });
 
         // Check if all the required parameters are provided and are in the correct format
@@ -157,7 +157,9 @@ const createFlow = async (req, res) => {
         req.user.flows.push(flow._id);
         await req.user.save();
 
-        res.send(flow);
+        res.code(201).send({
+            message: "Flow created successfully.",
+        });
     } catch (err) {
         res.status(500).send({
             message: err.message || "Some error occurred while creating flow.",
