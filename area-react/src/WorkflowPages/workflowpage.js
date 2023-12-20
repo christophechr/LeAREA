@@ -52,7 +52,7 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
         },
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           window.alert("created workflow successfully");
           window.location = "/workflow"
         } else {
