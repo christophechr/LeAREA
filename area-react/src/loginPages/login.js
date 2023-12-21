@@ -25,7 +25,7 @@ const LoginUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post('http://localhost:8080/auth/login', userData, {
+      .post("http://" + localStorage.getItem("ip") + ':8080/auth/login', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -36,7 +36,7 @@ const LoginUser = (email, password) => {
           console.log(response.data);
           localStorage.setItem("id", response.data.id);
           localStorage.setItem("token", response.data.token);
-          resolve(response.data); // Resolve with the data
+          resolve(response.data);
         } else {
           reject(new Error(`Unexpected response status: ${response.status}`));
         }

@@ -12,6 +12,12 @@ There will be 3 containers:
 - The Front web
 - The Front mobile
 
+
+## Change the ip
+Because it's not dockerized yet you need to put you local ip address to be able to use the program.
+To do that, please change the IP section in your .env file in area-node and area-expo directories and also the
+localStorage.setItem("ip"); in the app.js of the area-react directory.
+
 ## documentation
 You can find the documentation in the `docs` folder.
 To find the benchmark, you will find the file in the `docs/` folder as [Benchmark-technologies-choice.pdf](docs/Benchmark-technologies-choice.pdf).

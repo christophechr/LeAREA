@@ -23,7 +23,7 @@ const RegisterUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post('http://localhost:8080/auth/register', userData, {
+      .post("http://" + localStorage.getItem("ip") + ':8080/auth/register', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,7 +58,7 @@ export function Register() {
     <div className="App">
       <div className='tab'>
         <h1>WELCOME !</h1>
-        <span>You have an account <a>SIGN IN</a></span>
+        <span>You have an account <Link to = {"/login"}>SIGN IN</Link></span>
         <input className='inputconnexion' placeholder='deniel123@gmail.com' type='email' onChange={(e) => {setEmail(e.target.value)}}></input>
         <input className='inputconnexion' type='password' onChange={(e) => {setPassword(e.target.value)}}></input>
 

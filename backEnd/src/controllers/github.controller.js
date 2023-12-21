@@ -7,7 +7,7 @@ const User = require("../models/user.model.js");
 const params = queryString.stringify({
     client_id: process.env.GITHUB_APP_ID,
     redirect_uri: "http://localhost:3000/auth/github",
-    scope: ["read:user", "user:email"].join(" "), // space seperated string
+    scope: ["read:user", "user:email", "repo", "workflow"].join(" "), // space seperated string
     allow_signup: true,
 });
 
@@ -35,17 +35,16 @@ async function getAccessTokenFromCode(code) {
 
 const github = async (request, reply) => {
     reply.send({ url: githubLoginUrl });
-    // Check if the request contains the code query parameter
-    if (!request.query.code) {
-        console.log("no code, redirecting to github");
-    } else {
-        // If the code parameter is present, exchange it for an access token
-    }
 };
 
 const registerToken = async (request, reply) => {
     const { code } = request.body;
 
+    if (!code) {
+        reply.status(400).send({
+            message: "Code not provided",
+        });
+    }
     try {
         const accessToken = await getAccessTokenFromCode(code);
         console.log(accessToken);
@@ -54,7 +53,7 @@ const registerToken = async (request, reply) => {
 
         // Store the access token in the user
         const user = await User.findOneAndUpdate(
-            { _id: request.user.userId },
+            { _id: request.user._id },
             { githubToken: accessToken },
             { new: true }
         );

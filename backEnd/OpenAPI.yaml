@@ -4,18 +4,27 @@ info:
   description: |-
     This is the AREA Server API description based on the OpenAPI 3.0 specification.  You can find out more about
     AREA at [GitHub repository](https://github.com/christophechr/LeAREA/tree/main)
-    
+
   contact:
     email: raphael.mercie@epitech.eu
   version: 1.0.11
+
 externalDocs:
   description: Find out more about Area project
   url: https://github.com/christophechr/LeAREA/tree/main
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:8080/
 tags:
   - name: Authentication
     description: Routes to login and register
+  - name: Triggers
+    description: Triggers routes
+  - name: Actions
+    description: Actions routes
+  - name: GitHub
+    description: Routes used for GitHub authentication
+  - name: Flows
+    description: Routes used for user flows
 paths:
   /auth/register:
     post:
@@ -69,7 +78,302 @@ paths:
           description: Missing email or password
         '401':
           description: Incorrect email or password
+  /triggers:
+    get:
+      tags:
+        - Triggers
+      summary: Get all possible triggers
+      description: get all available triggers for each available services, and what parameter you need to create them
+      operationId: triggers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the available triggers as JSON object.<br />
+            - <b>id</b> The ID of the service
+            - <b>name</b> The name of the service to display (e.g. GitHub)
+            - <b>triggers</b> List of all triggers available for the service
+              - <b>id</b> ID of the trigger
+              - <b>name</b> Name of the trigger to display (e.g. When temperature is...)
+              - <b>description</b> A brief to describe the trigger check
+              - <b>params</b> Parameters accepted by the trigger
+                - <b>id</b> ID of the trigger
+                - <b>name</b> Parameter displayable name
+                - <b>type</b> Type of the parameter. It can be : <b>string</b>, <b>number</b>, <b>enum</b> or <b>boolean</b>
+                - <b>required</b> If the parameter is required or not
+                - <b>description</b> A brief to describe the parameter
+                - <b>values</b> OPTIONAL : If the parameter is an enum, the list of possible values
+                  - <b>name</b> Name of the value to display
+                  - <b>value</b> Value of the enum value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggersConfig'
+        '401':
+          description: Unauthorized
+  /actions:
+    get:
+      tags:
+        - Actions
+      summary: Get all possible actions
+      description: get all available actions for each available services, and what parameter you need to create them
+      operationId: actions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the available actions as JSON object.<br />
+            - <b>id</b> The ID of the service
+            - <b>name</b> The name of the service to display (e.g. GitHub)
+            - <b>actions</b> List of all actions available for the service
+              - <b>id</b> ID of the action
+              - <b>name</b> Name of the action to display (e.g. When temperature is...)
+              - <b>description</b> A brief to describe the action check
+              - <b>params</b> Parameters accepted by the action
+                - <b>id</b> ID of the action
+                - <b>name</b> Parameter displayable name
+                - <b>type</b> Type of the parameter. It can be : <b>string</b>, <b>number</b>, <b>enum</b> or <b>boolean</b>
+                - <b>required</b> If the parameter is required or not
+                - <b>description</b> A brief to describe the parameter
+                - <b>values</b> OPTIONAL : If the parameter is an enum, the list of possible values
+                  - <b>name</b> Name of the value to display
+                  - <b>value</b> Value of the enum value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionsConfig'
+        '401':
+          description: Unauthorized
+  /auth/github:
+    get:
+      tags:
+        - GitHub
+      summary: GitHub get authorization URL
+      description: Get the URL to redirect the user to GitHub authorization page
+      operationId: githubAuth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the URL to redirect the user to GitHub authorization page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://https://github.com/login/oauth/authorize?client_id=1234567890&redirect_uri=http://localhost:8080/auth/github/callback&scope=user:email&allow_signup=true
+        '401':
+          description: Unauthorized'
+    post:
+      tags:
+        - GitHub
+      summary: Send GitHub code REQUIRED
+      description: |
+        This route have to be called to send the GitHub code to the backend to let it get the user token.<br />
+        This route is mandatory to associate a GitHub account to the user.
+        It will generate the token from the code given by GitHub with the URL given by the previous route.
+      operationId: githubCode
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: GitHub callback
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: 1234567890
+        required: true
+      responses:
+        '200':
+          description: |
+            GitHub token stored
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: GitHub token stored
+        '400':
+          description: Missing code
+        '401':
+          description: Unauthorized
+  /flows:
+    get:
+      tags:
+        - Flows
+      summary: Get all user flows
+      description: Get all user flows
+      operationId: flows
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the user flows as JSON array.<br />
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: The unique identifier for the event flow.
+                    user:
+                      type: string
+                      description: The user associated with the event flow. (you)
+                    name:
+                      type: string
+                      description: The name of the event flow.
+                    trigger:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the trigger.
+                        params:
+                          type: object
+                          properties:
+                            location:
+                              type: string
+                              description: The location for the trigger.
+                            operator:
+                              type: string
+                              description: The operator for the trigger.
+                            temperature:
+                              type: string
+                              description: The temperature for the trigger.
+                            unit:
+                              type: string
+                              description: The unit of temperature for the trigger.
+                    action:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the action.
+                        params:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: The name parameter for the action.
+                    __v:
+                      type: integer
+                      description: Version information.
+    post:
+      tags:
+        - Flows
+      summary: Create a new user flow
+      description: Create a new user flow
+      operationId: flows
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the event flow.
+                trigger:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the trigger.
+                    params:
+                      type: object
+                      properties:
+                        location:
+                          type: string
+                          description: The location for the trigger.
+                        operator:
+                          type: string
+                          description: The operator for the trigger.
+                        temperature:
+                          type: string
+                          description: The temperature for the trigger.
+                        unit:
+                          type: string
+                          description: The unit of temperature for the trigger.
+                action:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the action.
+                    params:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name parameter for the action.
+      responses:
+        '201':
+          description: |
+            User flow created successfully.<br />
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Flow created successfully
+        '400':
+          description: Missing name, trigger, action or invalid trigger or action ID
+        '401':
+          description: Unauthorized
+        '500':
+          description: Failed to create the flow
+  /auth/me:
+    get:
+      tags:
+        - Authentication
+      summary: Get user information
+      description: Used to know if the user JWT is still valid, and returns the services associated with the user
+      operationId: me
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            User JWT is still valid, returns the user information and the services associated with the user.<br />
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isGithubConnected:
+                    type: boolean
+                    example: true
+        '401':
+          description: Unauthorized
+
+
+
+
 components:
+  securitySchemes:
+      bearerAuth:            # arbitrary name for the security scheme
+        type: http
+        scheme: bearer
+        bearerFormat: JWT    # optional, arbitrary value for documentation purposes
   schemas:
     UserLoginRequest:
       type: object
@@ -89,3 +393,93 @@ components:
         token:
           type: string
           example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTdjZTZlMjZmNTIzNTkwNWYwMTc4ZjMiLCJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJpYXQiOjE3MDI3MzIwNDgsImV4cCI6MTcwMjgxODQ0OH0.8JjWDxH9Q_UYi2yGwt4z17lQGgWdpUwQp_cDro41in0'
+    TriggersConfig:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the trigger service.
+          name:
+            type: string
+            description: The name of the trigger service.
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The ID of the trigger.
+                name:
+                  type: string
+                  description: The name of the trigger.
+                description:
+                  type: string
+                  description: Description of the trigger.
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the parameter.
+                      name:
+                        type: string
+                        description: The name of the parameter.
+                      type:
+                        type: string
+                        description: The data type of the parameter.
+                      required:
+                        type: boolean
+                        description: Indicates if the parameter is required.
+                      description:
+                        type: string
+                        description: Description of the parameter.
+    ActionsConfig:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the action service.
+          name:
+            type: string
+            description: The name of the action service.
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The ID of the action action.
+                name:
+                  type: string
+                  description: The name of the action action.
+                description:
+                  type: string
+                  description: Description of the action action.
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the parameter.
+                      name:
+                        type: string
+                        description: The name of the parameter.
+                      type:
+                        type: string
+                        description: The data type of the parameter.
+                      required:
+                        type: boolean
+                        description: Indicates if the parameter is required.
+                      description:
+                        type: string
+                        description: Description of the parameter.

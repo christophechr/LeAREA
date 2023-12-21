@@ -1,4 +1,11 @@
 const { verifyJwt } = require("../utils/jwt.utils");
+const User = require("../models/user.model.js");
+
+const getUser = async (request, reply) => {
+    const user = await User.findById(request.userId);
+
+    request.user = user;
+};
 
 const auth = (request, reply, next) => {
     if (request.headers && request.headers.authorization) {
@@ -11,8 +18,7 @@ const auth = (request, reply, next) => {
         try {
             const decoded = verifyJwt(token);
 
-            request.user = decoded;
-
+            request.userId = decoded.userId;
             next();
         } catch (err) {
             reply.code(401).send({ error: "Unauthorized" });
@@ -24,4 +30,5 @@ const auth = (request, reply, next) => {
 
 module.exports = {
     auth,
+    getUser,
 };

@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-
+import {IP} from '@env'
 
 export const LogoutUser = async () => {
     await AsyncStorage.clear();
@@ -29,7 +29,7 @@ const LoginUser = async (email, password) => {
       console.log(userData);
       
       axios
-        .post('http://10.15.190.199:8080/auth/login', userData, {
+        .post('http://' + IP + ':8080/auth/login', userData, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -62,9 +62,9 @@ export function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
+    console.log(IP);
     useEffect(() => {
         console.log(email, password);
-
     }, [email, password]);
   return (
     <LinearGradient

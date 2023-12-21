@@ -8,10 +8,12 @@ import { useEffect, useState } from 'react';
 import { Workflowpage } from './WorkflowPages/workflowpage';
 import { useNavigation } from 'react-router-dom';
 import { Github } from './loginPages/GithubPages/github';
+import { Navbar } from './Utils/Navbar';
 function App() {
   const [basicpath, setBasicPath] = useState(null);
-
+  
   useEffect(() => {
+    localStorage.setItem("ip", "10.15.190.199");
     if (localStorage.getItem('id') !== null) {
       setBasicPath("/workflow");
       console.log(localStorage.getItem('id'));
@@ -23,6 +25,11 @@ function App() {
 
   return (
     <BrowserRouter>
+    {/* {
+      basicpath != "/login" ?
+      (<>
+      <Navbar/></> ): null
+    } */}
       <Routes>
         {basicpath !== null ? (
           <>
