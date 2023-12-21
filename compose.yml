@@ -3,7 +3,7 @@ services:
   server:
     container_name: server
     build:
-      context: backEnd/
+      context: area-node/
     ports:
       - "8080:3000"
     volumes:
