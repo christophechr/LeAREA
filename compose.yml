@@ -1,43 +1,57 @@
-version: '3'
 services:
   mongo:
     container_name: mongo
-    image: mongo
+    build:
+      context: area-mongo
+#    restart: always
     volumes:
       - database:/data/db
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=area-backend
-      - MONGO_INITDB_ROOT_PASSWORD=mypassword
+    networks:
+      - localnet
+#    ports:
+#      - "27017:27017"
+#      - "35580:35580"
 
   server:
     container_name: server
+    env_file:
+      - ./area-node/.env
+#    restart: always
     build:
       context: area-node/
     depends_on:
         - mongo
+    networks:
+        - localnet
     ports:
-      - "8080:3000"
+        - "8080:8080"
 
   client_mobile:
     container_name: mobile_client
+#    restart: never
     build:
-      context: area-expo/
+        context: area-expo/
     volumes:
-      - shared_data:/pipe
+        - shared_data:/pipe
 
   client_web:
     container_name: web_client
+#    restart: always
     build:
       context: area-react/
     depends_on:
-      - server
-      - client_mobile
+        - server
+        - client_mobile
+    networks:
+        - localnet
     ports:
-      - "8081:8081"
+        - "8081:8081"
     volumes:
-      - shared_data:/pipe
+        - shared_data:/pipe
+
+networks:
+    localnet:
+      driver: bridge
 
 volumes:
   database:

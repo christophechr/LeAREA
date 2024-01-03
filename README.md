@@ -5,18 +5,15 @@
 LeAREA is a project that aims to create a [IFTTT](https://ifttt.com/) like services.
 
 ## How to use it?
-You'll need to use the docker-compose file to run the project.
-You can find it in the root of the project.
-There will be 3 containers:
-- The API
+
+Just run ```docker-compose up``` in the root of the project and go to [localhost:8081](http://localhost:8081) to use the web interface.
+
+This docker compose will start 4 containers:
+- The MongoDB database
+- The Backend API
 - The Front web
-- The Front mobile
+- The mobile application compilation
 
-
-## Change the ip
-Because it's not dockerized yet you need to put you local ip address to be able to use the program.
-To do that, please change the IP section in your .env file in area-node and area-expo directories and also the
-localStorage.setItem("ip"); in the app.js of the area-react directory.
 
 ## documentation
 You can find the documentation in the `docs` folder.
