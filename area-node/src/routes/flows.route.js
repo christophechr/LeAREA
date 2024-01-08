@@ -13,5 +13,10 @@ module.exports = function (fastify, opts, done) {
         { preHandler: [auth, getUser] },
         flowsControllers.createFlow
     );
+    fastify.delete(
+        "/:flowId",
+        { preHandler: [auth, getUser] },
+        flowsControllers.deleteFlow
+    );
     done();
 };

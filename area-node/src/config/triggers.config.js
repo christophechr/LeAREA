@@ -75,4 +75,10 @@ module.exports = [
             },
         ],
     },
+    {
+        id: "github",
+        name: "GitHub",
+        triggers: [
+            {
+    }
 ];

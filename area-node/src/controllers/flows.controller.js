@@ -167,7 +167,40 @@ const createFlow = async (req, res) => {
     }
 };
 
+const deleteFlow = async (req, res) => {
+    try {
+        const flow = await Flow.findById(req.params.id);
+
+        if (!flow)
+            return res.status(404).send({
+                message: "Flow not found.",
+            });
+
+        if (flow.user.toString() !== req.user._id.toString())
+            return res.status(403).send({
+                message: "You are not authorized to delete this flow.",
+            });
+
+        await Flow.findByIdAndDelete(req.params.id);
+
+        // Remove the flow from the user's flows array
+        req.user.flows = req.user.flows.filter(
+            (flowId) => flowId.toString() !== req.params.id.toString()
+        );
+        await req.user.save();
+
+        res.send({
+            message: "Flow deleted successfully.",
+        });
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Some error occurred while deleting flow.",
+        });
+    }
+}
+
 module.exports = {
     getUserFlows,
     createFlow,
+    deleteFlow,
 };
