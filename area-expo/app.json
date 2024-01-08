@@ -21,14 +21,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.stcb.areaexpo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "css"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "css"
+      ]
     }
   }
 }

@@ -16,8 +16,8 @@ mongoose
     .connect(
         `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
         {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
         }
     )
     .then(() => console.log("Connected to MongoDB"))
@@ -41,7 +41,7 @@ fastify.register(fastifyCron, {
  */
 const start = async () => {
     try {
-        await fastify.listen({ port: 8080, host : "10.15.190.199" });
+        await fastify.listen({ port: 8080, host : "localhost" });
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);

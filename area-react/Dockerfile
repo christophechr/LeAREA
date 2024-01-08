@@ -2,11 +2,12 @@ FROM node:latest as build
 
 WORKDIR /app
 COPY package.json .
+
 RUN npm install
 COPY . .
 RUN npm run build
+RUN npm install -g serve
 
-FROM nginx:latest as release
-COPY --from=build /app/build /usr/share/nginx/html/
 EXPOSE 8081
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["serve", "-s", "build", "-l", "8081"]
