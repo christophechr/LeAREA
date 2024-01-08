@@ -20,13 +20,12 @@ const flowTask = async () => {
                             flow.action.id.split(".");
 
                         try {
-                            actionsConfig
+                            await actionsConfig
                                 .find((service) => service.id === aServiceId)
                                 .actions.find(
                                     (action) => action.id === actionId
                                 )
                                 .function(user, flow.action.params);
-                            console.log("Flow executed");
                         } catch (err) {
                             console.log(err);
                         }
