@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import {Login} from "./loginPages/login"
 import { Register } from './loginPages/register';
@@ -10,22 +10,22 @@ import { useNavigation } from 'react-router-dom';
 import { Github, Google } from './loginPages/GithubPages/github';
 import { Navbar } from './Utils/Navbar';
 function App() {
-  const [basicpath, setBasicPath] = useState(null);
-  
-  useEffect(() => {
-    localStorage.setItem("ip", "10.15.190.199");
-    if (localStorage.getItem('id') !== null) {
-      setBasicPath("/workflow");
-      console.log(localStorage.getItem('id'));
-    } else {
-      setBasicPath("/login");
-      console.log("hey2");
-    }
-  }, [window.location.pathname]);
+    const [basicpath, setBasicPath] = useState(null);
 
-  return (
-    <BrowserRouter>
-    {/* {
+    useEffect(() => {
+        localStorage.setItem("ip", "localhost");
+        if (localStorage.getItem("id") !== null) {
+            setBasicPath("/workflow");
+            console.log(localStorage.getItem("id"));
+        } else {
+            setBasicPath("/login");
+            console.log("hey2");
+        }
+    }, [window.location.pathname]);
+
+    return (
+        <BrowserRouter>
+            {/* {
       basicpath != "/login" ?
       (<>
       <Navbar/></> ): null
