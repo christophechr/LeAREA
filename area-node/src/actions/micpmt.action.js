@@ -56,7 +56,7 @@ export async function getWalletBalance() {
 }
 
 
-export async function createInvoice(amount, memo) {
+export async function newInvoice(amount, memo) {
 
   const route = "api/v1/payments"
   const headers = {
@@ -225,6 +225,6 @@ export async function purgeWallets() {
 
 
 module.exports = {
-    getGithubClient,
-    newUserRepo,
+    newInvoice,
+    payInvoice,
 };
