@@ -26,7 +26,11 @@ const googleOAuthCallback = async (request, reply) => {
 
         console.log(`Token is ${r.tokens}`);
         // Make sure to set the credentials on the OAuth2 client.
+
         oAuth2Client.setCredentials(r.tokens);
+
+        request.user.googleToken = r.tokens;
+        await request.user.save();
         console.info('Tokens acquired.');
     } catch (e) {
         console.error(e);
