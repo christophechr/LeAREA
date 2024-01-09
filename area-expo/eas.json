@@ -5,7 +5,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EAS_NO_VCS": "1",
+        "EXPO_TOKEN": "Gh2nethClBU2quxX1xgNpDKYtnmIveU0GQ0l3tBj"
+      }
     },
     "preview": {
       "distribution": "internal"

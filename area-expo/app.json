@@ -34,6 +34,12 @@
         "jsx",
         "css"
       ]
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c8bd849e-a4ac-4943-b11f-e5c8819df278"
+      }
+    },
+    "owner": "learea"
   }
 }

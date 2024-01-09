@@ -8,16 +8,18 @@ WORKDIR /app
 
 COPY . .
 
-ENV EXPO_TOKEN=Dl413cgQorzsvw2IV4useFuEynt98EtPE_ZXcK4f
+ENV EXPO_TOKEN=Gh2nethClBU2quxX1xgNpDKYtnmIveU0GQ0l3tBj
+ENV EAS_NO_VCS=1
 
 RUN npm install
 RUN npm i @react-native-community/cli-platform-android
-RUN npm install -g expo-dev-client
-RUN npm install -g expo-cli
+RUN npm install -g expo@45.0.0
 RUN npm install -g eas-cli
+RUN npx expo install expo-dev-client
 #RUN yarn add expo
 
 RUN export ANDROID_HOME=/root/.android/sdk
-RUN eas build --non-interactive --platform android --profile development --local
+RUN eas init --id c8bd849e-a4ac-4943-b11f-e5c8819df278
+RUN eas build --platform android --profile development --local
 
 CMD ["cp", "android/app/build/outputs/bundle/release/*.apk", "/pipe"]
