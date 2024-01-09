@@ -4,6 +4,7 @@ module.exports = [
     {
         id: "weather",
         name: "Weather",
+        img: "/public/images/weather.png",
         triggers: [
             {
                 id: "temperature",

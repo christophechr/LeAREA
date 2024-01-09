@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const path = require('node:path');
+
 const mongoose = require("mongoose");
 const routes = require("./routes");
 
@@ -22,6 +24,12 @@ mongoose
     )
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.log(err));
+
+// Set the public folder as static folder for images
+fastify.register(require('@fastify/static'), {
+    root: path.join(__dirname, 'public'),
+    prefix: '/public/', // optional: default '/'
+})
 
 fastify.register(routes);
 

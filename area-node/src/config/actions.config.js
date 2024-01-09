@@ -4,6 +4,7 @@ module.exports = [
     {
         id: "github",
         name: "GitHub",
+        img: "/public/images/github.png",
         actions: [
             {
                 id: "new_repo",
