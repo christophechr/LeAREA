@@ -39,10 +39,9 @@ export const Github = () => {
 
 
 export const Google = () => {
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const code = searchParams.get("code");
   useEffect(() => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const code = searchParams.get("code");
     const userData = {code};
     axios
     .post("http://" + localStorage.getItem("ip") + ':8080/google', userData, {
