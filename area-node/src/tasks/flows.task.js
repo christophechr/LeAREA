@@ -12,6 +12,7 @@ const tryFlow = async (flow, trigger, action) => {
                 try {
                     action.function(user, flow.action.params);
                     flow.finished = true;
+                    flow.save();
                 } catch (err) {
                     console.log(err);
                 }
@@ -38,7 +39,9 @@ const flowTask = async () => {
                 .actions.find((action) => action.id === actionId);
 
             // Cancels if the action can be executed only one time and it was already executed.
-            if (action.loop === false && flow.finished === true) return;
+            if (action.loop === false && flow.finished === true) {
+                return;
+            }
 
             flow.lastExec += 1;
             if (flow.lastExec >= trigger.execEach) {

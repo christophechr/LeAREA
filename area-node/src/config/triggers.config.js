@@ -10,7 +10,7 @@ module.exports = [
                 name: "When the temperature value is...",
                 description: "Triggers a temperature condition.",
                 function: triggers.weatherTriggers.temperature,
-                execEach: 1,
+                execEach: 5,
                 params: [
                     {
                         id: "location",
