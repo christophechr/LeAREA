@@ -77,4 +77,39 @@ module.exports = [
             },
         ],
     },
+    {
+        id: "gmail",
+        name: "Gmail",
+        img: "/public/images/gmail.png",
+        triggers: [
+            {
+                id: "email_received",
+                name: "When an email is received...",
+                description: "Triggers when an email is received.",
+                params: [
+                    {
+                        id: "email",
+                        name: "Email",
+                        type: "string",
+                        required: true,
+                        description: "The email to check.",
+                    },
+                    {
+                        id: "subject",
+                        name: "Subject",
+                        type: "string",
+                        required: true,
+                        description: "The subject to check.",
+                    },
+                    {
+                        id: "body",
+                        name: "Body",
+                        type: "string",
+                        required: true,
+                        description: "The body to check.",
+                    },
+                ],
+            },
+        ],
+    }
 ];
