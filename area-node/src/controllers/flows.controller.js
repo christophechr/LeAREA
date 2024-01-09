@@ -234,4 +234,5 @@ module.exports = {
     getUserFlows,
     createFlow,
     deleteFlow,
+    updateFlow,
 };
