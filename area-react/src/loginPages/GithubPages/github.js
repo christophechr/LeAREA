@@ -1,6 +1,6 @@
-
 import { useEffect } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 export const Github = () => {
 
@@ -41,12 +41,10 @@ export const Github = () => {
 export const Google = () => {
 
   useEffect(() => {
-      const currentUrl = window.location.href;
-      console.log(currentUrl);
-      const code = currentUrl.split("=")[1];
-      console.log(code);
-      const userData = {code};
-      axios
+    const [searchParams, setSearchParams] = useSearchParams();
+    const code = searchParams.get("code");
+    const userData = {code};
+    axios
     .post("http://" + localStorage.getItem("ip") + ':8080/google', userData, {
       headers: {
         'Content-Type': 'application/json',
