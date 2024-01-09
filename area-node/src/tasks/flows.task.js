@@ -3,21 +3,14 @@ const User = require("../models/user.model.js");
 const actionsConfig = require("../config/actions.config.js");
 const triggersConfig = require("../config/triggers.config.js");
 
-const tryFlow = async (flow, trigger) => {
+const tryFlow = async (flow, trigger, action) => {
     User.findById(flow.user).then(async (user) => {
         try {
             const isReady = await trigger.function(user, flow.trigger.params);
 
             if (isReady) {
-                const [aServiceId, actionId] = flow.action.id.split(".");
-
                 try {
-                    await actionsConfig
-                        .find((service) => service.id === aServiceId)
-                        .actions.find(
-                            (action) => action.id === actionId
-                        )
-                        .function(user, flow.action.params);
+                    action.function(user, flow.action.params);
                 } catch (err) {
                     console.log(err);
                 }
@@ -37,10 +30,19 @@ const flowTask = async () => {
                 .find((service) => service.id === tServiceId)
                 .triggers.find((trigger) => trigger.id === triggerId);
 
+            const [aServiceId, actionId] = flow.action.id.split(".");
+
+            const action = actionsConfig
+                .find((service) => service.id === aServiceId)
+                .actions.find((action) => action.id === actionId);
+
+            // Cancels if the action can be executed only one time and it was already executed.
+            if (action.loop === false && flow.finished === true) return;
+
             flow.lastExec += 1;
             if (flow.lastExec >= trigger.execEach) {
                 flow.lastExec = 0;
-                await tryFlow(flow, trigger);
+                await tryFlow(flow, trigger, action);
             }
             flow.save();
         });

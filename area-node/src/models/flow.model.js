@@ -7,6 +7,7 @@ const flowSchema = new mongoose.Schema({
     action: { type: Object, required: true },
     enabled: { type: Boolean, default: true },
     lastExec: { type: Number, default: 0 },
+    finished: { type: Boolean, default: false },
 });
 
 const Flow = mongoose.model("flow", flowSchema);
