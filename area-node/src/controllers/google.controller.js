@@ -37,6 +37,13 @@ const googleOAuthCallback = async (request, reply) => {
             },
         });
 
+        if (resEmail.status !== 200) {
+            reply.status(resEmail.status).send({
+                message: "Email subscription failed. Retry later."
+            });
+            return;
+        }
+
         console.log(resEmail.data);
 
         console.log(`Email registered: ${resEmail.data.email}`);
