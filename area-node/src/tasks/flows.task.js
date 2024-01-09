@@ -11,6 +11,7 @@ const tryFlow = async (flow, trigger, action) => {
             if (isReady) {
                 try {
                     action.function(user, flow.action.params);
+                    flow.finished = true;
                 } catch (err) {
                     console.log(err);
                 }
