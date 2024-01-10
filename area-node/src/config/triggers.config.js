@@ -4,12 +4,14 @@ module.exports = [
     {
         id: "weather",
         name: "Weather",
+        img: "/public/images/weather.png",
         triggers: [
             {
                 id: "temperature",
                 name: "When the temperature value is...",
                 description: "Triggers a temperature condition.",
                 function: triggers.weatherTriggers.temperature,
+                execEach: 5,
                 params: [
                     {
                         id: "location",

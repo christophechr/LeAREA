@@ -31,6 +31,31 @@ const github_connexion = () => {
 };
 
 
+const google_connexion = () => {
+    const bearerToken = localStorage.getItem("token");
+
+    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/google";
+
+    const axiosConfig = {
+        method: "get",
+        url: apiUrl,
+        headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            "Content-Type": "application/json",
+        },
+    };
+
+    axios(axiosConfig)
+        .then((response) => {
+            window.location = response.data.url;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
+
+
 const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) => {
     const json = {
         "name" : name,
@@ -283,6 +308,13 @@ export const Workflowpage = () => {
                     }}
                 >
                     github
+                </button>
+                <button
+                    onClick={() => {
+                        google_connexion();
+                    }}
+                >
+                    Google
                 </button>
             </div>
             <div className="workflowstation">
