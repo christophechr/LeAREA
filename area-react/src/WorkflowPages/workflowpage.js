@@ -65,7 +65,7 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
         },
         "action" : {
             "id" : actionid,
-            "params" : {"name" : actionparams.name}
+            "params" : actionparams,
         }
     }
     console.log(json);
