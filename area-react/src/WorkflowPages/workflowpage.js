@@ -193,7 +193,7 @@ const NewWorkflow = () => {
                 </div>
                
             </div>
-            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {createWorkflow(action.id + "." + chooseaction, actionparams, trigger.id + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
+            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {console.log(action);createWorkflow(action.id + "." + chooseaction, actionparams, trigger.id + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
             </div>
         );
     }
