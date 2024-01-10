@@ -44,7 +44,7 @@ jobs:
       - name: Stop containers
         run: docker-compose down
   
-  docker_updatex:
+  docker_update:
     runs-on: ubuntu-latest
     services:
       docker:
