@@ -34,9 +34,9 @@ const incommingPayment = async (user, params) => {
 A Admin ID
  */
 
-export async function getWalletBalance() {
+export async function getWalletBalance(walletKey) {
     const headers = {
-        "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
+        "X-Api-Key": walletKey,
         "Content-type": "application/json"
     }
     const route = "api/v1/wallet"
@@ -53,30 +53,23 @@ export async function getWalletBalance() {
 
 
 const balance = async (user, params) => {
-    const { location, operator, temperature, unit } = params;
+    const { operator, value } = params;
 
-    if (!location || !operator || !temperature || !unit) {
-        return false;
-    }
+    if (!operator || !value) return false;
 
-    const balance = getWalletBalance()
-
-    const weatherTemperature =
-        unit === "celsius"
-            ? weather.main.temp - 273.15
-            : weather.main.temp * 1.8 - 459.67;
+    const balance = getWalletBalance(user.micropaymentKey)
 
     switch (operator) {
         case "equal":
-            return weatherTemperature === temperature;
+            return balance === value;
         case "greater_than":
-            return weatherTemperature > temperature;
+            return balance > value;
         case "less_than":
-            return weatherTemperature < temperature;
+            return balance < value;
         case "greater_than_or_equal":
-            return weatherTemperature >= temperature;
+            return balance >= value;
         case "less_than_or_equal":
-            return weatherTemperature <= temperature;
+            return balance <= value;
         default:
             return false;
     }
