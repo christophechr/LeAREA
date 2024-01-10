@@ -201,8 +201,9 @@ const NewWorkflow = () => {
 
     const FirstStepWorkflow = () => {
         const [nameintern, setNameintern] = useState(name);
-        {
-            action != null && trigger != null ? () => {chooseaction(action.actions[0].id), choosetrigger(trigger.triggers[0].id)} : <></>
+        if (action != null && trigger != null){
+            chooseaction(action.actions[0].id);
+            choosetrigger(trigger.triggers[0].id);
         }
         return(
             <div className="newWorkflow">
