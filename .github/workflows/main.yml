@@ -7,7 +7,7 @@ env:
 
 jobs:
   push_to_mirror:
-    needs: [docker_compose, ping]
+    needs: [docker_compose, docker_update]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -44,15 +44,23 @@ jobs:
       - name: Stop containers
         run: docker-compose down
   
-  ping:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Ping website
-          run: |
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://localhost:8080)
-            if [ "$STATUS" -eq 200 ]; then
-              echo "Website is up! Status code: $STATUS"
-            else
-              echo "Website is down! Status code: $STATUS"
-              exit 1
-            fi
+  docker_update:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.11
+        ports:
+          - 8080:80
+    steps:
+      - name: login to docker mongo
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: tag image mongo
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/area_mongo:latest ${{ secrets.DOCKER_USERNAME }}/area_mongo:latest
+      - name: push image mongo
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/area_mongo:latest
+      - name: login to docker back
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: tag image back
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/area_back:latest ${{ secrets.DOCKER_USERNAME }}/area_back:latest
+      - name: push image back
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/area_back:latest
