@@ -15,7 +15,7 @@ const register = async (request, reply) => {
         .then(async (hash) => {
             const user = new User({ email, passwordHash: hash });
 
-
+            await createWallet(user);
 
             await user
                 .save()

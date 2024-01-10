@@ -2,11 +2,12 @@ import axios from "axios";
 
 const base_url = "https://legend.lnbits.com/"
 
-let invoices = [];
-let paymentHashes = [];
-
 export async function createWallet(user) {
   if (!user) return;
+  if (!user.micropaymentID) {
+    user.micropaymentID = (+new Date).toString(36) // Stack overflow magic non-collisionnal shit
+  }
+
   const route = 'usermanager/api/v1/wallets'
 
   const headers = {
@@ -16,13 +17,14 @@ export async function createWallet(user) {
 
   const body = {
     'admin_id': process.env.LNBITS_ADMIN_ID,
-    'user_id': user.micropaymentID,
+    'user_id': process.env.LNBITS_ADMIN_ID,
     'wallet_name': user.micropaymentID,
   };
 
   try {
     const response = await axios.post(base_url + route, body, { headers });
-    return response.data;
+    user.micropaymentKey = response.data.adminkey;
+    user.micropaymentInKey = response.data.inkey;
   } catch (error) {
     console.error(error);
     console.log(JSON.stringify(error.response, undefined, 4));
@@ -103,6 +105,7 @@ export async function payInvoice(user, params) {
 
 
 module.exports = {
+    createWallet,
     newInvoice,
     payInvoice,
 };
