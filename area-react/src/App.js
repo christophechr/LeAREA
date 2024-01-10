@@ -14,7 +14,7 @@ function App() {
 
     useEffect(() => {
         localStorage.setItem("ip", "localhost");
-        if (localStorage.getItem("id") !== null) {
+        if (localStorage.getItem("id") != null) {
             setBasicPath("/workflow");
             console.log(localStorage.getItem("id"));
         } else {
@@ -31,7 +31,7 @@ function App() {
       <Navbar/></> ): null
     } */}
       <Routes>
-        {basicpath !== null ? (
+        {basicpath != null ? (
           <>
             <Route path="/" element={<Navigate to={basicpath} />} />
             <Route path="/login" element={<Login />} />
