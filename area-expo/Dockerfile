@@ -8,7 +8,6 @@ WORKDIR /app
 
 COPY . .
 
-ENV EXPO_TOKEN=Gh2nethClBU2quxX1xgNpDKYtnmIveU0GQ0l3tBj
 ENV EAS_NO_VCS=1
 
 RUN npm install
@@ -18,8 +17,6 @@ RUN npm install -g eas-cli
 RUN npx expo install expo-dev-client
 #RUN yarn add expo
 
-RUN export ANDROID_HOME=/root/.android/sdk
-RUN eas init --id c8bd849e-a4ac-4943-b11f-e5c8819df278
-RUN eas build --platform android --profile development --local
+RUN npx expo start
 
 CMD ["cp", "android/app/build/outputs/bundle/release/*.apk", "/pipe"]
