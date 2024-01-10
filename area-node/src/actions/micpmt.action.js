@@ -1,58 +1,32 @@
 import axios from "axios";
 
 const base_url = "https://legend.lnbits.com/"
-const admin_id = "fcfa1b9b3c3143a79bba99076169304b";
-const user_id = "75d3125343244f2e92587188b28932cc";
-
-let walletData = {};
 
 let invoices = [];
 let paymentHashes = [];
 
-export async function createWallet(id) {
-  console.log('Create user and wallet of id >', id);
+export async function createWallet(user) {
+  if (!user) return;
   const route = 'usermanager/api/v1/wallets'
 
   const headers = {
-    "X-Api-Key": '903655b93e294a8abf740b0f55c6c43c',
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": 'application/json'
   };
 
   const body = {
-    'admin_id': admin_id,
-    'user_id': user_id,
-    'wallet_name': id,
+    'admin_id': process.env.LNBITS_ADMIN_ID,
+    'user_id': user.micropaymentID,
+    'wallet_name': user.micropaymentID,
   };
 
   try {
     const response = await axios.post(base_url + route, body, { headers });
-    walletData = response.data;
     console.log("Got:\n", JSON.stringify(response, undefined, 4));
-    console.log("WalletData: ", walletData);
   } catch (error) {
     console.error(error);
     console.log(JSON.stringify(error.response, undefined, 4));
   }
-}
-
-export async function getWalletBalance() {
-  const headers = {
-    "X-Api-Key": walletData.inkey,
-    "Content-type": "application/json"
-  }
-  const route = "api/v1/wallet"
-
-  console.log('url >', base_url + route)
-  console.log('headers >', headers)
-
-  try {
-    const response = await axios.get(base_url + route, { headers });
-    console.log("Got:\n", JSON.stringify(response.data, undefined, 4));
-  } catch (error) {
-    console.error(error);
-    console.log(JSON.stringify(error.response, undefined, 4));
-  }
-  return response.data
 }
 
 
@@ -60,7 +34,7 @@ export async function newInvoice(amount, memo) {
 
   const route = "api/v1/payments"
   const headers = {
-    "X-Api-Key": walletData.inkey,
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": "application/json"
   }
 
@@ -104,7 +78,7 @@ export function PrintQrCode() {
 export async function payInvoice(bolt11 = invoices[invoices.length - 1]) {
   const route = "api/v1/payments";
   const headers = {
-    "X-Api-Key": walletData.adminkey,
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": "application/json",
   };
 
@@ -132,7 +106,7 @@ export async function payInvoice(bolt11 = invoices[invoices.length - 1]) {
 export async function decodeInvoice(bolt11)   {
     const route = "api/v1/payments/decode"
   const headers = {
-    "X-Api-Key": walletData.inkey,
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": "application/json"
   }
 
@@ -162,7 +136,7 @@ export async function getWallets() {
   const route = 'usermanager/api/v1/wallets'
 
   const headers = {
-    "X-Api-Key": '903655b93e294a8abf740b0f55c6c43c',
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": "application/json"
   }
 
@@ -176,37 +150,6 @@ export async function getWallets() {
     console.error(error);
     console.log(JSON.stringify(error.response, undefined, 4));
   }
-}
-
-async function deleteWallet(id) {
-  const headers = {
-    "X-Api-Key": '903655b93e294a8abf740b0f55c6c43c',
-    "Content-type": "application/json"
-  }
-
-  if (id === "abdca069064d4df7b3d36b15ea1cffd1")
-    return
-
-  const route = '/usermanager/api/v1/wallets/' + id
-
-  console.log("deleting wallet n°", id)
-  console.log('url >', base_url + route)
-
-  try {
-    const response = await axios.delete(base_url + route, { headers });
-    console.log("Got:\n", JSON.stringify(response.data, undefined, 4));
-  } catch (error) {
-    console.error(error);
-    console.log(JSON.stringify(error.response, undefined, 4));
-  }
-}
-
-export async function purgeWallets() {
-  let wallets = await getWallets()
-  console.log("\nPURGING WALLETS\n")
-  wallets.forEach(async (w) => {
-    await deleteWallet(w.id, w.adminkey)
-  })
 }
 
 // ############# TRIGGERS:

@@ -28,7 +28,7 @@ module.exports = [
     {
         id: "micpmt",
         name: "Micropayment",
-        img: "/public/images/micropayment.png",
+        img: "/public/images/micropayment.webp",
         actions: [
             {
                 id: "newInvoice",

@@ -115,7 +115,14 @@ module.exports = [
                                 value: "less_than_or_equal",
                             },
                         ]
-                    }
+                    },
+                    {
+                        id: "value",
+                        name: "Value",
+                        type: "number",
+                        required: true,
+                        description: "The value to compare the last payment.",
+                    },
                 ]
             },
             {
@@ -152,7 +159,14 @@ module.exports = [
                                 value: "less_than_or_equal",
                             },
                         ]
-                    }
+                    },
+                    {
+                        id: "value",
+                        name: "Value",
+                        type: "number",
+                        required: true,
+                        description: "The value to compare the balance.",
+                    },
                 ]
             },
         ]
