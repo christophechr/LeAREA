@@ -60,11 +60,11 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
     const json = {
         "name" : name,
         "trigger" : {
-            "id" : triggerid.toLowerCase(),
+            "id" : triggerid,
             "params" : triggerparams,
         },
         "action" : {
-            "id" : actionid.toLowerCase(),
+            "id" : actionid,
             "params" : {"name" : actionparams.name}
         }
     }
@@ -193,7 +193,7 @@ const NewWorkflow = () => {
                 </div>
                
             </div>
-            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {createWorkflow(action.id + "." + chooseaction, actionparams, trigger.name + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
+            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {createWorkflow(action.id + "." + chooseaction, actionparams, trigger.id + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
             </div>
         );
     }
