@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const { createJwt } = require("../utils/jwt.utils");
+const { createWallet } = require("../actions/micpmt.action")
 
 const register = async (request, reply) => {
     const { email, password } = request.body;
@@ -13,6 +14,8 @@ const register = async (request, reply) => {
         .hash(password, 10)
         .then(async (hash) => {
             const user = new User({ email, passwordHash: hash });
+
+
 
             await user
                 .save()

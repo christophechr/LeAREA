@@ -10,19 +10,19 @@ export async function createWallet(user) {
   const route = 'usermanager/api/v1/wallets'
 
   const headers = {
-    "X-Api-Key": user.micropaymentKey,
+    "X-Api-Key": process.env.LNBITS_ADMIN_KEY,
     "Content-type": 'application/json'
   };
 
   const body = {
-    'admin_id': user.micropaymentKey,
+    'admin_id': process.env.LNBITS_ADMIN_ID,
     'user_id': user.micropaymentID,
     'wallet_name': user.micropaymentID,
   };
 
   try {
     const response = await axios.post(base_url + route, body, { headers });
-    console.log("Got:\n", JSON.stringify(response, undefined, 4));
+    return response.data;
   } catch (error) {
     console.error(error);
     console.log(JSON.stringify(error.response, undefined, 4));
