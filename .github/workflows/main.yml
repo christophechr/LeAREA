@@ -7,7 +7,7 @@ env:
 
 jobs:
   push_to_mirror:
-    needs: [docker_compose, docker_updates]
+    needs: [docker_compose, docker_update]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
       - name: Stop containers
         run: docker-compose down
   
-  docker_updates:
+  docker_updatex:
     runs-on: ubuntu-latest
     services:
       docker:
