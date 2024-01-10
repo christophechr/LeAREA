@@ -63,4 +63,4 @@ jobs:
       - name: tag image back
         run: docker tag ${{ secrets.DOCKER_USERNAME }}/area_back:latest ${{ secrets.DOCKER_USERNAME }}/area_back:latest
       - name: push image back
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/area_back:latestError: Cannot perform an interactive login from a non TTY device
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/area_back:latest
