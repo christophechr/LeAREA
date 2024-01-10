@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('qs');
-const { OAuth2Client } = require('outlook-auth');
 
 const oAuth2Client = new OAuth2Client(
     process.env.OUTLOOK_CLIENT_ID,
@@ -8,12 +7,6 @@ const oAuth2Client = new OAuth2Client(
     "http://localhost:3000/outlook/callback"
 );
 
-const getOAuthOutlookAddress = async (request, reply) => {
-    reply.send({ url: oAuth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: 'https://outlook.office.com/IMAP.AccessAsUser.All',
-    })});
-}
 
 const outlookOAuthCallback = async (request, reply) => {
     try {
