@@ -7,8 +7,14 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EAS_NO_VCS": "1",
-        "EXPO_TOKEN": "Gh2nethClBU2quxX1xgNpDKYtnmIveU0GQ0l3tBj"
+        "development": {
+          "developmentClient": true,
+          "distribution": "internal"
+        },
+        "production": {
+          "developmentClient": false,
+          "distribution": "internal"
+        }
       }
     },
     "preview": {
