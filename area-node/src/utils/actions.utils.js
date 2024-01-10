@@ -2,7 +2,6 @@ const actionsConfig = require('../config/actions.config');
 const User = require('../models/user.model');
 
 const executeAction = async (flow) => {
-    console.log("Executing action: ", flow.action.id);
     try {
         const [aServiceId, actionId] = flow.action.id.split('.');
 
