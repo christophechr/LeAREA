@@ -217,7 +217,7 @@ const NewWorkflow = () => {
                     {action != null && trigger != null ? 
                         <label>choisiez une actions
                             <select value = {chooseaction} onChange={(val) => {setchooseaction(val.target.value)}}>
-                            {Object.values(action.actions).map((val) => {return(<option value = {"new_repo"}>{val.name}</option>)})}
+                            {Object.values(action.actions).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                             </select>
                         </label> : <></>}
                 </div>
@@ -230,7 +230,7 @@ const NewWorkflow = () => {
                 {action != null && trigger != null ? 
                     <label>choisiez une reactions
                         <select value = {choosetrigger} onChange={(val) => {setchoosetrigger(val.target.value)}}>
-                            {Object.values(trigger.triggers).map((val) => {return(<option value = {"temperature"}>{val.name}</option>)})}
+                            {Object.values(trigger.triggers).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                         </select>
                     </label> : <></>}
                 </div>
