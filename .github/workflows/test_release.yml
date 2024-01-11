@@ -8,19 +8,6 @@ on:
       - '*'
 
 jobs:
-  create-tag:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    name: Release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Generate release tag
-        id: tag
-        run: |
-          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
-  
   build:
     runs-on: ubuntu-latest
     name: Build
@@ -49,6 +36,11 @@ jobs:
         run: |
           eas build --platform android --profile production --no-wait --non-interactive --local
           mv build-*.apk area.apk
+
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
 
       - name: Create release
         id: create_release
