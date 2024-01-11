@@ -24,6 +24,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
+    working-directory: ./area-expo
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,7 +33,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'yarn'
+          cache: 'npm'
         
       - name: Set expo
         uses: expo/expo-github-action@v8
@@ -50,7 +51,6 @@ jobs:
         uses: android-actions/setup-android@v3
       
       - name: Build
-        working-directory: ./area-expo
         run: |
           eas init --id ${{ secrets.EXPO_LINK_TOKEN }}
           eas build --platform android --profile production --no-wait --non-interactive --clear-credentials
