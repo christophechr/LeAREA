@@ -8,6 +8,7 @@ env:
 
 jobs:
   release:
+    permissions: write-all
     runs-on: ubuntu-latest
     name: Release
     steps:
