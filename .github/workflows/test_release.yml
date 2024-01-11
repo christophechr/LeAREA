@@ -19,11 +19,12 @@ jobs:
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
+        if : startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: devopstest
-          release_name: Release devopstest
+          tag_name: devopstest ${{ github.ref }}
+          release_name: Release devopstest ${{ github.ref }}
           draft: false
           prerelease: false
   
