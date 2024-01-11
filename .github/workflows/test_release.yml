@@ -29,8 +29,10 @@ jobs:
         run: yarn install
       
       - name: Build
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-        eas init --id ${{ secrets.EXPO_LINK_TOKEN }}
+        eas init --id EXPO_TOKEN
         eas build --platform android --profile production --no-wait --non-interactive --clear-credentials
     
   release:
