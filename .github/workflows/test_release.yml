@@ -35,11 +35,11 @@ jobs:
       TAG: ${{ github.ref_name }}
     steps:
       - name: create the release
-      run: |
-        gh release create "$TAG" \
-          --title "v$TAG" \
-          --generate-notes \
-          --target "$BRANCH" \
+        run: |
+          gh release create "$TAG" \
+            --title "v$TAG" \
+            --generate-notes \
+            --target "$BRANCH" \
           
 
   build:
