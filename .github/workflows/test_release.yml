@@ -47,6 +47,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ needs.create-tag.outputs.release_tag }}
-          name: ${{ needs.create-tag.outputs.release_tag }}
+          tag: ${{ steps.tag.outputs.release_tag }}
+          name: ${{ steps.tag.outputs.release_tag }}
           artifacts: area.apk
