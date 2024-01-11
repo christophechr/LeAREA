@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Release
     env:
-      BRANCH: ${{ devops }}
+      BRANCH: 'devops'
       TAG: ${{ github.ref_name }}
     steps:
       - name: create the release
