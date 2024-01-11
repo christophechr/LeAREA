@@ -23,6 +23,7 @@ export async function createWallet(user) {
 
   try {
     const response = await axios.post(base_url + route, body, { headers });
+    console.log("CREATE WALLET:", response)
     user.micropaymentKey = response.data.adminkey;
     user.micropaymentInKey = response.data.inkey;
   } catch (error) {
