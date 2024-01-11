@@ -8,9 +8,22 @@ on:
       - '*'
 
 jobs:
+  create-tag:
+    permissions: write-all
+    runs-on: ubuntu-latests
+    name: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
   
   build:
     runs-on: ubuntu-latest
+    name: create-tag
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,27 +49,12 @@ jobs:
           eas build --platform android --profile production --no-wait --non-interactive --local
           mv build-*.apk area.apk
 
-  create-release:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    needs: build
-    name: Release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Generate release tag
-        id: tag
-        run: |
-          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
-
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ steps.tag.outputs.release_tag }}
-          name: ${{ steps.tag.outputs.release_tag }}
-          artifacts: |
-            ./area-expo/area.apk
+          tag: ${{ needs.create-release.outputs.release_tag }}
+          name: ${{ needs.create-release.outputs.release_tag }}
+          artifacts: area.apk
