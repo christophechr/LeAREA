@@ -12,10 +12,6 @@ WORKDIR /app
 
 RUN npm install
 RUN npm i @react-native-community/cli-platform-android
-RUN npm install -g expo
-RUN npm install -g eas-cli
 RUN npx expo install expo-dev-client
 
-RUN npx expo start
-
-CMD ["cp", "android/app/build/outputs/bundle/release/*.apk", "/pipe"]
+CMD ["npm", "start"]
