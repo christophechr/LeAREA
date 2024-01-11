@@ -34,18 +34,18 @@ jobs:
       BRANCH: 'devops'
       TAG: ${{ github.ref_name }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
     steps:
       - name: create the release
         run: |
-          gh release create "$TAG" \
-            --title "v$TAG" \
-            --generate-notes \
-            --target "$BRANCH" \
+          gh release create "$TAG" --title "v$TAG" --generate-notes --target "$BRANCH" --repo "$REPO"
           
 
   build:
     runs-on: ubuntu-latest
     needs: create-release
+    env:
+      TAG: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,6 +72,5 @@ jobs:
           mv build-*.apk area.apk
       
       - name: Upload APK to release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ./area-expo/area.apk
+        run: |
+          gh release upload "$TAG" area.apk --clobber
