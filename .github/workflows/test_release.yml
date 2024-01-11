@@ -5,7 +5,7 @@ on:
     branches:
       - devops
     tags:
-      - v*
+      - '*'
 
 jobs:
   create-release:
@@ -59,4 +59,7 @@ jobs:
         working-directory: ./area-expo
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload ${{ startsWith(github.ref, 'refs/tags/') }} area.apk
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: area.apk
