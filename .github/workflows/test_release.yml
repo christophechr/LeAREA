@@ -32,7 +32,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-        eas init --id EXPO_TOKEN
+        eas init --id env.EXPO_TOKEN
         eas build --platform android --profile production --no-wait --non-interactive --clear-credentials
     
   release:
