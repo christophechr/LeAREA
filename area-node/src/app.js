@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const path = require('node:path');
+
 const mongoose = require("mongoose");
 const routes = require("./routes");
 
@@ -23,6 +25,12 @@ mongoose
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.log(err));
 
+// Set the public folder as static folder for images
+fastify.register(require('@fastify/static'), {
+    root: path.join(__dirname, 'public'),
+    prefix: '/public/', // optional: default '/'
+})
+
 fastify.register(routes);
 
 // Allow CORS requests for all routes
@@ -41,7 +49,7 @@ fastify.register(fastifyCron, {
  */
 const start = async () => {
     try {
-        await fastify.listen({ port: 8080, host : "10.15.190.199" });
+        await fastify.listen({ port: 8080, host: '0.0.0.0'});
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
