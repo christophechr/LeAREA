@@ -5,22 +5,17 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "development": {
-          "developmentClient": true,
-          "distribution": "internal"
-        },
-        "production": {
-          "developmentClient": false,
-          "distribution": "internal"
+      "distribution": "internal"
+      },
+    "production": {
+        "developmentClient": false,
+        "android": {
+          "buildType": "apk"
         }
       }
     },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+  "preview": {
+    "distribution": "internal"
   },
   "submit": {
     "production": {}
