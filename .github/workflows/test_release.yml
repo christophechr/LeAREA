@@ -2,7 +2,7 @@ name: apk-release
 
 on: push
 
-#jobs:
+jobs:
 #  release:
 #    permissions: write-all
 #    runs-on: ubuntu-latest
