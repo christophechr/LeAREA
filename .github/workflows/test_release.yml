@@ -2,6 +2,8 @@ name: apk-release
 
 on: 
   push:
+    branches:
+      - devops
     tags:
       - '*'
 
