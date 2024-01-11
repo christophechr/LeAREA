@@ -59,4 +59,4 @@ jobs:
           tag: ${{ steps.tag.outputs.release_tag }}
           name: ${{ steps.tag.outputs.release_tag }}
           artifacts: |
-            area-expo/area.apk
+            ./area-expo/area.apk
