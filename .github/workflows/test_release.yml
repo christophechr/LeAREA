@@ -38,26 +38,26 @@ jobs:
           mv build-*.apk area.apk
 
     create-release:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    name: Release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      permissions: write-all
+      runs-on: ubuntu-latest
+      name: Release
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
 
-      - name: Generate release tag
-        id: tag
-        run: |
-          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
+        - name: Generate release tag
+          id: tag
+          run: |
+            echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: devops-${{ steps.tag.outputs.release_tag }}
-          release_name: ${{ steps.tag.outputs.release_tag }}
-          draft: false
-          prerelease: false
-          artifacts: area.apk
+        - name: Create release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: devops-${{ steps.tag.outputs.release_tag }}
+            release_name: ${{ steps.tag.outputs.release_tag }}
+            draft: false
+            prerelease: false
+            artifacts: area.apk
