@@ -28,8 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: devops-
-          release_name: Release devopstest ${{ steps.tag.outputs.release_tag }}
+          tag_name: devops-${{ steps.tag.outputs.release_tag }}
+          release_name: ${{ steps.tag.outputs.release_tag }}
           draft: false
           prerelease: false
   
