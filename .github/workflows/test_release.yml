@@ -34,13 +34,14 @@ jobs:
         working-directory: ./area-expo
         run: |
           eas build --platform android --profile production --no-wait --non-interactive --local
-          mv build-*.apk area.apk
+          mkdir build
+          mv build-*.apk ./build/area.apk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: area.apk
-          path: area.apk
+          path: ./area-expo/build/area.apk
 
   release:
     needs: build
@@ -60,4 +61,4 @@ jobs:
         with:
           tag: ${{ steps.tag.outputs.release_tag }}
           name: ${{ steps.tag.outputs.release_tag }}
-          artifacts: area.apk
+          artifacts: area-expo/build/area.apk
