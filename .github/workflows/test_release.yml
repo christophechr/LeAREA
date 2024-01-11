@@ -43,11 +43,6 @@ jobs:
           name: area.apk
           path: ./area-expo/build/area.apk
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Release
-    steps:
       - name: Generate release tag
         id: tag
         run: |
