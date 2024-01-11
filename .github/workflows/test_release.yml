@@ -59,5 +59,4 @@ jobs:
         working-directory: ./area-expo
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release upload ${{ github.ref }} area.apk
+        run: gh release upload ${{ startsWith(github.ref, 'refs/tags/') }} area.apk
