@@ -46,5 +46,5 @@ jobs:
       - name: Build
         working-directory: ./area-expo
         run: |
-          eas build --platform android --profile production --no-wait --non-interactive
-          mv ./android/app/build/outputs/apk/release/app-release.apk ./area.apk
+          eas build --platform android --profile production --no-wait --non-interactive --local
+          mv build-*.apk area.apk
