@@ -3,5 +3,6 @@ module.exports = (fastify, opts, done) => {
     fastify.register(require("./auth.route.js"), { prefix: "/auth" });
     fastify.register(require("./triggers.route.js"), { prefix: "/triggers" });
     fastify.register(require("./actions.route.js"), { prefix: "/actions" });
+    fastify.register(require("./google.route.js"), { prefix: "/google" });
     done();
 };
