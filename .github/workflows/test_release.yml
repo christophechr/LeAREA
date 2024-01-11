@@ -8,6 +8,7 @@ on:
       - '*'
 
 jobs:
+
   create-release:
     permissions: write-all
     runs-on: ubuntu-latest
@@ -15,15 +16,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::Release_$(date +"%Y.%m.%d_%H.%M")"
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: devops-${{ github.ref_name }}
-          release_name: Release devopstest ${{ github.ref_name }}
+          tag_name: devops-
+          release_name: Release devopstest ${{ steps.tag.outputs.release_tag }}
           draft: false
           prerelease: false
   
@@ -56,8 +62,9 @@ jobs:
         run: |
           eas build --platform android --profile production --no-wait --non-interactive --local
           mv build-*.apk area.apk
-      
+
       - name: Upload APK to release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ needs.create-release.outputs.release_tag }}
           files: area.apk
