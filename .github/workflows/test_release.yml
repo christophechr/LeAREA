@@ -36,6 +36,17 @@ jobs:
           eas build --platform android --profile production --no-wait --non-interactive --local
           mv build-*.apk area.apk
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: area.apk
+          path: area.apk
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Release
+    steps:
       - name: Generate release tag
         id: tag
         run: |
