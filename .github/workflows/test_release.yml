@@ -7,6 +7,24 @@ env:
   working-directory: ./area-expo
 
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+  
   build:
     runs-on: ubuntu-latest
     steps:
@@ -34,21 +52,4 @@ jobs:
         run: |
         eas build --platform android --profile production --no-wait --non-interactive --clear-credentials
     
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    name: Release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+  
