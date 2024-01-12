@@ -14,4 +14,6 @@ RUN npm install
 RUN npm i @react-native-community/cli-platform-android
 RUN npx expo install expo-dev-client
 
-CMD ["npm", "start"]
+EXPOSE 8082
+
+CMD ["npx", "expo", "start", "-p", "8082"]
