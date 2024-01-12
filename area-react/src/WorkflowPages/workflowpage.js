@@ -60,12 +60,12 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
     const json = {
         "name" : name,
         "trigger" : {
-            "id" : triggerid.toLowerCase(),
+            "id" : triggerid,
             "params" : triggerparams,
         },
         "action" : {
-            "id" : actionid.toLowerCase(),
-            "params" : {"name" : actionparams.name}
+            "id" : actionid,
+            "params" : actionparams,
         }
     }
     console.log(json);
@@ -130,7 +130,7 @@ const NewWorkflow = () => {
                 modal
                 nested
                 onOpen={() => setopen((o) => !o)}
-                trigger={<button className="cross-button">{mode == "actions" && action != null ? action.name : "+" && mode == "triggers" && trigger != null ? trigger.name : "+"  }</button>}
+                trigger={<button className="cross-button">{mode === "actions" && action != null ? action.name : "+" && mode === "triggers" && trigger != null ? trigger.name : "+"  }</button>}
                 position="right center"
                 contentStyle={{
                     background: "rgba(255,255,255,1)",
@@ -142,7 +142,7 @@ const NewWorkflow = () => {
                
                     {Object.values(data).map((val) => {
                     
-                        return <button onClick={() => {if (mode == "actions"){getAction(val)}else{getTrigger(val)}}} className="block">{val.name}</button>;
+                        return <button onClick={() => {if (mode === "actions"){getAction(val)}else{getTrigger(val)}}} className="block">{val.name}</button>;
                     })}
                 </div>
             </Popup>
@@ -163,11 +163,11 @@ const NewWorkflow = () => {
                     <div style ={{flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
                         {action.actions[0].params.map((val) => {return(
                             <div>
-                                 {val.type == "string" ?
+                                 {val.type === "string" ?
                                 <NominalInputs setVal={setactionparams} Val={actionparams} action = {val}></NominalInputs>
-                                : val.type == "enum" ?
+                                : val.type === "enum" ?
                                 <EqualityInputs setVal={setactionparams} Val={actionparams} action = {val}></EqualityInputs>
-                                : val.type == "boolean" ?
+                                : val.type === "boolean" ?
                                 <CheckboxInputs setVal={setactionparams} Val={actionparams} action={val }></CheckboxInputs>
                                 : <NumberInputs setVal={setactionparams} Val={actionparams} action={val }></NumberInputs>
                                 }
@@ -180,11 +180,11 @@ const NewWorkflow = () => {
                     <div style ={{flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
                         {trigger.triggers[0].params.map((val) => {return(
                             <div>
-                               {val.type == "string" ?
+                               {val.type === "string" ?
                                 <NominalInputs setVal={setriggerparams} Val={triggerparams} action = {val}></NominalInputs>
-                                : val.type == "enum" ?
+                                : val.type === "enum" ?
                                 <EqualityInputs setVal={setriggerparams} Val={triggerparams} action = {val}></EqualityInputs>
-                                : val.type == "boolean" ?
+                                : val.type === "boolean" ?
                                 <CheckboxInputs setVal={setriggerparams} Val={triggerparams} action={val }></CheckboxInputs>
                                 : <NumberInputs setVal={setriggerparams} Val={triggerparams} action={val }></NumberInputs>
                                 }
@@ -193,7 +193,7 @@ const NewWorkflow = () => {
                 </div>
                
             </div>
-            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {createWorkflow(action.name + "." + chooseaction, actionparams, trigger.name + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
+            <button className="nav-b" style={{marginTop : 30, alignSelf : 'center'}} onClick={() => {console.log(action);createWorkflow(action.id + "." + chooseaction, actionparams, trigger.id + "." + choosetrigger, triggerparams, name)}}>create Workflow</button>
             </div>
         );
     }
@@ -201,6 +201,10 @@ const NewWorkflow = () => {
 
     const FirstStepWorkflow = () => {
         const [nameintern, setNameintern] = useState(name);
+        if (action != null && trigger != null){
+            setchooseaction(action.actions[0].id);
+            setchoosetrigger(trigger.triggers[0].id);
+        }
         return(
             <div className="newWorkflow">
                 <input
@@ -217,7 +221,7 @@ const NewWorkflow = () => {
                     {action != null && trigger != null ? 
                         <label>choisiez une actions
                             <select value = {chooseaction} onChange={(val) => {setchooseaction(val.target.value)}}>
-                            {Object.values(action.actions).map((val) => {return(<option value = {"new_repo"}>{val.name}</option>)})}
+                            {Object.values(action.actions).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                             </select>
                         </label> : <></>}
                 </div>
@@ -230,14 +234,14 @@ const NewWorkflow = () => {
                 {action != null && trigger != null ? 
                     <label>choisiez une reactions
                         <select value = {choosetrigger} onChange={(val) => {setchoosetrigger(val.target.value)}}>
-                            {Object.values(trigger.triggers).map((val) => {return(<option value = {"temperature"}>{val.name}</option>)})}
+                            {Object.values(trigger.triggers).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                         </select>
                     </label> : <></>}
                 </div>
                 
             </div>
             { action != null && trigger != null ?
-            <button className="nav-b" style={{alignSelf : "center", marginTop : 30}}  onClick={() => {setContinuer(true)}} disabled = {name == ""}>continue</button> : <></>
+            <button className="nav-b" style={{alignSelf : "center", marginTop : 30}}  onClick={() => {setContinuer(true)}} disabled = {name === ""}>continue</button> : <></>
             }
             </div>
 
@@ -247,7 +251,7 @@ const NewWorkflow = () => {
 
     return (
         <div className="newWorkflow">
-           {continuer == false ?
+           {continuer === false ?
             <FirstStepWorkflow/> : <SecondStepWorkflow/>}
         </div>
     );

@@ -62,3 +62,36 @@ GITHUB_SECRET=
 
 OPEN_WEATHER_API_KEY=
 ```
+
+## Google configuration
+
+### Install Google Cloud SDK
+
+```bash
+curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-459.0.0-linux-x86_64.tar.gz
+
+tar zxvf google-cloud-sdk-<version>-linux-x86_64.tar.gz google-cloud-sdk
+
+./google-cloud-sdk/install.sh
+```
+
+### Init Google Cloud SDK
+
+```bash
+./google-cloud-sdk/bin/gcloud init
+```
+
+You may have to select the area project.
+
+### login to Google Cloud
+
+```bash
+./gcloud auth application-default login
+```
+
+From that, it will give you a path to the credentials file.
+You have to paste it in the .env file.
+
+```dotenv
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials.json
+```

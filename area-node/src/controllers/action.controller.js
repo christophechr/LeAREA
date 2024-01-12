@@ -7,12 +7,16 @@ const getActions = (req, res) => {
     for (const [key, value] of Object.entries(actionsConfig)) {
         actions[key] = {
             name: value.name,
+            id: value.id,
+            img: value.img,
             actions: {},
         };
 
         for (const [k, v] of Object.entries(actionsConfig[key].actions)) {
             actions[key].actions[k] = {
                 name: v.name,
+                id: v.id,
+                loop: v.loop,
                 description: v.description,
                 params: v.params,
             };
