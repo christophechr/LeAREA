@@ -1,5 +1,4 @@
 const triggers = require("../triggers");
-
 module.exports = [
     {
         id: "weather",
@@ -77,4 +76,41 @@ module.exports = [
             },
         ],
     },
+    {
+        id: "gmail",
+        name: "Gmail",
+        img: "/public/images/gmail.webp",
+        triggers: [
+            {
+                id: "email_received",
+                name: "When an email is received...",
+                description: "Triggers when an email is received from Gmail.",
+                execEach: 1,
+                params: [],
+            },
+        ],
+    },
+    {
+        id: "spotify",
+        name: "Spotify",
+        img: "/public/images/Spotify.webp",
+        triggers: [
+            {
+                id: "is_this_song",
+                function: triggers.spotifyTriggers.isThisSong,
+                execEach: 5,
+                name: "test if the song that is being played is actually the one given as parameter",
+                description: "Test the name of the song that is being played",
+                params: [
+                    {
+                        id: "songname",
+                        name: "Song Name",
+                        type: "string",
+                        required: true,
+                        description: "give the name of the song that is being played",
+                    },
+                ],
+            },
+        ],
+    }
 ];

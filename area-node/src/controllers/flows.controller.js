@@ -201,7 +201,7 @@ const deleteFlow = async (req, res) => {
 
 const updateFlow = async (req, res) => {
     try {
-        const flow = await Flow.findById(req.params.id);
+        const flow = await Flow.findById(req.params.flowId);
 
         if (!flow)
             return res.status(404).send({
@@ -216,7 +216,7 @@ const updateFlow = async (req, res) => {
         if (req.body.name) flow.name = req.body.name;
         if (req.body.trigger) flow.trigger = req.body.trigger;
         if (req.body.action) flow.action = req.body.action;
-        if (req.body.enabled) flow.enabled = req.body.enabled;
+        if (req.body.enabled != undefined) flow.enabled = req.body.enabled;
 
         await flow.save();
 

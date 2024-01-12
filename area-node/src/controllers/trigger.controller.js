@@ -7,12 +7,15 @@ const getTriggers = (req, res) => {
     for (const [key, value] of Object.entries(triggersConfig)) {
         triggers[key] = {
             name: value.name,
+            id: value.id,
+            img: value.img,
             triggers: {},
         };
 
         for (const [k, v] of Object.entries(triggersConfig[key].triggers)) {
             triggers[key].triggers[k] = {
                 name: v.name,
+                id: v.id,
                 description: v.description,
                 params: v.params,
             };
