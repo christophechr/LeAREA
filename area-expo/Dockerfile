@@ -1,29 +1,19 @@
-FROM debian:bullseye-slim
+FROM node:20
 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && apt-get install -y --no-install-recommends ca-certificates zip openjdk-17-jdk-headless  && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g yarn
-
-RUN apt-get update && apt-get install -y openjdk-17-jdk && apt-get clean
-
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH=$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin
-
+RUN npm install -g npm@latest
 
 RUN java -version && node -v && npm -v && yarn -v
 
-WORKDIR /app
+COPY . /app
 
-COPY . .
+WORKDIR /app
 
 RUN npm install
 RUN npm i @react-native-community/cli-platform-android
-RUN yarn add expo
-RUN npx expo prebuild --platform android
-RUN cd ./android/ && ./gradlew assembleRelease && cd ..
-RUN ls -la android/app/build/outputs/bundle/release/
-CMD ["cp", "android/app/build/outputs/bundle/release/*.apk", "/pipe"]
+RUN npx expo install expo-dev-client
+
+EXPOSE 8082
+
+CMD ["npx", "expo", "start", "-p", "8082"]
