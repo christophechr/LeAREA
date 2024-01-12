@@ -162,6 +162,26 @@ const createFlow = async (req, res) => {
             name: req.body.name,
         });
 
+        if (actionConfigObj.init) {
+            const isInit = await actionConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Action initialization failed.",
+                });
+            }
+        }
+
+        if (triggerConfigObj.init) {
+            const isInit = await triggerConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Action initialization failed.",
+                });
+            }
+        }
+
         await flow.save();
 
         // Add the flow to the user's flows array

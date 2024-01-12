@@ -8,8 +8,6 @@ const time = async (user, params) => {
         return false;
     }
 
-    // Call an API http://worldtimeapi.org/api/timezone/Europe/Paris
-
     const timeApi = await axios.get(`https://worldtimeapi.org/api/timezone/${timezone}`);
 
     console.log(timeApi);
@@ -33,3 +31,7 @@ const time = async (user, params) => {
             return false;
     }
 }
+
+module.exports = {
+    time,
+};

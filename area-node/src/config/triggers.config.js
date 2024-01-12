@@ -1,5 +1,23 @@
 const triggers = require("../triggers");
+const init = require("../init");
+
 module.exports = [
+    {
+        id: "github",
+        name: "Github",
+        img: "/public/images/github.png",
+        triggers: [
+            {
+                id: "new_repo",
+                name: "When a new repository is created...",
+                description: "Triggers when a new repository is created.",
+                function: triggers.githubTriggers.newRepo,
+                execEach: 10,
+                init: init.githubTriggerInit.initNewRepoTrigger,
+                params: [],
+            }
+        ]
+    },
     {
         id: "weather",
         name: "Weather",
