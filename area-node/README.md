@@ -26,7 +26,7 @@ This is the backend of the AREA project.
 
 ## Documentation
 
-You can find the API documentation [here](https://app.swaggerhub.com/apis/RAPHAELMERCIE4/AREA/1.0.11).
+You can find the API documentation [here](https://app.swaggerhub.com/apis-docs/RAPHAELMERCIE4/AREA/1.0.11).
 
 ## Prerequisites
 
