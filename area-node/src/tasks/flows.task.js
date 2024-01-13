@@ -10,10 +10,10 @@ const tryFlow = async (flow, trigger, action) => {
 
             if (isReady) {
                 try {
-                    action.function(user, flow.action.params);
                     if (flow.loop === false)
                         flow.enabled = false;
-                    flow.save();
+                    await flow.save();
+                    await action.function(user, flow.action.params);
                 } catch (err) {
                     console.log(err);
                 }
