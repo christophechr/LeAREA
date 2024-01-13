@@ -10,7 +10,7 @@ const { flowTask } = require("./tasks/flows.task.js");
 const fastifyCron = require("fastify-cron");
 
 const fastify = require("fastify")({
-    logger: true,
+    logger: false,
 });
 
 // Connect to the database
@@ -30,6 +30,9 @@ fastify.register(require('@fastify/static'), {
     root: path.join(__dirname, 'public'),
     prefix: '/public/', // optional: default '/'
 })
+
+// Initialize Google API
+require("./config/google.init");
 
 fastify.register(routes);
 
@@ -55,4 +58,5 @@ const start = async () => {
         process.exit(1);
     }
 };
+
 start();

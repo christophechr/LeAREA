@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
     passwordHash: { type: String, required: true },
     githubToken: { type: String },
     googleToken: { type: Object },
+    googleEmail: { type: String },
+    SpotifyToken : {type : String},
+    githubRepoCount: { type: Number, default: -1 },
 
     // Array of flow IDs that belong to the user
     flows: [{ type: mongoose.Schema.Types.ObjectId, ref: "flow" }],
