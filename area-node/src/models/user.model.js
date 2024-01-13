@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, set: toLower },
     passwordHash: { type: String, required: true },
     githubToken: { type: String },
+    gitlabToken: { type: String },
     googleToken: { type: Object },
     googleEmail: { type: String },
     SpotifyToken : {type : String },
