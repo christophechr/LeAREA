@@ -30,6 +30,28 @@ const github_connexion = () => {
         });
 };
 
+const gitlab_connexion = () => {
+    const bearerToken = localStorage.getItem("token");
+
+    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/gitlab";
+
+    const axiosConfig = {
+        method: "get",
+        url: apiUrl,
+        headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            "Content-Type": "application/json",
+        },
+    };
+    axios(axiosConfig)
+        .then((response) => {
+            window.location = response.data.url;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
 const spotify_connexion = () => {
     const bearerToken = localStorage.getItem("token");
 
@@ -389,6 +411,13 @@ export const Workflowpage = () => {
                     }}
                 >
                     github
+                </button>
+                <button
+                    onClick={() => {
+                        gitlab_connexion();
+                    }}
+                >
+                    gitlab
                 </button>
                 <button
                     onClick={() => {

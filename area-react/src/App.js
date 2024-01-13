@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Workflowpage } from './WorkflowPages/workflowpage';
 import { useNavigation } from 'react-router-dom';
-import { Github, Google, Spotify } from './loginPages/GithubPages/github';
+import { Github, Gitlab, Google, Spotify } from './loginPages/GithubPages/github';
 import { Navbar } from './Utils/Navbar';
 function App() {
     const [basicpath, setBasicPath] = useState(null);
@@ -40,6 +40,7 @@ function App() {
             <Route path="/auth/github" element={<Github/>} />
             <Route path="/google" element={<Google/>} />
             <Route path="/spotify" element={<Spotify/>} />
+            <Route path="/gitlab" element={<Gitlab/>} />
           </>
         ) : null}
       </Routes>
