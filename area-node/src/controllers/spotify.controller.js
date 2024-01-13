@@ -77,17 +77,18 @@ const registerToken = async (request, reply) => {
         console.log("hey" + accessToken);
 
         console.log(request.user);
-        if (accessToken){
-            const user = await User.findOneAndUpdate(
-                { _id: request.user._id },
-                { SpotifyToken: accessToken },
-                { new: true }
-            );
-            console.log(user);
+        if (accessToken) {
+            request.user.SpotifyToken = accessToken;
+            await request.user.save();
+            // console.log(user);
+            reply.send({
+                message: "Spotify token stored",
+            });
+        } else {
+            reply.status(500).send({
+                message: "Spotify token not stored",
+            });
         }
-        reply.send({
-            message: "Spotify token stored",
-        });
     } catch (err) {
         console.log(err);
         reply.status(500).send({
