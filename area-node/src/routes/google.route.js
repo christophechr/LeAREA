@@ -13,5 +13,6 @@ module.exports = function (fastify, opts, done) {
         { preHandler: [auth, getUser] },
         googleControllers.googleOAuthCallback
     );
+    fastify.post("/calendar/notifications", googleControllers.calendarNotifications);
     done();
 };
