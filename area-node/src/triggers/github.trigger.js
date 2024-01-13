@@ -1,4 +1,6 @@
 const axios = require("axios");
+const User = require("../models/user.model.js");
+
 const newRepo = async (user, params) => {
 
     if (!user || !user.githubToken)
@@ -72,6 +74,9 @@ const newFollower = async (user, params) => {
         if (data.followers !== user.githubFollowersCount) {
             let result;
 
+            console.log("Followers count: " + data.followers);
+            console.log("Followers count: " + user.githubFollowersCount);
+
             switch (params.toCheck) {
                 case ('new'):
                     result = data.followers > user.githubFollowersCount;
@@ -84,7 +89,8 @@ const newFollower = async (user, params) => {
                     break;
             }
 
-            user.githubRepoCount = data.followers;
+            await User.findByIdAndUpdate(user._id, { githubFollowersCount: data.followers });
+
             await user.save();
 
             return result;
