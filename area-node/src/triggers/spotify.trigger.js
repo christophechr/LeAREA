@@ -2,7 +2,7 @@
 
 const isThisSong = async(user, params) => {
 
-    const {operator, songname} = params;
+    const {songname} = params;
     if (!user || !songname)
         return false;
 
@@ -32,7 +32,6 @@ const isThisSong = async(user, params) => {
             return false;
           })
           .catch(error => {
-            console.error('Erreur lors de la requête:', error);
           });
         if (returnVal === true || returnVal === false) {
             return returnVal;

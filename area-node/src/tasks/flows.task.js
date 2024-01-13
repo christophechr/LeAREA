@@ -49,7 +49,7 @@ const flowTask = async () => {
 
             // Cancels if the action can be executed only one time and it was already executed.
             flow.lastExec += 1;
-            if (flow.lastExec === trigger.execEach) {
+            if (flow.lastExec >= trigger.execEach) {
                 flow.lastExec = 0;
                 await flow.save();
                 await tryFlow(flow, trigger, action);

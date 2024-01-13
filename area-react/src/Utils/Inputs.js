@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DateTimePicker from 'react-datetime-picker';
 
 export const NominalInputs = ({setVal, Val, action}) => {
     const [value, setValue] = useState(Val[action.id]);
@@ -51,4 +52,16 @@ export const NumberInputs = ({setVal, Val, action}) => {
                             list[action.id] = value;
                             setVal({...list})}} ></input>
     );
+}
+
+
+export const DateInputs = ({setVal, Val, action}) => {
+  const [value, setValue] = useState(new Date());
+  return(
+    <DateTimePicker placeholder={action.name} value = {value} onChange={(e) => {setValue(value)}} 
+    onBlur={() => {const list = Val;
+                        list[action.id] = value.toDateString();
+                        setVal({...list})}} />
+  );
+
 }

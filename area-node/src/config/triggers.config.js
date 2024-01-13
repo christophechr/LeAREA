@@ -15,6 +15,33 @@ module.exports = [
                 execEach: 10,
                 init: init.githubTriggerInit.initNewRepoTrigger,
                 params: [],
+            },
+            {
+                id: "new_follower",
+                name: "When a follower...",
+                description: "Triggers when a follower is added or lost.",
+                function: triggers.githubTriggers.newFollower,
+                execEach: 10,
+                init: init.githubTriggerInit.initNewFollowerTrigger,
+                params: [
+                    {
+                        id: "toCheck",
+                        name: "To check",
+                        type: "enum",
+                        required: true,
+                        description: "The type of follower to check.",
+                        values: [
+                            {
+                                name: "New",
+                                value: "new",
+                            },
+                            {
+                                name: "Lost",
+                                value: "lost",
+                            },
+                        ],
+                    },
+                ],
             }
         ]
     },

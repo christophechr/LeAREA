@@ -69,3 +69,36 @@ export const Google = () => {
   )
 
 };
+
+
+export const Spotify = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const code = searchParams.get("code");
+  useEffect(() => {
+    const userData = {code};
+    axios
+    .post("http://" + localStorage.getItem("ip") + ':8080/spotify', userData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+          console.log("Sucess registration");
+          window.location = "/workflow";
+      } else {
+          console.log("Error: " + response.status);
+      }
+    }).catch((error) => {
+      console.log("Error: " + error);
+    });
+  });
+
+  return(
+      <div>
+          <span>you will be redirected in 5 sec ...</span>
+      </div>
+
+  )
+
+};

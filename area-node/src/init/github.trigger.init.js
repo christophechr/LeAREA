@@ -43,6 +43,39 @@ const initNewRepoTrigger = async (user) => {
     return true;
 }
 
+const initNewFollowerTrigger = async (user) => {
+    if (!user || !user.githubToken)
+        return false;
+
+    try {
+        const { data } = await axios({
+            url: "https://api.github.com/user",
+            method: "get",
+            headers: {
+                Accept: "application/vnd.github+json",
+                Authorization: `Bearer ${user.githubToken}`,
+                "X-GitHub-Api-Version": "2022-11-28",
+            }
+        });
+
+        if (!data || data.followers === undefined) {
+            console.log("Cannot init new follower trigger: CANCELLED");
+            return false;
+        }
+
+        console.log("Followers count: " + data.followers);
+
+        user.githubFollowersCount = data.followers;
+
+        await user.save();
+    } catch (err) {
+        console.log("Cannot init new follower trigger");
+        return false
+    }
+    return true;
+}
+
 module.exports = {
     initNewRepoTrigger,
+    initNewFollowerTrigger,
 }
