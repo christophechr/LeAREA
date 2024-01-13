@@ -1,5 +1,47 @@
 # AREA Backend
 
+## Table of contents
+
+- [AREA Backend](#area-backend)
+  - [Table of contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Documentation](#documentation)
+  - [Prerequisites](#prerequisites)
+    - [Install Node.js](#install-nodejs)
+    - [Install dependencies](#install-dependencies)
+  - [Database setup](#database-setup)
+    - [Create database](#create-database)
+      - [Docker](#docker)
+      - [Local](#local)
+    - [Create database user](#create-database-user)
+  - [Store environment variables](#store-environment-variables)
+  - [Google configuration](#google-configuration)
+    - [Install Google Cloud SDK](#install-google-cloud-sdk)
+    - [Init Google Cloud SDK](#init-google-cloud-sdk)
+    - [login to Google Cloud](#login-to-google-cloud)
+
+## Introduction
+
+This is the backend of the AREA project.
+
+## Documentation
+
+You can find the API documentation [here](https://app.swaggerhub.com/apis/RAPHAELMERCIE4/AREA/1.0.11).
+
+## Prerequisites
+
+### Install Node.js
+
+```bash
+sudo apt install nodejs
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
 ## Database setup
 
 ### Create database

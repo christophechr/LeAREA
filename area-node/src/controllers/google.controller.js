@@ -75,6 +75,10 @@ const googleOAuthCallback = async (request, reply) => {
 
         await request.user.save();
 
+        reply.send({
+            message: "Google token stored",
+        });
+
     } catch (e) {
         console.error(e);
         reply.status(500).send({
