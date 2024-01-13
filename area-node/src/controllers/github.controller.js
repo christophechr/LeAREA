@@ -6,7 +6,7 @@ const User = require("../models/user.model.js");
 
 const params = queryString.stringify({
     client_id: process.env.GITHUB_APP_ID,
-    redirect_uri: `http://${process.env.HOST}:${process.env.FRONT_PORT}/auth/github`,
+    redirect_uri: `https://${process.env.HOST}:${process.env.FRONT_PORT}/auth/github`,
     scope: ["read:user", "user:email", "repo", "workflow"].join(" "), // space seperated string
     allow_signup: true,
 });
@@ -20,7 +20,7 @@ async function getAccessTokenFromCode(code) {
         params: {
             client_id: process.env.GITHUB_APP_ID,
             client_secret: process.env.GITHUB_SECRET,
-            redirect_uri: `http://${process.env.HOST}:${process.env.FRONT_PORT}/auth/github`,
+            redirect_uri: `https://${process.env.HOST}:${process.env.FRONT_PORT}/auth/github`,
             code,
         },
     });

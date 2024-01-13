@@ -6,7 +6,7 @@ const axios = require("axios");
 const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    `http://${process.env.HOST}:${process.env.FRONT_PORT}/google`,
+    `https://${process.env.HOST}:${process.env.FRONT_PORT}/google`,
 );
 
 const getOAuthGoogleAddress = async (request, reply) => {
@@ -78,7 +78,7 @@ const googleOAuthCallback = async (request, reply) => {
             data: {
                 id: request.user._id.toString(),
                 type: "web_hook",
-                address: `http://${process.env.HOST}:${process.env.PORT}/google/calendar`,
+                address: `https://${process.env.HOST}:${process.env.PORT}/google/calendar`,
             }
         });
 
