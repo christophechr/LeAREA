@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     googleToken: { type: Object },
     googleEmail: { type: String },
     SpotifyToken : {type : String},
+    githubRepoCount: { type: Number, default: -1 },
 
     // Array of flow IDs that belong to the user
     flows: [{ type: mongoose.Schema.Types.ObjectId, ref: "flow" }],

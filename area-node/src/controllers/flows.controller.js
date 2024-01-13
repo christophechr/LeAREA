@@ -2,6 +2,11 @@ const Flow = require("../models/flow.model.js");
 const triggerConfig = require("../config/triggers.config.js");
 const actionConfig = require("../config/actions.config.js");
 
+
+const dateTimeRegex = new RegExp(
+    "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:00Z$"
+);
+
 const getUserFlows = async (req, res) => {
     try {
         const flows = await Flow.find({ user: req.user._id });
@@ -59,6 +64,12 @@ const checkParams = (params, config, res) => {
         }
         if (param.type === "string") {
             if (typeof params[param.id] !== "string")
+                return res.status(400).send({
+                    message: `Invalid parameter value: ${param.id}`,
+                });
+        }
+        if (param.type === "datetime") {
+            if (typeof params[param.id] !== "string" || !dateTimeRegex.test(params[param.id]))
                 return res.status(400).send({
                     message: `Invalid parameter value: ${param.id}`,
                 });
@@ -150,6 +161,26 @@ const createFlow = async (req, res) => {
             action: req.body.action,
             name: req.body.name,
         });
+
+        if (actionConfigObj.init) {
+            const isInit = await actionConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Action initialization failed.",
+                });
+            }
+        }
+
+        if (triggerConfigObj.init) {
+            const isInit = await triggerConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Action initialization failed.",
+                });
+            }
+        }
 
         await flow.save();
 

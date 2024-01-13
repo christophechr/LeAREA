@@ -10,10 +10,10 @@ const tryFlow = async (flow, trigger, action) => {
 
             if (isReady) {
                 try {
-                    action.function(user, flow.action.params);
                     if (flow.loop === false)
                         flow.enabled = false;
-                    flow.save();
+                    await flow.save();
+                    await action.function(user, flow.action.params);
                 } catch (err) {
                     console.log(err);
                 }
@@ -49,11 +49,12 @@ const flowTask = async () => {
 
             // Cancels if the action can be executed only one time and it was already executed.
             flow.lastExec += 1;
-            if (flow.lastExec >= trigger.execEach) {
+            if (flow.lastExec === trigger.execEach) {
                 flow.lastExec = 0;
+                await flow.save();
                 await tryFlow(flow, trigger, action);
             }
-            flow.save();
+            await flow.save();
         });
     });
 };
