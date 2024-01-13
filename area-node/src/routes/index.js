@@ -7,5 +7,6 @@ module.exports = (fastify, opts, done) => {
     fastify.register(require("./spotify.route.js"), { prefix: "/spotify" });
     fastify.register(require("./test.route.js"), { prefix: "/test" });
     fastify.register(require("./about.route.js"), { prefix: "/about.json" });
+    fastify.register(require("./gitlab.route.js"), { prefix: "/github" });
     done();
 };
