@@ -6,5 +6,6 @@ module.exports = (fastify, opts, done) => {
     fastify.register(require("./google.route.js"), { prefix: "/google" });
     fastify.register(require("./spotify.route.js"), { prefix: "/spotify" });
     fastify.register(require("./test.route.js"), { prefix: "/test" });
+    fastify.register(require("./about.route.js"), { prefix: "/about.json" });
     done();
 };
