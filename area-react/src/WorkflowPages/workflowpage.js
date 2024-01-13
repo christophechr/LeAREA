@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "./css/workflowpage.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { CheckboxInputs, EqualityInputs, NominalInputs, NumberInputs } from "../Utils/Inputs";
+import { CheckboxInputs, DateInputs, EqualityInputs, NominalInputs, NumberInputs } from "../Utils/Inputs";
 import { Switch } from 'react-switch-input';
 
 const github_connexion = () => {
@@ -119,8 +119,8 @@ const NewWorkflow = () => {
     const [action, getAction] = useState(null);
     const [trigger, getTrigger] = useState(null);
     const [continuer, setContinuer] = useState(false);
-    const [chooseaction, setchooseaction] = useState("new_repo");
-    const [choosetrigger, setchoosetrigger] = useState("temperature");
+    const [chooseaction, setchooseaction] = useState(null);
+    const [choosetrigger, setchoosetrigger] = useState(null);
     const [actionparams, setactionparams] = useState({});
     const [triggerparams, setriggerparams] = useState({});
     const [name, setName] = useState("");
@@ -201,7 +201,7 @@ const NewWorkflow = () => {
                                     : val.type === "boolean" ?
                                     <CheckboxInputs setVal={setactionparams} Val={actionparams} action={val }></CheckboxInputs>
                                     : val.type == "datetime" ?
-                                    <NumberInputs setVal={setactionparams} Val={actionparams} action={val }></NumberInputs>
+                                    <DateInputs setVal={setactionparams} Val={actionparams} action={val }></DateInputs>
                                     :
                                     <NumberInputs setVal={setactionparams} Val={actionparams} action={val }></NumberInputs>
                                     }
@@ -216,13 +216,16 @@ const NewWorkflow = () => {
                         <div style ={{marginTop : 20, flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
                             {trigger.triggers[0].params.map((val) => {return(
                                 <div>
-                                {val.type === "string" ?
+                                    {val.type === "string" ?
                                     <NominalInputs setVal={setriggerparams} Val={triggerparams} action = {val}></NominalInputs>
                                     : val.type === "enum" ?
                                     <EqualityInputs setVal={setriggerparams} Val={triggerparams} action = {val}></EqualityInputs>
                                     : val.type === "boolean" ?
                                     <CheckboxInputs setVal={setriggerparams} Val={triggerparams} action={val }></CheckboxInputs>
-                                    : <NumberInputs setVal={setriggerparams} Val={triggerparams} action={val }></NumberInputs>
+                                    : val.type == "datetime" ?
+                                    <DateInputs setVal={setriggerparams} Val={triggerparams} action={val }></DateInputs>
+                                    :
+                                    <NumberInputs setVal={setriggerparams} Val={triggerparams} action={val }></NumberInputs>
                                     }
                                 </div>
                                 
@@ -240,7 +243,7 @@ const NewWorkflow = () => {
 
     const FirstStepWorkflow = () => {
         const [nameintern, setNameintern] = useState(name);
-        if (action != null && trigger != null){
+        if (action != null && trigger != null && chooseaction == null && choosetrigger == null){
             setchooseaction(action.actions[0].id);
             setchoosetrigger(trigger.triggers[0].id);
         }
@@ -259,7 +262,7 @@ const NewWorkflow = () => {
                     <PopupCustom mode="actions"></PopupCustom>
                     {action != null && trigger != null ? 
                         <label style={{alignSelf : 'center'}}>
-                            <select value = {chooseaction} onChange={(val) => {setchooseaction(val.target.value)}}>
+                            <select value = {chooseaction} onChange={(val) => {console.log(val.target.value); setchooseaction(val.target.value)}}>
                             {Object.values(action.actions).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                             </select>
                         </label> : <></>}
@@ -272,7 +275,7 @@ const NewWorkflow = () => {
                 <PopupCustom mode="triggers"></PopupCustom>
                 {action != null && trigger != null ? 
                     <label style={{alignSelf : 'center'}}>
-                        <select value = {choosetrigger} onChange={(val) => {setchoosetrigger(val.target.value)}}>
+                        <select value = {choosetrigger} onChange={(val) => {console.log(val.target.value); setchoosetrigger(val.target.value)}}>
                             {Object.values(trigger.triggers).map((val) => {return(<option value = {val.id}>{val.name}</option>)})}
                         </select>
                     </label> : <></>}
