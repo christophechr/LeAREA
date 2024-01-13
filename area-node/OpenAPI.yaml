@@ -13,7 +13,7 @@ externalDocs:
   description: Find out more about Area project
   url: https://github.com/christophechr/LeAREA/tree/main
 servers:
-  - url: http://localhost:8080/
+  - url: http://localhost:8080
 tags:
   - name: Authentication
     description: Routes to login and register
@@ -25,6 +25,10 @@ tags:
     description: Routes used for GitHub authentication
   - name: Flows
     description: Routes used for user flows
+  - name: Google
+    description: Routes used for Google authentication
+  - name: Spotify
+    description: Routes used for Spotify authentication
 paths:
   /auth/register:
     post:
@@ -269,6 +273,9 @@ paths:
                             name:
                               type: string
                               description: The name parameter for the action.
+                    enabled:
+                      type: boolean
+                      description: The status of the flow.
                     __v:
                       type: integer
                       description: Version information.
@@ -341,6 +348,117 @@ paths:
           description: Unauthorized
         '500':
           description: Failed to create the flow
+  /flows/{id}:
+      delete:
+        tags:
+          - Flows
+        summary: Delete a user flow
+        description: Delete a user flow
+        operationId: flows
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The ID of the flow to delete.
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: |
+              User flow deleted successfully.<br />
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Flow deleted successfully
+          '401':
+            description: Unauthorized
+          '500':
+            description: Failed to delete the flow
+      put:
+        tags:
+          - Flows
+        summary: Update a user flow
+        description: Update a user flow
+        operationId: flows
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The ID of the flow to update.
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the event flow.
+                  trigger:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the trigger.
+                      params:
+                        type: object
+                        properties:
+                          location:
+                            type: string
+                            description: The location for the trigger.
+                          operator:
+                            type: string
+                            description: The operator for the trigger.
+                          temperature:
+                            type: string
+                            description: The temperature for the trigger.
+                          unit:
+                            type: string
+                            description: The unit of temperature for the trigger.
+                  action:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the action.
+                      params:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: The name parameter for the action.
+                  enabled:
+                    type: boolean
+                    description: The status of the flow.
+        responses:
+          '200':
+            description: |
+              User flow updated successfully.<br />
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Flow updated successfully
+          '400':
+            description: Missing name, trigger, action or invalid trigger or action ID
+          '401':
+            description: Unauthorized
+          '500':
+            description: Failed to update the flow
   /auth/me:
     get:
       tags:
@@ -362,8 +480,135 @@ paths:
                   isGithubConnected:
                     type: boolean
                     example: true
+                  isGoogleConnected:
+                    type: boolean
+                    example: false
         '401':
           description: Unauthorized
+  /google:
+    get:
+      tags:
+        - Google
+      summary: Google get authorization URL
+      description: Get the URL to redirect the user to Google authorization page
+      operationId: googleAuth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the URL to redirect the user to Google authorization page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://accounts.google.com/o/oauth2/v2/auth?client_id=1234567890&redirect_uri=http://localhost:8080/auth/google/callback&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&access_type=offline
+        '401':
+          description: Unauthorized'
+    post:
+      tags:
+        - Google
+      summary: Send Google code REQUIRED
+      description: |
+        This route have to be called to send the Google code to the backend to let it get the user token.<br />
+        This route is mandatory to associate a Google account to the user.
+        It will generate the token from the code given by Google with the URL given by the previous route.
+      operationId: googleCode
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Google callback
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: 1234567890
+        required: true
+      responses:
+        '200':
+          description: |
+            Google token stored
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Google token stored
+        '400':
+          description: Missing code
+        '401':
+          description: Unauthorized
+  /spotify:
+    get:
+      tags:
+        - Spotify
+      summary: Spotify get authorization URL
+      description: Get the URL to redirect the user to Spotify authorization page
+      operationId: spotifyAuth
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: |
+            Returns the URL to redirect the user to Spotify authorization page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://accounts.spotify.com/authorize?client_id=1234567890&redirect_uri=http://localhost:8080/auth/spotify/callback&response_type=code&scope=user-read-private%20user-read-email&show_dialog=true
+        '401':
+          description: Unauthorized'
+    post:
+      tags:
+        - Spotify
+      summary: Send Spotify code REQUIRED
+      description: |
+        This route have to be called to send the Spotify code to the backend to let it get the user token.<br />
+        This route is mandatory to associate a Spotify account to the user.
+        It will generate the token from the code given by Spotify with the URL given by the previous route.
+      operationId: spotifyCode
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Spotify callback
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: 1234567890
+        required: true
+      responses:
+        '200':
+          description: |
+            Spotify token stored
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Spotify token stored
+        '400':
+          description: Missing code
+        '401':
+          description: Unauthorized
+        '500':
+          description: Failed to store the token
 
 
 
