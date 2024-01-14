@@ -9,11 +9,11 @@ import { Workflowpage } from './WorkflowPages/workflowpage';
 import { useNavigation } from 'react-router-dom';
 import { Github, Gitlab, Google, Spotify } from './loginPages/GithubPages/github';
 import { Navbar } from './Utils/Navbar';
+import { Frontmobile } from "./frontMobile/frontmobile";
 function App() {
     const [basicpath, setBasicPath] = useState(null);
 
     useEffect(() => {
-        localStorage.setItem("ip", "localhost");
         if (localStorage.getItem("id") != null) {
             setBasicPath("/workflow");
             console.log(localStorage.getItem("id"));
@@ -41,6 +41,7 @@ function App() {
             <Route path="/google" element={<Google/>} />
             <Route path="/spotify" element={<Spotify/>} />
             <Route path="/gitlab" element={<Gitlab/>} />
+            <Route path="/frontMobile/:token/:service/:ip/:http" element={<Frontmobile/>} />
           </>
         ) : null}
       </Routes>

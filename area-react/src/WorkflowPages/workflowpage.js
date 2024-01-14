@@ -8,10 +8,14 @@ import "reactjs-popup/dist/index.css";
 import { CheckboxInputs, DateInputs, EqualityInputs, NominalInputs, NumberInputs } from "../Utils/Inputs";
 import { Switch } from 'react-switch-input';
 
-const github_connexion = () => {
+export const github_connexion = (http) => {
     const bearerToken = localStorage.getItem("token");
 
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/auth/github";
+    let apiUrl =  localStorage.getItem("ip") + "/auth/github";
+
+    if (http != null || http != undefined){
+        apiUrl  = http + "://" + localStorage.getItem("ip") + "/auth/github";
+    }
 
     const axiosConfig = {
         method: "get",
@@ -30,10 +34,14 @@ const github_connexion = () => {
         });
 };
 
-const gitlab_connexion = () => {
+export const gitlab_connexion = (http) => {
     const bearerToken = localStorage.getItem("token");
 
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/gitlab";
+    let apiUrl =  localStorage.getItem("ip") + "/gitlab";
+
+    if (http != null || http != undefined){
+        apiUrl  = http + "://" + localStorage.getItem("ip") + "/gitlab";
+    }
 
     const axiosConfig = {
         method: "get",
@@ -52,11 +60,14 @@ const gitlab_connexion = () => {
         });
 };
 
-const spotify_connexion = () => {
+export const spotify_connexion = (http) => {
     const bearerToken = localStorage.getItem("token");
+    let apiUrl =  localStorage.getItem("ip") + "/spotify";
+    if (http != null || http != undefined){
+        apiUrl  = http + "://" + localStorage.getItem("ip") + "/spotify";
+    }
 
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/spotify";
-
+    
     const axiosConfig = {
         method: "get",
         url: apiUrl,
@@ -65,21 +76,27 @@ const spotify_connexion = () => {
             "Content-Type": "application/json",
         },
     };
-
+   
     axios(axiosConfig)
         .then((response) => {
+            //console.log(response.data);
             window.location = response.data.url;
         })
         .catch((error) => {
+            console.log('hey');
             console.error(error);
         });
 };
 
 
-const google_connexion = () => {
+export const google_connexion = (http) => {
     const bearerToken = localStorage.getItem("token");
 
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/google";
+    let apiUrl =  localStorage.getItem("ip") + "/google";
+
+    if (http != null || http != undefined){
+        apiUrl  = http + "://" + localStorage.getItem("ip") + "/google";
+    }
 
     const axiosConfig = {
         method: "get",
@@ -115,7 +132,7 @@ const createWorkflow = (actionid, actionparams, triggerid, triggerparams, name) 
     }
     console.log(json);
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/flows', json, {
+      .post( localStorage.getItem("ip") + '/flows', json, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
@@ -147,15 +164,17 @@ const NewWorkflow = () => {
     const [triggerparams, setriggerparams] = useState({});
     const [name, setName] = useState("");
 
-
+    useEffect(() => {
+        localStorage.setItem("ip", "http://localhost:8080");
+      }, []);
     
     const PopupCustom = ({ mode }) => {
         const [open, setopen] = useState(false);
         const [data, setdata] = useState([]);
 
         const bearerToken = localStorage.getItem("token");
-        const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/" + mode;
-        const url = "http://" + localStorage.getItem("ip") + ":8080";
+        const apiUrl =  localStorage.getItem("ip") + "/" + mode;
+        const url =  localStorage.getItem("ip") + "";
         const axiosConfig = {
             method: "get",
             url: apiUrl,
@@ -204,7 +223,7 @@ const NewWorkflow = () => {
 
 
     const SecondStepWorkflow = () => {
-        const url = "http://" + localStorage.getItem("ip") + ":8080";
+        const url =  localStorage.getItem("ip") + "";
         useEffect(() => {
         if (action.actions != undefined || action.actions != null) 
             console.log(Object.values(action.actions).find((val) => val.id == chooseaction));   
@@ -327,7 +346,7 @@ const NewWorkflow = () => {
 
 export const ChangeEnabledWorkflow = async (id, val) => {
     const bearerToken = localStorage.getItem("token");
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/flows/" + id;
+    const apiUrl =  localStorage.getItem("ip") + "/flows/" + id;
     const axiosConfig = {
             method: "put",
             url: apiUrl,
@@ -354,7 +373,7 @@ export const Getflows = () => {
     const [data, setdata] = useState([]);
     const [checked, setchecked] = useState(false);
     const bearerToken = localStorage.getItem("token");
-    const apiUrl = "http://" + localStorage.getItem("ip") + ":8080/flows";
+    const apiUrl =  localStorage.getItem("ip") + "/flows";
     const axiosConfig = {
             method: "get",
             url: apiUrl,
@@ -415,13 +434,6 @@ export const Workflowpage = () => {
                     }}
                 >
                     github
-                </button>
-                <button
-                    onClick={() => {
-                        gitlab_connexion();
-                    }}
-                >
-                    gitlab
                 </button>
                 <button
                     onClick={() => {

@@ -29,7 +29,7 @@ const LoginUser = async (email, password) => {
       console.log(IP);
       
       axios
-        .post('http://' + IP + ':8080/auth/login', userData, {
+        .post(IP + '/auth/login', userData, {
           headers: {
             'Content-Type': 'application/json',
           },

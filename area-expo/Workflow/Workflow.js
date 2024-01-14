@@ -17,10 +17,10 @@ export const ChosePage = (props) => {
         const mode = props.route.params.action;
         const [data, setdata] = useState([]);
         const [bearerToken, setbearerToken] = useState([]);
-        const url = "http://" + IP + ":8080";
+        const url = IP + "";
         useEffect(() => {
             AsyncStorage.getItem("token").then((token) => {setbearerToken(token)});
-            const apiUrl = "http://" + IP + ":8080/" + mode;
+            const apiUrl = IP + "/" + mode;
             
             const axiosConfig = {
                 method: "get",
@@ -68,7 +68,7 @@ const createWorkflow = async (actionid, actionparams, triggerid, triggerparams, 
     const token = await AsyncStorage.getItem("token");
     console.log(json);
     axios
-      .post("http://" + IP + ':8080/flows', json, {
+      .post(IP + '/flows', json, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + token
@@ -101,7 +101,7 @@ const Create_Workflow = () => {
     const [continuer, setContinuer] = useState(1);
     const [chosesousaction, setchosesousaction] = useState({});
     const [chosesoustrigger, setchosesoustrigger] = useState({});
-    const url = "http://" + IP + ":8080";
+    const url = IP + "";
 
     const SetArg = () => {
         const [actionparams, setactionparams] = useState({});

@@ -18,7 +18,7 @@ export const Navbar = ({actualPage}) =>{
         <View style = {{height : 70, alignSelf : 'stretch', backgroundColor : 'white', bottom : -13, flexDirection : 'row', justifyContent : 'space-around', alignItems : 'center'}}>
             <Element text = {"Create Workflow"} actualPage = {actualPage} goto = {"Workflow"}></Element>
             <Element text = {"My Workflows"} actualPage = {actualPage} goto = {"GetWorkflow"}></Element>
-            <Element text = {"Services Connexions"} actualPage = {actualPage}></Element>
+            <Element text = {"Services Connexions"} actualPage = {actualPage} goto = {"Services"}></Element>
         </View>
 
     )
