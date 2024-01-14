@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios");
 
 const incommingPayment = async (user, params) => {
     const { operator, value } = params;
@@ -31,10 +31,10 @@ const incommingPayment = async (user, params) => {
  */
 // The admin has:
 /*
-A Admin ID
- */
+   An Admin ID
+*/
 
-export async function getWalletBalance(walletKey) {
+const getWalletBalance = async (walletKey) => {
     const headers = {
         "X-Api-Key": walletKey,
         "Content-type": "application/json"

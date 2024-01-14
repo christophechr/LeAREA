@@ -1,11 +1,11 @@
-import axios from "axios";
+const axios = require("axios");
 
 const base_url = "https://legend.lnbits.com/"
 
-export async function createWallet(user) {
+const createWallet = async(user) => {
   if (!user) return;
   if (!user.micropaymentID) {
-    user.micropaymentID = (+new Date).toString(36) // Stack overflow magic non-collisionnal shit
+    user.micropaymentID = Date.now().toString(36) + Math.random().toString(36).substring(2);
   }
 
   const route = 'usermanager/api/v1/wallets'
@@ -23,7 +23,7 @@ export async function createWallet(user) {
 
   try {
     const response = await axios.post(base_url + route, body, { headers });
-    console.log("CREATE WALLET:", response)
+    console.log("CREATE WALLET:", response.data)
     user.micropaymentKey = response.data.adminkey;
     user.micropaymentInKey = response.data.inkey;
   } catch (error) {
@@ -33,7 +33,7 @@ export async function createWallet(user) {
 }
 
 
-export async function newInvoice(user, params) {
+const newInvoice = async (user, params) => {
   const { amount, memo } = params
   const route = "api/v1/payments"
   const headers = {
@@ -71,7 +71,7 @@ export async function newInvoice(user, params) {
   console.log("Invoices[-1]:", invoices[invoices.length - 1].payment_request)
 }
 
-export async function payInvoice(user, params) {
+const payInvoice = async (user, params) => {
   const { bolt11 } = params
 
   const route = "api/v1/payments";
