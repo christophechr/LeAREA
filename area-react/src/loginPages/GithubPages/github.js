@@ -10,8 +10,12 @@ export const Github = () => {
         const code = currentUrl.split("=")[1];
         console.log(code);
         const userData = {code};
+        let ip = localStorage.getItem("ip");
+        if (!localStorage.getItem("ip").includes("http")){
+          ip = localStorage.getItem("http") + "://" + localStorage.getItem("ip");
+        }
         axios
-      .post( localStorage.getItem("ip") + '/auth/github', userData, {
+      .post( ip + '/auth/github', userData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -46,8 +50,12 @@ export const Gitlab = () => {
       const code = currentUrl.split("=")[1];
       console.log(code);
       const userData = {code};
+      let ip = localStorage.getItem("ip");
+        if (!localStorage.getItem("ip").includes("http")){
+          ip = localStorage.getItem("http") + "://" + localStorage.getItem("ip");
+        }
       axios
-    .post( localStorage.getItem("ip") + '/gitlab', userData, {
+    .post( ip + '/gitlab', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -76,10 +84,14 @@ export const Gitlab = () => {
 export const Google = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code");
+  let ip = localStorage.getItem("ip");
+  if (!localStorage.getItem("ip").includes("http")){
+      ip = localStorage.getItem("http") + "://" + localStorage.getItem("ip");
+  }
   useEffect(() => {
     const userData = {code};
     axios
-    .post( localStorage.getItem("ip") + '/google', userData, {
+    .post( ip + '/google', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -112,8 +124,12 @@ export const Spotify = () => {
   console.log(localStorage.getItem('token'));
   useEffect(() => {
     const userData = {code};
+    let ip = localStorage.getItem("ip");
+    if (!localStorage.getItem("ip").includes("http")){
+      ip = localStorage.getItem("http") + "://" + localStorage.getItem("ip");
+    }
     axios
-    .post(localStorage.getItem("ip") + '/spotify', userData, {
+    .post(ip + '/spotify', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),

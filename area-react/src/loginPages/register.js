@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 
 
 const RegisterUser = (email, password) => {
+  localStorage.setItem("ip", "http://localhost:8080");
   return new Promise((resolve, reject) => {
     if (email === "" || password === "") {
       window.alert("Email and password are required");
@@ -54,9 +55,6 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
-  useEffect(() => {
-    localStorage.setItem("ip", "http://localhost:8080");
-  }, []);
   return (
     <div className="App">
       <div className='tab'>
