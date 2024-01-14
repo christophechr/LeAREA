@@ -16,7 +16,7 @@ function emailReceived(message) {
                 User.findById(flow.user).then(async (user) => {
 
                     if (user.googleEmail === data.emailAddress)
-                        await executeAction(flow);
+                        await executeAction(flow, user);
                 }).catch((err) => {
                     console.log(err);
                 });

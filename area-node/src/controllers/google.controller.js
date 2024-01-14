@@ -2,11 +2,14 @@ const {OAuth2Client} = require('google-auth-library');
 
 // import axios
 const axios = require("axios");
+const Flow = require("../models/flow.model");
+const User = require("../models/user.model");
+const {executeAction} = require("../utils/actions.utils");
 
 const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    `https://${process.env.HOST}:${process.env.FRONT_PORT}/google`,
+    `${process.env.FRONT_URL}/google`,
 );
 
 const getOAuthGoogleAddress = async (request, reply) => {
@@ -63,6 +66,7 @@ const googleOAuthCallback = async (request, reply) => {
 
         // Check res code
         if (res.status !== 200) {
+            console.error("Email subscription failed");
             reply.status(res.status).send({
                 message: "Email subscription failed. Retry later."
             });
@@ -78,7 +82,7 @@ const googleOAuthCallback = async (request, reply) => {
             data: {
                 id: request.user._id.toString(),
                 type: "web_hook",
-                address: `https://${process.env.HOST}:${process.env.PORT}/google/calendar`,
+                address: `https://area-backend-production.up.railway.app/google/calendar`,
             }
         });
 
@@ -101,6 +105,8 @@ const googleOAuthCallback = async (request, reply) => {
             message: "Google token stored",
         });
 
+        console.log("Google token stored");
+
     } catch (e) {
         console.error(e);
         reply.status(500).send({
@@ -111,8 +117,20 @@ const googleOAuthCallback = async (request, reply) => {
 
 const calendarNotifications = async (request, reply) => {
     try {
-        console.log(request.body);
         console.log(request.headers);
+        console.log("User id: " + request.headers['x-goog-channel-id']);
+
+        User.findById(request.headers['x-goog-channel-id']).then(async (user) => {
+            for (const flowId of user.flows) {
+                const flow = await Flow.findById(flowId);
+
+                if (flow && flow.trigger.id === "google_calendar.new_event") {
+                    await executeAction(flow, user);
+                }
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
 
         reply.send({
             message: "Calendar notification received",

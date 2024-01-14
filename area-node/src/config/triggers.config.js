@@ -418,5 +418,18 @@ module.exports = [
                 ],
             },
         ],
+    },
+    {
+        id: "google_calendar",
+        name: "Google Calendar",
+        img: "/public/images/google_calendar.png",
+        triggers: [
+            {
+                id: "new_event",
+                name: "When a new event is created...",
+                description: "Triggers when a new event is created.",
+                params: [],
+            },
+        ],
     }
 ];
