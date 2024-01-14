@@ -9,9 +9,9 @@ module.exports = [
             {
                 id: "new_event",
                 name: "New event",
-                function: actions.googleCalendarActions.newEvent,
-                loop: true,
-                description: "Triggers when a new event is created.",
+                function: actions.googleActions.createEvent,
+                loop: false,
+                description: "Create a new event in Google Calendar.",
                 params: [
                     {
                         id: "startTime",
@@ -264,6 +264,30 @@ module.exports = [
                     }
                 ],
             },
+            {
+                id: "new_calendar",
+                name: "New calendar",
+                function: actions.googleActions.createCalendar,
+                loop: false,
+                description: "Create a new calendar in Google Calendar.",
+                params: [
+                    {
+                        id: "summary",
+                        name: "Summary",
+                        type: "string",
+                        required: true,
+                        description: "The summary of the calendar.",
+                    },
+                    {
+                        id: "description",
+                        name: "Description",
+                        type: "string",
+                        required: false,
+                        description: "The description of the calendar.",
+                    },
+                ],
+
+            }
         ],
     },
     {
