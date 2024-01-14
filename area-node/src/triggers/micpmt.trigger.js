@@ -1,5 +1,7 @@
 const axios = require("axios");
 
+
+// Fake implementation, can be erased.
 const incommingPayment = async (user, params) => {
     const { operator, value } = params;
 
@@ -76,6 +78,6 @@ const balance = async (user, params) => {
 };
 
 module.exports = {
-    incommingPayment,
+    //incommingPayment, // Not implemented, can be erased
     balance,
 };
