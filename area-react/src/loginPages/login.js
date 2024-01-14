@@ -11,6 +11,7 @@ export const LogoutUser = async () => {
 
 const LoginUser = (email, password) => {
   return new Promise((resolve, reject) => {
+    localStorage.setItem("ip", "http://localhost:8080");
     if (email === "" || password === "") {
       window.alert("Email and password are required");
       reject(new Error("Email and password are required"));
@@ -56,9 +57,6 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
-  useEffect(() => {
-    localStorage.setItem("ip", "http://localhost:8080");
-  }, []);
   return (
     <div className="App">
       <div className='tab'>
