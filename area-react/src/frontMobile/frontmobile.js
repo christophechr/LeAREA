@@ -3,17 +3,18 @@ import { github_connexion, google_connexion, spotify_connexion} from "../Workflo
 import { useEffect } from "react";
 
 export const Frontmobile = () => {
-    const { token, service, ip } = useParams();
+    const { token, service, ip, http } = useParams();
 
     useEffect(() => {
         localStorage.setItem("token", token);
         localStorage.setItem("ip", ip);
+        localStorage.setItem("http", http);
         if (service == "google")
-            google_connexion();
+            google_connexion(http);
         else if (service == "spotify")
-            spotify_connexion();
+            spotify_connexion(http);
         else if (service == "github")
-            github_connexion();
+            github_connexion(http);
     }, []);
 
     return(

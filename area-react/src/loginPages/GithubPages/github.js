@@ -109,10 +109,11 @@ export const Google = () => {
 export const Spotify = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code");
+  console.log(localStorage.getItem('token'));
   useEffect(() => {
     const userData = {code};
     axios
-    .post( localStorage.getItem("ip") + '/spotify', userData, {
+    .post(localStorage.getItem("ip") + '/spotify', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),

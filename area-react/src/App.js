@@ -14,8 +14,6 @@ function App() {
     const [basicpath, setBasicPath] = useState(null);
 
     useEffect(() => {
-        localStorage.setItem("ip", "https://area-backend-production.up.railway.app");
-        console.log(localStorage.getItem("ip"));
         if (localStorage.getItem("id") != null) {
             setBasicPath("/workflow");
             console.log(localStorage.getItem("id"));
@@ -43,7 +41,7 @@ function App() {
             <Route path="/google" element={<Google/>} />
             <Route path="/spotify" element={<Spotify/>} />
             <Route path="/gitlab" element={<Gitlab/>} />
-            <Route path="/frontMobile/:token/:service/:ip" element={<Frontmobile/>} />
+            <Route path="/frontMobile/:token/:service/:ip/:http" element={<Frontmobile/>} />
           </>
         ) : null}
       </Routes>
