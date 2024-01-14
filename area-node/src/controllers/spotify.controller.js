@@ -15,7 +15,7 @@ async function redirectToAuthCodeFlow(request, reply) {
     const params = new URLSearchParams();
     params.append("client_id", process.env.SPOTIFY_CLIENT_ID);
     params.append("response_type", "code");
-    params.append("redirect_uri", "http://localhost:3000/spotify");
+    params.append("redirect_uri", `${process.env.FRONT_URL}/spotify`);
     params.append("scope", "user-read-private user-read-email user-read-currently-playing");
 
     url = `https://accounts.spotify.com/authorize?${params.toString()}`;
@@ -39,7 +39,7 @@ async function getAccessToken(code) {
     const params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "http://localhost:3000/spotify");
+    params.append("redirect_uri", `${process.env.FRONT_URL}/spotify`);
     console.log((new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64')));
     const result = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",

@@ -10,7 +10,7 @@ const { flowTask } = require("./tasks/flows.task.js");
 const fastifyCron = require("fastify-cron");
 
 const fastify = require("fastify")({
-    logger: false,
+    logger: true,
 });
 
 // Connect to the database

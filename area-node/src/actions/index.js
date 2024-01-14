@@ -1,7 +1,5 @@
-const githubActions = require("./github.action");
-const httpActions = require("./http.action");
-
 module.exports = {
-    githubActions,
-    httpActions,
+    githubActions: require("./github.action"),
+    httpActions: require("./http.action"),
+    googleActions: require("./google.action"),
 };
