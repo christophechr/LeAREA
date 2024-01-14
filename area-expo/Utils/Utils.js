@@ -3,6 +3,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import { View, Text, TextInput } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import { useState, useEffect } from 'react';
+import { LogoutUser } from '../Login/login';
 
 export const Input_Selector = ({data, setaction, action}) =>{
     const [selected, setSelected] = useState({});

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
+import { LogoutUser } from "../Login/login";
 import styles from "./css/services.module.css";
 export const Services = () => {
     const [token, setToken] = useState(null);
@@ -23,7 +24,7 @@ export const Services = () => {
     useEffect(() => {
         const fonction = async () => {
             const token = await AsyncStorage.getItem("token");
-            const apiUrl = "http://" + IP + ":8080/auth/me";
+            const apiUrl = IP + "/auth/me";
             
             const axiosConfig = {
                 method: "get",
@@ -53,6 +54,8 @@ export const Services = () => {
         <View style = {{marginTop : 30, flexDirection : 'column', justifyContent : 'space-between', height : '95%', width : "100%"}}>
             { token != null ?
             <View>
+                 <Button title = "Deconnexion" onPress={() => {LogoutUser().then(() => {navigation.navigate("Login")})}}></Button>
+                <Text style = {{alignSelf : 'center', fontWeight : 'bold', color : 'white', fontSize : 40}}>My Services</Text>
             <SafeAreaView>
             { data != null ?
                 <ScrollView  horizontal = {true}>

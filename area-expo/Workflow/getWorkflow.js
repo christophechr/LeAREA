@@ -14,7 +14,7 @@ const changeFlow = async (id, isEnabled) => {
     const json = {
         enabled : isEnabled,
     };
-    const apiUrl = "http://" + IP + ":8080/flows/" + id;
+    const apiUrl = IP + "/flows/" + id;
             
     const axiosConfig = {
                 method: "put",
@@ -40,7 +40,7 @@ export const GetWorkflow = () =>{
     useEffect(() => {
         const fonction = async () => {
             const token = await AsyncStorage.getItem("token");
-            const apiUrl = "http://" + IP + ":8080/flows";
+            const apiUrl = IP + "/flows";
             
             const axiosConfig = {
                 method: "get",
