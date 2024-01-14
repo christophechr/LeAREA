@@ -182,7 +182,7 @@ const createFlow = async (req, res) => {
 
             if (!isInit) {
                 return res.status(400).send({
-                    message: "Action initialization failed.",
+                    message: "Trigger initialization failed.",
                 });
             }
         }

@@ -6,6 +6,8 @@ function emailReceived(message) {
     try {
         const data = JSON.parse(Buffer.from(message.data, 'base64').toString());
 
+        console.log("Email received: ", data);
+
         // Find enabled flows with the Gmail trigger and the user that have the same email address as the one that received the email
         Flow.find({
             enabled: true,

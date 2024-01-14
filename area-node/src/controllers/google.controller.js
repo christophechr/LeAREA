@@ -34,68 +34,12 @@ const googleOAuthCallback = async (request, reply) => {
         // Now that we have the code, use that to acquire tokens.
         const r = await oAuth2Client.getToken(code);
 
-        // Get user email
-        const resEmail = await axios.get("https://www.googleapis.com/oauth2/v2/userinfo", {
-            headers: {
-                Authorization: `Bearer ${r.tokens.access_token}`,
-            },
-        });
-
-        if (resEmail.status !== 200) {
-            reply.status(resEmail.status).send({
-                message: "Email subscription failed. Retry later."
+        if (!r.tokens) {
+            reply.status(400).send({
+                message: "Google token not provided",
             });
             return;
         }
-
-        console.log(resEmail.data);
-
-        console.log(`Email registered: ${resEmail.data.email}`);
-
-        request.user.googleEmail = resEmail.data.email;
-
-        // Watch for new emails from API https://gmail.googleapis.com/gmail/v1/users/{userId}/watch
-        const res = await axios.post("https://gmail.googleapis.com/gmail/v1/users/me/watch", {
-            topicName: "projects/area-410711/topics/emailReceived",
-            labelIds: ["INBOX"],
-        }, {
-            headers: {
-                Authorization: `Bearer ${r.tokens.access_token}`,
-            },
-        });
-
-        // Check res code
-        if (res.status !== 200) {
-            console.error("Email subscription failed");
-            reply.status(res.status).send({
-                message: "Email subscription failed. Retry later."
-            });
-            return;
-        }
-
-        const calendarListener = await axios.request({
-            url: "https://www.googleapis.com/calendar/v3/calendars/primary/events/watch",
-            method: "post",
-            headers: {
-                Authorization: `Bearer ${r.tokens.access_token}`,
-            },
-            data: {
-                id: request.user._id.toString(),
-                type: "web_hook",
-                address: `https://area-backend-production.up.railway.app/google/calendar`,
-            }
-        });
-
-        if (calendarListener.status !== 200) {
-            console.error("Calendar subscription failed");
-            reply.status(calendarListener.status).send({
-                message: "Calendar subscription failed. Retry later."
-            });
-            return;
-        }
-
-        // Make sure to set the credentials on the OAuth2 client.
-        oAuth2Client.setCredentials(r.tokens);
 
         request.user.googleToken = r.tokens;
 
@@ -108,10 +52,11 @@ const googleOAuthCallback = async (request, reply) => {
         console.log("Google token stored");
 
     } catch (e) {
-        console.error(e);
-        reply.status(500).send({
-            message: e.message,
-        });
+        console.error("Google token storage failed");
+        // console.error(e);
+        // reply.status(500).send({
+        //     message: e.message,
+        // });
     }
 }
 
