@@ -9,6 +9,7 @@ import axios from 'axios';
 import { CustomInput_Selector, CustomNumberInput, CustomTextInput, Input_Selector } from "../Utils/Utils";
 import {IP} from "@env"
 import RNPickerSelect from 'react-native-picker-select';
+import { Navbar } from "../Navbar/Navbar";
 
 export const ChosePage = (props) => {
         const navigation = useNavigation();
@@ -226,13 +227,13 @@ export const Workflow = () => {
         colors={["#0062ff",  "#da61ff", "#3DC8D2"]}
         style = {styles.container}
       >
-        <View style = {{marginTop : 30, flexDirection : 'column', justifyContent : 'space-around', height : '100%'}}>
+        <View style = {{marginTop : 30, flexDirection : 'column', justifyContent : 'space-around', height : '100%', width : "100%"}}>
             <Button title = "Deconnexion" onPress={() => {LogoutUser().then(() => {navigation.navigate("Login")})}}></Button>
             <Text style = {{alignSelf : 'center', fontWeight : 'bold', color : 'white', fontSize : 40}}>New Workflow</Text>
-            <Create_Workflow></Create_Workflow>
-            <View></View>
-            <View></View>
+            <View style = {{alignSelf : 'center'}}><Create_Workflow></Create_Workflow></View>
+            <Navbar actualPage={"Create Workflow"}></Navbar>
         </View>
+        
         </LinearGradient>
     )
 }

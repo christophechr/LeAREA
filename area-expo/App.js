@@ -10,6 +10,7 @@ import { Register } from './Register/Register';
 import { Workflow } from './Workflow/Workflow';
 import { ChosePage } from './Workflow/Workflow';
 import { CardStyleInterpolators } from "@react-navigation/stack";
+import { GetWorkflow } from './Workflow/getWorkflow';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +23,8 @@ export default function App() {
         <Stack.Screen name="Login" component={Login}
          />
          <Stack.Screen name="Workflow" component={Workflow}
+         />
+         <Stack.Screen name="GetWorkflow" component={GetWorkflow}
          />
           <Stack.Screen name="Register" component={Register}/>
 
