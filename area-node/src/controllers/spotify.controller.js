@@ -47,7 +47,6 @@ async function getAccessToken(code) {
         'Authorization': 'Basic ' + (new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64')) },
         body: params
     });
-    console.log(code );
     const { access_token } = await result.json();
     return access_token;
 }
@@ -78,9 +77,11 @@ const registerToken = async (request, reply) => {
 
         console.log(request.user);
         if (accessToken) {
-            request.user.SpotifyToken = accessToken;
-            await request.user.save();
+            //request.user.SpotifyToken = accessToken;
+            //await request.user.save();
             // console.log(user);
+            const nom = await User.findByIdAndUpdate(request.user._id, {SpotifyToken: accessToken});
+            await nom.save();
             reply.send({
                 message: "Spotify token stored",
             });

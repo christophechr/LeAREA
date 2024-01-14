@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 
 const RegisterUser = (email, password) => {
@@ -23,7 +23,7 @@ const RegisterUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/register', userData, {
+      .post( localStorage.getItem("ip") + '/auth/register', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,6 +54,9 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
+  useEffect(() => {
+    localStorage.setItem("ip", "http://localhost:8080");
+  }, []);
   return (
     <div className="App">
       <div className='tab'>
