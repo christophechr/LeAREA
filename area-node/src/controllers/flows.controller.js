@@ -2,9 +2,19 @@ const Flow = require("../models/flow.model.js");
 const triggerConfig = require("../config/triggers.config.js");
 const actionConfig = require("../config/actions.config.js");
 
+
+const dateTimeRegex = new RegExp(
+    "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:00Z$"
+);
+
 const getUserFlows = async (req, res) => {
     try {
         const flows = await Flow.find({ user: req.user._id });
+
+        // Remove lastExec from the flows
+        for (const flow of flows) {
+            flow.lastExec = undefined;
+        }
 
         res.send(flows);
     } catch (err) {
@@ -59,6 +69,12 @@ const checkParams = (params, config, res) => {
         }
         if (param.type === "string") {
             if (typeof params[param.id] !== "string")
+                return res.status(400).send({
+                    message: `Invalid parameter value: ${param.id}`,
+                });
+        }
+        if (param.type === "datetime") {
+            if (typeof params[param.id] !== "string" || !dateTimeRegex.test(params[param.id]))
                 return res.status(400).send({
                     message: `Invalid parameter value: ${param.id}`,
                 });
@@ -151,6 +167,26 @@ const createFlow = async (req, res) => {
             name: req.body.name,
         });
 
+        if (actionConfigObj.init) {
+            const isInit = await actionConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Action initialization failed.",
+                });
+            }
+        }
+
+        if (triggerConfigObj.init) {
+            const isInit = await triggerConfigObj.init(req.user, action.params);
+
+            if (!isInit) {
+                return res.status(400).send({
+                    message: "Trigger initialization failed.",
+                });
+            }
+        }
+
         await flow.save();
 
         // Add the flow to the user's flows array
@@ -167,7 +203,72 @@ const createFlow = async (req, res) => {
     }
 };
 
+const deleteFlow = async (req, res) => {
+    try {
+        const flow = await Flow.findById(req.params.id);
+
+        if (!flow)
+            return res.status(404).send({
+                message: "Flow not found.",
+            });
+
+        if (flow.user.toString() !== req.user._id.toString())
+            return res.status(403).send({
+                message: "You are not authorized to delete this flow.",
+            });
+
+        await Flow.findByIdAndDelete(req.params.id);
+
+        // Remove the flow from the user's flows array
+        req.user.flows = req.user.flows.filter(
+            (flowId) => flowId.toString() !== req.params.id.toString()
+        );
+        await req.user.save();
+
+        res.send({
+            message: "Flow deleted successfully.",
+        });
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Some error occurred while deleting flow.",
+        });
+    }
+}
+
+const updateFlow = async (req, res) => {
+    try {
+        const flow = await Flow.findById(req.params.flowId);
+
+        if (!flow)
+            return res.status(404).send({
+                message: "Flow not found.",
+            });
+
+        if (flow.user.toString() !== req.user._id.toString())
+            return res.status(403).send({
+                message: "You are not authorized to update this flow.",
+            });
+
+        if (req.body.name) flow.name = req.body.name;
+        if (req.body.trigger) flow.trigger = req.body.trigger;
+        if (req.body.action) flow.action = req.body.action;
+        if (req.body.enabled !== undefined) flow.enabled = req.body.enabled;
+
+        await flow.save();
+
+        res.send({
+            message: "Flow updated successfully.",
+        });
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Some error occurred while updating flow.",
+        });
+    }
+}
+
 module.exports = {
     getUserFlows,
     createFlow,
+    deleteFlow,
+    updateFlow,
 };

@@ -1,15 +1,61 @@
 const triggers = require("../triggers");
+const init = require("../init");
 
 module.exports = [
     {
+        id: "github",
+        name: "Github",
+        img: "/public/images/github.png",
+        triggers: [
+            {
+                id: "new_repo",
+                name: "When a new repository is created...",
+                description: "Triggers when a new repository is created.",
+                function: triggers.githubTriggers.newRepo,
+                execEach: 10,
+                init: init.githubTriggerInit.initNewRepoTrigger,
+                params: [],
+            },
+            {
+                id: "new_follower",
+                name: "When a follower...",
+                description: "Triggers when a follower is added or lost.",
+                function: triggers.githubTriggers.newFollower,
+                execEach: 10,
+                init: init.githubTriggerInit.initNewFollowerTrigger,
+                params: [
+                    {
+                        id: "toCheck",
+                        name: "To check",
+                        type: "enum",
+                        required: true,
+                        description: "The type of follower to check.",
+                        values: [
+                            {
+                                name: "New",
+                                value: "new",
+                            },
+                            {
+                                name: "Lost",
+                                value: "lost",
+                            },
+                        ],
+                    },
+                ],
+            }
+        ]
+    },
+    {
         id: "weather",
         name: "Weather",
+        img: "/public/images/weather.png",
         triggers: [
             {
                 id: "temperature",
                 name: "When the temperature value is...",
                 description: "Triggers a temperature condition.",
                 function: triggers.weatherTriggers.temperature,
+                execEach: 5,
                 params: [
                     {
                         id: "location",
@@ -75,4 +121,56 @@ module.exports = [
             },
         ],
     },
+    {
+        id: "gmail",
+        name: "Gmail",
+        img: "/public/images/gmail.webp",
+        triggers: [
+            {
+                id: "email_received",
+                name: "When an email is received...",
+                description: "Triggers when an email is received from Gmail.",
+                execEach: 1,
+                init: init.googleTriggerInit.initEmailReceivedTrigger,
+                params: [],
+            },
+        ],
+    },
+    {
+        id: "spotify",
+        name: "Spotify",
+        img: "/public/images/Spotify.webp",
+        triggers: [
+            {
+                id: "is_this_song",
+                function: triggers.spotifyTriggers.isThisSong,
+                execEach: 5,
+                name: "test if the song that is being played is actually the one given as parameter",
+                description: "Test the name of the song that is being played",
+                params: [
+                    {
+                        id: "songname",
+                        name: "Song Name",
+                        type: "string",
+                        required: true,
+                        description: "give the name of the song that is being played",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: "google_calendar",
+        name: "Google Calendar",
+        img: "/public/images/google_calendar.png",
+        triggers: [
+            {
+                id: "new_event",
+                name: "When an event occurs in Google Calendar...",
+                description: "Triggers when something happens in Google Calendar.",
+                init: init.googleTriggerInit.initNewCalendarEventTrigger,
+                params: [],
+            },
+        ],
+    }
 ];

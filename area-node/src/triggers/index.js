@@ -1,5 +1,5 @@
-const weatherTriggers = require("./weather.trigger");
-
 module.exports = {
-    weatherTriggers,
+    weatherTriggers: require("./weather.trigger"),
+    spotifyTriggers: require("./spotify.trigger"),
+    githubTriggers: require("./github.trigger"),
 };
