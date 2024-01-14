@@ -26,7 +26,7 @@ const LoginUser = async (email, password) => {
         password: password,
       };
   
-      console.log(userData);
+      console.log(IP);
       
       axios
         .post('http://' + IP + ':8080/auth/login', userData, {

@@ -146,6 +146,9 @@ const NewWorkflow = () => {
     const [actionparams, setactionparams] = useState({});
     const [triggerparams, setriggerparams] = useState({});
     const [name, setName] = useState("");
+
+
+    
     const PopupCustom = ({ mode }) => {
         const [open, setopen] = useState(false);
         const [data, setdata] = useState([]);

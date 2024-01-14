@@ -1,20 +1,22 @@
 
 import { SelectList } from 'react-native-dropdown-select-list'
 import { View, Text } from 'react-native'
+import RNPickerSelect from 'react-native-picker-select';
 import { useState, useEffect } from 'react';
 
 export const Input_Selector = ({data, setaction, action}) =>{
-    const [selected, setSelected] = useState("hey");
-
-   
-    let newArray = data.map((val) => {return {key : val.value, value : val.value }});
-    console.log(action);
+    const [selected, setSelected] = useState({});
+    let newArray = [];
+    if (data != undefined) {
+        newArray = Object.values(data).map((val) => {return {value : val, label : val.name}});
+    }
     return(
         <View>
-            <SelectList setSelected={(val) => {setSelected(val)}} data={newArray} onSelect={() => {const list = action;
-                            list[action.id] = selected;
-                            setaction({...list})
-                            }} />
+             <RNPickerSelect
+             textInputProps={{fontSize : 30}}
+            onValueChange={(value) => console.log(value)}
+            items={newArray}
+        />
         </View>
     );
 
