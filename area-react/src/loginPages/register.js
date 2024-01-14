@@ -23,7 +23,7 @@ const RegisterUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/register', userData, {
+      .post( localStorage.getItem("ip") + '/auth/register', userData, {
         headers: {
           'Content-Type': 'application/json',
         },

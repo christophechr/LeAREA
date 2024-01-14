@@ -11,7 +11,7 @@ export const Github = () => {
         console.log(code);
         const userData = {code};
         axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/github', userData, {
+      .post( localStorage.getItem("ip") + '/auth/github', userData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -47,7 +47,7 @@ export const Gitlab = () => {
       console.log(code);
       const userData = {code};
       axios
-    .post("http://" + localStorage.getItem("ip") + ':8080/gitlab', userData, {
+    .post( localStorage.getItem("ip") + '/gitlab', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -79,7 +79,7 @@ export const Google = () => {
   useEffect(() => {
     const userData = {code};
     axios
-    .post("http://" + localStorage.getItem("ip") + ':8080/google', userData, {
+    .post( localStorage.getItem("ip") + '/google', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -112,7 +112,7 @@ export const Spotify = () => {
   useEffect(() => {
     const userData = {code};
     axios
-    .post("http://" + localStorage.getItem("ip") + ':8080/spotify', userData, {
+    .post( localStorage.getItem("ip") + '/spotify', userData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Bearer ' + localStorage.getItem('token'),

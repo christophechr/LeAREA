@@ -25,7 +25,7 @@ const LoginUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/login', userData, {
+      .post( localStorage.getItem("ip") + '/auth/login', userData, {
         headers: {
           'Content-Type': 'application/json',
         },

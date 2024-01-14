@@ -77,6 +77,7 @@ const me = async (request, reply) => {
     reply.send({
         isGithubConnected: !!request.user.githubToken,
         isGoogleConnected: !!request.user.googleToken,
+        isSpotifyConnected: !!request.user.spotifyToken,
     });
 };
 
