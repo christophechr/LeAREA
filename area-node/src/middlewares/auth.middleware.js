@@ -13,6 +13,7 @@ const auth = (request, reply, next) => {
 
         if (!token) {
             reply.code(401).send({ error: "Unauthorized" });
+            return;
         }
 
         try {
