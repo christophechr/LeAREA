@@ -22,21 +22,32 @@ module.exports =
                                 }
                             ]
                         }
-                    ]
-                },
-                {
-                    "name": "gitlab",
-                    "actions": [
+                    ],
+                    "reactions": [
                         {
-                            "name": "create_repo",
-                            "description": "Creates a new repository for the authenticated GitLab user.",
+                            "name": "When a new repository is created...",
+                            "description": "Triggers when a new repository is created.",
+                        },
+                        {
+                            "name": "when a follower",
+                            "description": "Triggers when a follower is added or lost.",
                             "params": [
                                 {
-                                    "id": "name",
-                                    "name": "Repo name",
-                                    "type": "string",
+                                    "id": "toCheck",
+                                    "name": "To check",
+                                    "type": "enum",
                                     "required": true,
-                                    "description": "The name of the new repository.",
+                                    "description": "The type of follower to check.",
+                                "values": [
+                                    {
+                                        "name": "New",
+                                        "value": "new",
+                                    },
+                                    {
+                                        "name": "Lost",
+                                        "value": "lost",
+                                    },
+                                    ],
                                 }
                             ]
                         }
@@ -72,6 +83,21 @@ module.exports =
                                 }
                             ]
                         }
+                    ],
+                    "reactions": [
+                        {
+                            "name" : "When an event occurs in Google Calendar...",
+                            "description": "Triggers when something happens in Google Calendar.",
+                        }
+                    ]
+                },
+                {
+                    "name": "gmail",
+                    "reactions": [
+                        {
+                            "name": "when an email is received...",
+                            "description": "Triggers when an email is received from Gmail.",    
+                        }
                     ]
                 },
                 {
@@ -103,17 +129,166 @@ module.exports =
                     "name": "weather",
                     "reactions": [
                         {
-                            "name": "Get_forecast",
-                            "description": "Get the forecast for a location."
-                        }
-                    ]
-                },
+                            "name": "When the temperature value is...",
+                            "description": "Triggers a temperature condition.",
+                            "params": [
+                                    {
+                                        "id": "location",
+                                        "name": "City location",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "The city location to check the weather.",
+                                    },
+                                    {
+                                        "id": "operator",
+                                        "name": "Operator",
+                                        "type": "enum",
+                                        "required": true,
+                                        "description": "The operator to compare the temperature.",
+                                        "values": [
+                                            {
+                                                "name": "Equal",
+                                                "value": "equal",
+                                            },
+                                            {
+                                                "name": "Greater than",
+                                                "value": "greater_than",
+                                            },
+                                            {
+                                                "name": "Less than",
+                                                "value": "less_than",
+                                            },
+                                            {
+                                                "name": "Greater than or equal",
+                                                "value": "greater_than_or_equal",
+                                            },
+                                            {
+                                                "name": "Less than or equal",
+                                                "value": "less_than_or_equal",
+                                            },
+                                            {
+                                                "id": "location",
+                                                "name": "City location",
+                                                "type": "string",
+                                                "required": true,
+                                                "description": "The city location to check the weather.",
+                                            },
+                                            {
+                                                "id": "operator",
+                                                "name": "Operator",
+                                                "type": "enum",
+                                                "required": true,
+                                                "description": "The operator to compare the temperature.",
+                                                "values": [
+                                                    {
+                                                        "name": "Equal",
+                                                        "value": "equal",
+                                                    },
+                                                    {
+                                                        "name": "Greater than",
+                                                        "value": "greater_than",
+                                                    },
+                                                    {
+                                                        "name": "Less than",
+                                                        "value": "less_than",
+                                                    },
+                                                    {
+                                                        "name": "Greater than or equal",
+                                                        "value": "greater_than_or_equal",
+                                                    },
+                                                    {
+                                                        "name": "Less than or equal",
+                                                        "value": "less_than_or_equal",
+                                                    },
+                                                ],
+                                                }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
                 {
                     "name": "date",
                     "reactions": [
                         {
                             "name": "get_current_date",
                             "description": "Gets the current date."
+                        }
+                    ]
+                },
+                {
+                    "name": "micropaiement",
+                    "action": [
+                        {
+                            "name": "create a new invoice",
+                            "description": "Creates a new invoice to receive payments.",
+                            "params": [
+                                {
+                                    "id": "memo",
+                                    "name": "Note",
+                                    "type": "string",
+                                    "required": true,
+                                    "description": "Leave a note on the invoice.",
+                                },
+                                {
+                                    "id": "amount",
+                                    "name": "Amount",
+                                    "type": "integer",
+                                    "required": true,
+                                    "description": "The amount to receive.",
+                                },
+                            ],
+                        },
+                        {
+                            "name": "Pay an invoice",
+                            "description": "fill a BOLT11 invoice and pay it.",
+                            "params": [
+                                {
+                                    "id": "bolt11",
+                                    "name": "BOLT11 Invoice",
+                                    "type": "string",
+                                    "required": true,
+                                    "description": "The BOLT11 invoice to pay.",
+                                },
+                            ],
+                        }
+                    ],
+                    "reaction": [
+                        {
+                            "name": "Check the balance",
+                            "description": "Trigger a micropayment condition",
+                            "params": [
+                                {
+                                    "id": "operator",
+                                    "name": "Operator",
+                                    "type": "enum",
+                                    "required": true,
+                                    "description": "The operator to compare the amount.",
+                                    "values": [
+                                        {
+                                            "name": "Equal",
+                                            "value": "equal",
+                                        },
+                                        {
+                                            "name": "Greater than",
+                                            "value": "greater_than",
+                                        },
+                                        {
+                                            "name": "Less than",
+                                            "value": "less_than",
+                                        },
+                                        {
+                                            "name": "Greater than or equal",
+                                            "value": "greater_than_or_equal",
+                                        },
+                                        {
+                                            "name": "Less than or equal",
+                                            "value": "less_than_or_equal",
+                                        },
+                                    ],
+                                },
+                            ]
                         }
                     ]
                 }
