@@ -10,6 +10,7 @@ import * as WebBrowser from 'expo-web-browser';
 import styles from "./css/services.module.css";
 export const Services = () => {
     const [token, setToken] = useState(null);
+    const [data, setdata] = useState(null);
 
     useEffect(() => {
         const fonction = async () => {
@@ -18,6 +19,31 @@ export const Services = () => {
         }
         fonction();
     }, []);
+
+    useEffect(() => {
+        const fonction = async () => {
+            const token = await AsyncStorage.getItem("token");
+            const apiUrl = "http://" + IP + ":8080/auth/me";
+            
+            const axiosConfig = {
+                method: "get",
+                url: apiUrl,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            };
+            axios(axiosConfig)
+                .then((response) => {
+                    setdata(response.data);
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        fonction();
+    }, [token]);
 
     return(
         <LinearGradient
@@ -28,12 +54,15 @@ export const Services = () => {
             { token != null ?
             <View>
             <SafeAreaView>
+            { data != null ?
                 <ScrollView  horizontal = {true}>
-                    <TouchableOpacity style = {styles.opa} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/spotify" + "/" + IP )}><Text style = {styles.text}>Spotify</Text></TouchableOpacity>
-                    <TouchableOpacity style = {styles.opa} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/google" + "/" + IP )}><Text style = {styles.text}>Google</Text></TouchableOpacity>
-                    <TouchableOpacity style = {styles.opa} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/github" + "/" + IP )}><Text style = {styles.text}>Github</Text></TouchableOpacity>
+                    <TouchableOpacity style = {[styles.opa, !data.isSpotifyConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'} ]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/spotify" + "/" + IP )}><Text style = {styles.text}>Spotify</Text></TouchableOpacity>
+                    <TouchableOpacity style = {[styles.opa, !data.isGoogleConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/google" + "/" + IP )}><Text style = {styles.text}>Google</Text></TouchableOpacity>
+                    <TouchableOpacity style ={[styles.opa, !data.isGithubConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/github" + "/" + IP )}><Text style = {styles.text}>Github</Text></TouchableOpacity>
+                    
                 </ScrollView>
-        
+                :<></>
+            }
             </SafeAreaView>
         
             </View>

@@ -418,13 +418,6 @@ export const Workflowpage = () => {
                 </button>
                 <button
                     onClick={() => {
-                        gitlab_connexion();
-                    }}
-                >
-                    gitlab
-                </button>
-                <button
-                    onClick={() => {
                         spotify_connexion();
                     }}
                 >
