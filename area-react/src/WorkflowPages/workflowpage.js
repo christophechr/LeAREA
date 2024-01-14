@@ -206,7 +206,8 @@ const NewWorkflow = () => {
     const SecondStepWorkflow = () => {
         const url = "http://" + localStorage.getItem("ip") + ":8080";
         useEffect(() => {
-            console.log(trigger.triggers[0].params);
+        if (action.actions != undefined || action.actions != null) 
+            console.log(Object.values(action.actions).find((val) => val.id == chooseaction));   
         }
         , []);
         return(
@@ -217,7 +218,7 @@ const NewWorkflow = () => {
                     <div style={{padding : 10, display : 'flex', flexDirection : 'column', justifyContent : 'space-around'}}>
                         <img style={{width : 20, height : 20, alignSelf : 'center'}} src = {url + action.img}></img>
                         <div style ={{marginTop : 20 ,flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
-                            {action.actions[0].params.map((val) => {return(
+                            {Object.values(action.actions).find((val) => val.id == chooseaction).params.map((val) => {return(
                                 <div>
                                     {val.type === "string" ?
                                     <NominalInputs setVal={setactionparams} Val={actionparams} action = {val}></NominalInputs>
@@ -239,7 +240,7 @@ const NewWorkflow = () => {
                     <div style={{padding : 10, flexDirection : 'column', display : 'flex'}}>
                         <img style={{width : 20, height : 20, alignSelf : 'center'}} src = {url + trigger.img}></img>
                         <div style ={{marginTop : 20, flexDirection : 'column', display : 'flex', justifyContent : 'space-between', maxHeight : 300, minHeight : 200}}>
-                            {trigger.triggers[0].params.map((val) => {return(
+                            {Object.values(trigger.triggers).find((val) => val.id == choosetrigger).params.map((val) => {return(
                                 <div>
                                     {val.type === "string" ?
                                     <NominalInputs setVal={setriggerparams} Val={triggerparams} action = {val}></NominalInputs>
