@@ -78,8 +78,10 @@ export const GetWorkflow = () =>{
             {data.map((val) => {
                 return(
                     <View style = {{borderTopWidth : 1, borderBottomWidth : 1, borderTopColor : "white", borderBottomColor : 'white'
-                    , flexDirection : 'row', justifyContent : 'space-around', alignItems : 'center'}}>
-                        <Text style = {{fontSize : 40, fontWeight : 'bold', color : 'white'}}>{val.name}</Text>
+                    , flexDirection : 'row', justifyContent : 'space-around', alignItems : 'center', marginBottom : 20}}>
+                        <View style = {{maxWidth : 110, minWidth : 100}}>
+                        <Text style = {{fontSize : 20, fontWeight : 'bold', color : 'white'}}>{val.name}</Text>
+                        </View>
                         <Switch
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={(value) => {changeFlow(val._id, value).then(() => {setEnabled((e) => !e)});}}
