@@ -124,6 +124,7 @@ module.exports = [
     {
         id: "micpmt",
         name: "Micropayment",
+        img: "/public/images/micropayment.webp",
         triggers: [
             // Not implemented, can be erased
             // {
@@ -175,6 +176,7 @@ module.exports = [
                 name: "Check the balance...",
                 description: "Triggers a micropayment condition.",
                 function: triggers.micpmtTriggers.balance,
+                execEach: 5,
                 params: [
                     {
                         id: "operator",

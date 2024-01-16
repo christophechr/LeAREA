@@ -482,6 +482,7 @@ module.exports = [
                 function: actions.micpmtActions.newInvoice,
                 description:
                     "Creates a new invoice to receive payments.",
+                loop: true,
                 params: [
                     {
                         id: "memo",
@@ -505,6 +506,7 @@ module.exports = [
                 function: actions.micpmtActions.payInvoice,
                 description:
                     "Fill a BOLT11 invoice and pay it.",
+                loop: false,
                 params: [
                     {
                         id: "bolt11",

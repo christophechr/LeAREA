@@ -74,6 +74,8 @@ const newInvoice = async (user, params) => {
 const payInvoice = async (user, params) => {
   const { bolt11 } = params
 
+  console.log("Paying invoice: ", bolt11)
+
   const route = "api/v1/payments";
   const headers = {
     "X-Api-Key": user.micropaymentKey,
@@ -91,6 +93,7 @@ const payInvoice = async (user, params) => {
     console.log("Invoice: ", response.data);
     return response.data;
   } catch (error) {
+    console.error("Error paying:", error);
     return "Error paying invoice";
   }
 }

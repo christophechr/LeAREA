@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+const base_url = "https://legend.lnbits.com/"
 
 // Fake implementation, can be erased.
 const incommingPayment = async (user, params) => {
@@ -45,21 +46,22 @@ const getWalletBalance = async (walletKey) => {
     var response = null
     try {
         response = await axios.get(base_url + route, { headers });
-        console.log("Got:\n", JSON.stringify(response.data, undefined, 4));
+        console.log("Got:\n", JSON.stringify(response.data.balance, undefined, 4));
+        return response.data.balance
     } catch (error) {
         console.error(error);
         console.log(JSON.stringify(error.response, undefined, 4));
     }
-    return response.data
 }
 
 
 const balance = async (user, params) => {
     const { operator, value } = params;
+    console.log("Checking balance for user: ", user.email)
 
     if (!operator || !value) return false;
 
-    const balance = getWalletBalance(user.micropaymentKey)
+    const balance = await getWalletBalance(user.micropaymentKey)
 
     switch (operator) {
         case "equal":
@@ -67,6 +69,7 @@ const balance = async (user, params) => {
         case "greater_than":
             return balance > value;
         case "less_than":
+            console.log(balance, " < ", value);
             return balance < value;
         case "greater_than_or_equal":
             return balance >= value;
