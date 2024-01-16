@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 
 const RegisterUser = (email, password) => {
+  localStorage.setItem("ip", "http://localhost:8080");
   return new Promise((resolve, reject) => {
     if (email === "" || password === "") {
       window.alert("Email and password are required");
@@ -23,7 +24,7 @@ const RegisterUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/register', userData, {
+      .post( localStorage.getItem("ip") + '/auth/register', userData, {
         headers: {
           'Content-Type': 'application/json',
         },

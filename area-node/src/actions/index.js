@@ -1,7 +1,6 @@
-const githubActions = require("./github.action");
-const micpmtActions = require("./micpmt.action");
-
 module.exports = {
-    githubActions,
-    micpmtActions,
+    githubActions: require("./github.action"),
+    httpActions: require("./http.action"),
+    googleActions: require("./google.action"),
+    micpmtActions: require("./micpmt.action"),
 };

@@ -1,4 +1,3 @@
-const authControllers = require("../controllers/auth.controller.js");
 const { auth, getUser } = require("../middlewares/auth.middleware.js");
 const googleControllers = require("../controllers/google.controller.js");
 
@@ -14,5 +13,6 @@ module.exports = function (fastify, opts, done) {
         { preHandler: [auth, getUser] },
         googleControllers.googleOAuthCallback
     );
+    fastify.post("/calendar", googleControllers.calendarNotifications);
     done();
 };

@@ -25,7 +25,7 @@ const RegisterUser = async (email, password) => {
       console.log(userData);
       
       axios
-        .post('http://' + IP + ':8080/auth/register', userData, {
+        .post(IP + '/auth/register', userData, {
           headers: {
             'Content-Type': 'application/json',
           },

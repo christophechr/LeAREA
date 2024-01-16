@@ -2,7 +2,7 @@ import logo from '../logo.svg';
 import './login.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const LogoutUser = async () => {
@@ -11,6 +11,7 @@ export const LogoutUser = async () => {
 
 const LoginUser = (email, password) => {
   return new Promise((resolve, reject) => {
+    localStorage.setItem("ip", "http://localhost:8080");
     if (email === "" || password === "") {
       window.alert("Email and password are required");
       reject(new Error("Email and password are required"));
@@ -25,7 +26,7 @@ const LoginUser = (email, password) => {
     console.log(userData);
 
     axios
-      .post("http://" + localStorage.getItem("ip") + ':8080/auth/login', userData, {
+      .post( localStorage.getItem("ip") + '/auth/login', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
