@@ -3,20 +3,17 @@ services:
     container_name: mongo
     build:
       context: area-mongo
-#    restart: always
+    restart: always
     volumes:
       - database:/data/db
     networks:
       - localnet
-#    ports:
-#      - "27017:27017"
-#      - "35580:35580"
 
   server:
     container_name: server
     env_file:
       - ./area-node/.env
-#    restart: always
+    restart: always
     build:
       context: area-node/
     depends_on:
@@ -36,7 +33,7 @@ services:
 
   client_web:
     container_name: web_client
-#    restart: always
+    restart: always
     build:
       context: area-react/
     depends_on:

@@ -1,5 +1,16 @@
 # AREA Backend
 
+## Micropayment Admin setup
+
+* Create a LNbits account => https://legend.lnbits.com/
+* Create a main wallet
+* Copy the Admin Key from the right API panel
+* Crawl the extensions and install the **user manager** extension
+* Create a new user with a wallet associated, it will be our admin
+* Copy its ID
+
+#### With the Admin ID and your Admin Key in the .env, you can now use the API to create new wallets for users.
+
 ## Table of contents
 
 - [AREA Backend](#area-backend)

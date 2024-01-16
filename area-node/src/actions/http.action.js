@@ -33,7 +33,7 @@ const get = async (user, params) => {
             data: body,
         });
     } catch (err) {
-        console.log("Cannot perform GET request");
+        console.log("Cannot perform GET request (", err.message, ")");
     }
 }
 
