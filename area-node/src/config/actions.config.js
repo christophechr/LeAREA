@@ -482,7 +482,7 @@ module.exports = [
                 function: actions.micpmtActions.newInvoice,
                 description:
                     "Creates a new invoice to receive payments.",
-                loop: true,
+                loop: false,
                 params: [
                     {
                         id: "memo",
