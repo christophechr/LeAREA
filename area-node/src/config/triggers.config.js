@@ -126,51 +126,6 @@ module.exports = [
         name: "Micropayment",
         img: "/public/images/micropayment.webp",
         triggers: [
-            // Not implemented, can be erased
-            // {
-            //     id: "incommingPayment",
-            //     name: "When an incomming payment is received...",
-            //     description: "Triggers a micropayment condition.",
-            //     function: triggers.micpmtTriggers.incommingPayment,
-            //     params: [
-            //         {
-            //             id: "operator",
-            //             name: "Operator",
-            //             type: "enum",
-            //             required: true,
-            //             description: "The operator to compare the amount.",
-            //             values: [
-            //                 {
-            //                     name: "Equal",
-            //                     value: "equal",
-            //                 },
-            //                 {
-            //                     name: "Greater than",
-            //                     value: "greater_than",
-            //                 },
-            //                 {
-            //                     name: "Less than",
-            //                     value: "less_than",
-            //                 },
-            //                 {
-            //                     name: "Greater than or equal",
-            //                     value: "greater_than_or_equal",
-            //                 },
-            //                 {
-            //                     name: "Less than or equal",
-            //                     value: "less_than_or_equal",
-            //                 },
-            //             ]
-            //         },
-            //         {
-            //             id: "value",
-            //             name: "Value",
-            //             type: "number",
-            //             required: true,
-            //             description: "The value to compare the last payment.",
-            //         },
-            //     ]
-            // },
             {
                 id: "balance",
                 name: "Check the balance...",
