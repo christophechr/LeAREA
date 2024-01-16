@@ -400,9 +400,9 @@ export const Getflows = () => {
             {data.map((val) => {return(
             <div className="workflow-get">
                 <p style={{color : 'grey', fontWeight : 'bold'}}>{val.name}</p>
-                <p style={{fontWeight : 'bold'}}>{val.action.id.split(".")[0]} {val.action.id.split(".")[1].replace("_", " ")}</p>
-                <p style={{fontWeight : 'bold'}}>{"-->"}</p>
                 <p style={{fontWeight : 'bold'}}>{val.trigger.id.split(".")[0]} {val.trigger.id.split(".")[1].replace("_", " ")}</p>
+                <p style={{fontWeight : 'bold'}}>{"-->"}</p>
+                <p style={{fontWeight : 'bold'}}>{val.action.id.split(".")[0]} {val.action.id.split(".")[1].replace("_", " ")}</p>
                 <Switch
                     checked={val.enabled}
                     onChange={(e) => {setchecked((e) => !e);ChangeEnabledWorkflow(val._id, e.target.checked)}}
