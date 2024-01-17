@@ -185,9 +185,9 @@ const Create_Workflow = () => {
                 : continuer == 2 ?
                 <View>
                     <Text style={{ fontSize: 50, alignSelf: 'center' }}>On</Text>
-                    <Input_Selector data={choseAction.actions} setaction={setchosesousaction}></Input_Selector>
-                    <Text style={{ fontSize: 50, alignSelf: 'center' }}>Do</Text>
                     <Input_Selector data={choseTrigger.triggers} setaction={setchosesoustrigger}></Input_Selector>
+                    <Text style={{ fontSize: 50, alignSelf: 'center' }}>Do</Text>
+                    <Input_Selector data={choseAction.actions} setaction={setchosesousaction}></Input_Selector>
                 </View>
                 :continuer == 3 ?
                 <View style = {{flexDirection : 'column'}}>

@@ -17,7 +17,7 @@
 }
 
 .chose{
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 
 .image{
