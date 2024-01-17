@@ -40,7 +40,7 @@ const LoginUser = async (email, password) => {
             console.log(response.data);
             await AsyncStorage.setItem("id", response.data.id);
             await AsyncStorage.setItem("token", response.data.token);
-            resolve(response.data); // Resolve with the data
+            resolve(response.data);
           } else {
             console.log("erreur");
             reject(new Error(`Unexpected response status: ${response.status}`));

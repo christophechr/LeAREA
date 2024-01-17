@@ -1,6 +1,6 @@
 import { View, Button, TouchableOpacity, Text, TextInput, Image , Alert, ScrollView, SafeAreaView, Switch} from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import {IP, SERVICEIP} from "@env"
+import {IP, SERVICEIP, IPFREE, HTTP} from "@env"
 import { LinearGradient } from 'expo-linear-gradient';
 import { Navbar } from "../Navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -59,9 +59,9 @@ export const Services = () => {
             <SafeAreaView>
             { data != null ?
                 <ScrollView  horizontal = {true}>
-                    <TouchableOpacity style = {[styles.opa, !data.isSpotifyConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'} ]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/spotify" + "/" + IP )}><Text style = {styles.text}>Spotify</Text></TouchableOpacity>
-                    <TouchableOpacity style = {[styles.opa, !data.isGoogleConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/google" + "/" + IP )}><Text style = {styles.text}>Google</Text></TouchableOpacity>
-                    <TouchableOpacity style ={[styles.opa, !data.isGithubConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/github" + "/" + IP )}><Text style = {styles.text}>Github</Text></TouchableOpacity>
+                    <TouchableOpacity style = {[styles.opa, !data.isSpotifyConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'} ]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/spotify" + "/" + IPFREE + "/" + HTTP )}><Text style = {styles.text}>Spotify</Text></TouchableOpacity>
+                    <TouchableOpacity style = {[styles.opa, !data.isGoogleConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/google" + "/" + IPFREE + "/" + HTTP )}><Text style = {styles.text}>Google</Text></TouchableOpacity>
+                    <TouchableOpacity style ={[styles.opa, !data.isGithubConnected ? {backgroundColor : 'rgba(255,0,0, 0.5)'} : {backgroundColor : 'rgba(0,255,0, 0.5)'}]} onPress={() => WebBrowser.openBrowserAsync(SERVICEIP + "/frontmobile/" + token + "/github" + "/" + IPFREE  + "/" + HTTP)}><Text style = {styles.text}>Github</Text></TouchableOpacity>
                     
                 </ScrollView>
                 :<></>

@@ -54,7 +54,7 @@ module.exports =
                     ]
                 },
                 {
-                    "name": "google",
+                    "name": "google Calendar",
                     "actions": [
                         {
                             "name": "create_calendar_event",
@@ -208,15 +208,6 @@ module.exports =
                             }
                         ]
                     },
-                {
-                    "name": "date",
-                    "reactions": [
-                        {
-                            "name": "get_current_date",
-                            "description": "Gets the current date."
-                        }
-                    ]
-                },
                 {
                     "name": "micropaiement",
                     "action": [

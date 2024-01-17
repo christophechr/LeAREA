@@ -345,6 +345,7 @@ const NewWorkflow = () => {
 };
 
 export const ChangeEnabledWorkflow = async (id, val) => {
+    console.log(id);
     const bearerToken = localStorage.getItem("token");
     const apiUrl =  localStorage.getItem("ip") + "/flows/" + id;
     const axiosConfig = {
@@ -397,22 +398,27 @@ export const Getflows = () => {
     return(
 
         <div>
-            {data.map((val) => {return(
+            {data.map((val, index) => {
+                console.log(val.name + " " +val._id);
+                return(
             <div className="workflow-get">
                 <p style={{color : 'grey', fontWeight : 'bold'}}>{val.name}</p>
-                <p style={{fontWeight : 'bold'}}>{val.action.id.split(".")[0]} {val.action.id.split(".")[1].replace("_", " ")}</p>
-                <p style={{fontWeight : 'bold'}}>{"-->"}</p>
                 <p style={{fontWeight : 'bold'}}>{val.trigger.id.split(".")[0]} {val.trigger.id.split(".")[1].replace("_", " ")}</p>
-                <Switch
-                    checked={val.enabled}
-                    onChange={(e) => {setchecked((e) => !e);ChangeEnabledWorkflow(val._id, e.target.checked)}}
-                />
+                <p style={{fontWeight : 'bold'}}>{"-->"}</p>
+                <p style={{fontWeight : 'bold'}}>{val.action.id.split(".")[0]} {val.action.id.split(".")[1].replace("_", " ")}</p>
+                <input type="checkbox"
+                 checked={val.enabled}
+                 onChange={() => {ChangeEnabledWorkflow(val._id, !val.enabled).then(() => {setchecked(e => !e)})}}></input>
+               
             {/* <p>{val.name} {val.action.id} triggers : {val.trigger.id}</p> */}
             </div>)})}
         </div>
     )
 
 }
+
+
+
 
 export const Workflowpage = () => {
     const [switchWorkflow, setSwitchWorkflow] = useState(true);
