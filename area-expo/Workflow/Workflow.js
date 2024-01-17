@@ -1,4 +1,4 @@
-import { View, Button, TouchableOpacity, Text, TextInput, Image , Alert} from "react-native"
+import { View, Button, TouchableOpacity, Text, TextInput, Image , Alert, ScrollView} from "react-native"
 import { LogoutUser } from "../Login/login"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from 'expo-linear-gradient';
@@ -42,12 +42,12 @@ export const ChosePage = (props) => {
     return(
         <View>
         {data?
-            <View style = {{flexDirection : 'row', gap : 40, marginTop : 30, marginLeft : 20}}>
+            <ScrollView horizontal  style = {{flexDirection : 'row', gap : 40, marginTop : 30, marginLeft : 20}}>
                 {Object.values(data).map(val => { return(
                 <TouchableOpacity  style = {styles.image} onPress={() => {props.route.params.function(val), navigation.goBack()}}>
                     <Image source={{uri : url + val.img}} style = {{width : 60, height : 60,}}></Image>
                 </TouchableOpacity>);})}
-            </View> : <></>
+            </ScrollView> : <></>
         }
     </View>
     );
