@@ -3,11 +3,11 @@
 ## 1. Create the service
 
 Folder to modify:
-- [Back-end folder](../area-node/)
+- [Back-end folder](../../area-node/)
 
 ### 1.1. Create the triggers
 
-- Create a new file in the folder [triggers](../area-node/triggers/)
+- Create a new file in the folder [triggers](../../area-node/triggers/)
 
 - Name the file with the name of the service (ServiceNameTrigger.trigger.js)
 
@@ -26,7 +26,7 @@ module.exports = {
 };
 ```
 
-- Add the trigger to the [index.js](../area-node/triggers/index.js) file
+- Add the trigger to the [index.js](../../area-node/triggers/index.js) file
 
 ```javascript
 const { ServiceNameTrigger } = require("./ServiceNameTrigger");
@@ -39,7 +39,7 @@ module.exports = {
 
 ### 1.2. Create the actions
 
-- Create a new file in the folder [actions](../area-node/actions/)
+- Create a new file in the folder [actions](../../area-node/actions/)
 
 - Name the file with the name of the service (ServiceNameAction.action.js)
 
@@ -57,7 +57,7 @@ module.exports = {
 };
 ```
 
-- Add the action to the [index.js](../area-node/actions/index.js) file
+- Add the action to the [index.js](../../area-node/actions/index.js) file
 
 ```javascript
 const { ServiceNameAction } = require("./ServiceNameAction");
@@ -70,7 +70,7 @@ module.exports = {
 
 ### 1.3. Create the config file
 
-- Create a new file in the folder [config](../area-node/config/)
+- Create a new file in the folder [config](../../area-node/config/)
 
 - Name the file with the name of the service (service.config.js)
 
@@ -114,7 +114,7 @@ module.exports = [
 
 ### 1.4. Create the controller
 
-- Create a new file in the folder [controllers](../area-node/controllers/)
+- Create a new file in the folder [controllers](../../area-node/controllers/)
 
 - Name the file with the name of the service (service.controller.js)
 
@@ -132,7 +132,7 @@ module.exports = {
 
 ### 1.5. Create the route
 
-- Create a new file in the folder [routes](../area-node/routes/)
+- Create a new file in the folder [routes](../a../rea-node/routes/)
 
 - Name the file with the name of the service (service.route.js)
 
@@ -150,7 +150,7 @@ module.exports = function (fastify, opts, done) {
 };
 ```
 
-- Add the route to the [index.js](../area-node/routes/index.js) file
+- Add the route to the [index.js](../../area-node/routes/index.js) file
 
 ```javascript
 ...

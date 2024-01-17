@@ -12,6 +12,9 @@ const userSchema = new mongoose.Schema({
     googleToken: { type: Object },
     googleEmail: { type: String },
     SpotifyToken : {type : String },
+    micropaymentID: { type: String },
+    micropaymentKey: { type: String },
+    micropaymentInKey: { type: String },
 
     githubRepoCount: { type: Number, default: -1 },
     githubFollowersCount: { type: Number, default: -1 },

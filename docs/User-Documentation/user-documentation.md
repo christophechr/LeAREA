@@ -21,17 +21,17 @@ To use the web interface, go to [localhost:8081](http://localhost:8081).
 #### Home page : Login or register
 
 The home page is the login page. If you don't have an account, you can register by clicking on the register button.
-![Home(login) page](./assets/login.png)
+![Home(login) page](./../assets/login.png)
 
 #### Register page
 
 To register, you need to fill the form with your email (as username) and your password.
-![Register page](./assets/register.png)
+![Register page](./../assets/register.png)
 
 #### Connect to services
 
 After being logged in, you can connect to services by choosing a new workflow or choosing a registered service into your workflows.
 
-![Workflow page](./assets/workflow_page.png)
+![Workflow page](./../assets/workflow_page.png)
 
 
