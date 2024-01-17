@@ -68,46 +68,111 @@ module.exports = {
 };
 ```
 
-### 1.3. Create the config file
+### 1.3. Add to config file
 
-- Create a new file in the folder [config](../../area-node/config/)
+- Depends on if you want to add an action or a trigger, you have to edit [actions.config.js](../../area-node/src/config/actions.config.js) or [triggers.config.json](../../area-node/src/config/triggers.config.js) in the backend: `src/config/`
 
 - Name the file with the name of the service (service.config.js)
 
 - Add the following code to the file: (replace the name of the service and the description)
 
+Example for adding a trigger: `/src/config/triggers.config.js`
 ```javascript
 module.exports = [
+    // ...
     {
-        name: "ServiceName",
-        description: "Service description",
+        id: 'service_id',
+        name: "Service Name",
+        img: '/public/images/serviceImg.png',  // Image accessible from the backend public folder as static image. Add yours to the folder
         triggers: [
             {
-                name: "ServiceNameTrigger",
+                id: 'trigger_id',  // The final trigger id will be 'service_id.trigger_id'.
+                name: "Trigger Name",
                 description: "Trigger description",
+                execEach: 1, // Each x secs, the trigger will be tested
+                init: init.serviceTriggerInit.initTrigger, // (Optionnal) A function to execute before flow creation. Return true if initalized correctly. Cancel flow creation if not.
+                function: triggers.serviceTriggers.trigger, // The function to call to test the trigger. Returns true if triggered, false if not
                 params: [
                     {
+                        id: "param_id",
                         name: "Param",
                         description: "Param description",
-                        type: "string"
-                    }
+                        type: "string",
+                        required: true
+                    },
+                    {
+                        id: "value",
+                        name: "Value",
+                        type: "number",
+                        required: true,
+                        description: "Description.",
+                    },
+                    {
+                        id: "operator",
+                        name: "Operator",
+                        type: "enum",
+                        required: true,
+                        description: "The operator to compare the amount.",
+                        values: [
+                            {
+                                name: "Equal",
+                                value: "equal",
+                            },
+                            {
+                                name: "Greater than",
+                                value: "greater_than",
+                            },
+                            {
+                                name: "Less than",
+                                value: "less_than",
+                            },
+                            {
+                                name: "Greater than or equal",
+                                value: "greater_than_or_equal",
+                            },
+                            {
+                                name: "Less than or equal",
+                                value: "less_than_or_equal",
+                            },
+                        ]
+                    },
                 ]
             }
         ],
+    }
+    // ...
+]
+```
+
+Example for adding an action: `/src/conf/actions.config.js`
+```js
+module.exports = [
+    // ...
+    {
+        id: "github",
+        name: "GitHub",
+        img: "/public/images/github.png",
         actions: [
             {
-                name: "ServiceNameAction",
-                description: "Action description",
+                id: "new_repo",
+                name: "Create a new repository",
+                function: actions.githubActions.newUserRepo, // The function to execute if the flow trigger is triggered
+                loop: false, // True if the action can be repeted, false otherwise
+                description:
+                    "Creates a new repository for the authenticated GitHub user.",
                 params: [
                     {
-                        name: "Param",
-                        description: "Param description",
-                        type: "string"
-                    }
-                ]
-            }
-        ]
-    };
+                        id: "name",
+                        name: "Repo name",
+                        type: "string",
+                        required: true,
+                        description: "The name of the new repository.",
+                    },
+                ],
+            },
+        ],
+    },
+    // ...
 ]
 ```
 
